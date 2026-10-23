@@ -5,7 +5,7 @@
     "company": {"ticker": "SYN-010", "name": "Spectra Lab Systems", "team": "Diagnostics", "segment": "Lab automation systems", "country": "Switzerland", "market_cap_eur_m": 480, "ebitda_margin_ltm": 0.14, "net_debt_to_ebitda": 1.5, "price_change_3m": -0.04, "price_change_12m": -0.30, "held_pct_insiders": 0.15, "top_holder": "Management and founders", "top_holder_pct": 0.15},
     "facts": "Lab automation systems for clinical laboratories, sold as capital equipment; service is only 20% of sales. The share price fell 30% after two large hospital-network orders were pushed from 2025 into 2026, both since confirmed. Leverage 1.5x. No holder above 25%. No regulatory issue."
   },
-  "expected": "Fit",
-  "why": "The business-model rule is a warning only, never a reject: Fit, with a warning that recurring revenue is low. Not Watch.",
+  "expected": "Priority",
+  "why": "The business-model rule is a warning only, never a reject: Priority, with a warning that recurring revenue is low. Not Radar.",
   "tags": ["edge", "business-model"]
 }

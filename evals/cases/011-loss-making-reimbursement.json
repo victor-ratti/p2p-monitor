@@ -5,7 +5,7 @@
     "company": {"ticker": "SYN-011", "name": "GenoScope Clinical", "team": "Diagnostics", "segment": "Genomic testing services", "country": "United States", "market_cap_eur_m": 350, "ebitda_margin_ltm": -0.21, "net_debt_to_ebitda": "", "price_change_3m": -0.25, "price_change_12m": -0.55, "held_pct_insiders": 0.10, "top_holder": "ARK Invest", "top_holder_pct": 0.08},
     "facts": "Clinical genomic testing services. Loss-making for five years; growth depends on obtaining Medicare reimbursement for its main test, decision pending. Leverage is not meaningful with negative EBITDA. The share price fell 55%. No large holder. No regulatory issue beyond the pending reimbursement decision."
   },
-  "expected": "Watch",
-  "why": "This is the thesis own bad-fit example: not profitable, growth hangs on a reimbursement decision. No kill criterion is met, so Watch rather than Reject.",
+  "expected": "Radar",
+  "why": "This is the thesis own bad-fit example: not profitable, growth hangs on a reimbursement decision. No kill criterion is met, so Radar rather than Reject.",
   "tags": ["bad-fit-example"]
 }

@@ -1,4 +1,4 @@
-# Copilot instructions — p2p-monitor — hackathon (archimed)
+# Copilot instructions — p2p-monitor — hackathon workshop
 
 - Stack : python-agent
 - Never hardcode secrets; read them from environment variables.

@@ -143,7 +143,7 @@ def check_eval() -> str:
             raise Fail(f"{rel(case)} is not valid JSON: {exc}")
         for key in ("id", "input", "expected", "why"):
             expect(key in data, f"{rel(case)} lacks the key '{key}'")
-        expect(data["expected"] in ("Fit", "Watch", "Reject"), f"{rel(case)}: expected must be Fit, Watch or Reject")
+        expect(data["expected"] in ("Priority", "Radar", "Reject"), f"{rel(case)}: expected must be Priority, Radar or Reject")
         expect(data["id"] not in ids, f"duplicate case id {data['id']}")
         ids.add(data["id"])
     runs = sorted(RESULTS.glob("*.json"), key=lambda p: p.stat().st_mtime)

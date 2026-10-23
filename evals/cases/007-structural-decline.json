@@ -5,7 +5,7 @@
     "company": {"ticker": "SYN-007", "name": "RapidTest Holdings", "team": "Diagnostics", "segment": "Rapid antigen tests", "country": "United States", "market_cap_eur_m": 260, "ebitda_margin_ltm": 0.24, "net_debt_to_ebitda": 0.4, "price_change_3m": -0.18, "price_change_12m": -0.62, "held_pct_insiders": 0.04, "top_holder": "Vanguard", "top_holder_pct": 0.09},
     "facts": "Rapid antigen tests for respiratory viruses. Revenue has fallen for three consecutive years as pandemic-era testing volumes disappear; the latest release shows a further 30% revenue decline and management has no new product with meaningful sales. Margins remain positive on cost cuts. Net debt 0.4x. No large holder. No regulatory issue."
   },
-  "expected": "Watch",
-  "why": "The price is low for a structural reason (a shrinking market), not a temporary one. The thesis says structural decline is Watch, not Reject: no kill criterion is met.",
+  "expected": "Radar",
+  "why": "The price is low for a structural reason (a shrinking market), not a temporary one. The thesis says structural decline is Radar, not Reject: no kill criterion is met.",
   "tags": ["structural"]
 }

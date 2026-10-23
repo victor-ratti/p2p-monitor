@@ -2,7 +2,7 @@
   "id": "012-real-stratec",
   "title": "Real data: Stratec (SBS.DE), facts limited to the dataset",
   "input": {"ticker": "SBS.DE"},
-  "expected": "Watch",
-  "why": "In segment, leverage 3.4x below the kill line, 61% insiders is a flag. But the dataset does not say WHY the price fell over twelve months nor the recurring share of sales: unknown is not a pass, so Watch with those facts listed as missing. The judge skill (Part 3) can upgrade it after reading the release.",
+  "expected": "Radar",
+  "why": "In segment, leverage 3.4x below the kill line, 61% insiders is a flag. But the dataset does not say WHY the price fell over twelve months nor the recurring share of sales: unknown is not a pass, so Radar with those facts listed as missing. The judge skill (Part 3) can upgrade it after reading the release.",
   "tags": ["real", "unknown"]
 }

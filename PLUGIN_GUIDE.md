@@ -91,7 +91,7 @@ A **marketplace** is a catalog of plugins: one JSON file listing where each plug
 `.claude-plugin/marketplace.json` at the repo root:
 ```json
 {
-  "name": "archimed-p2p",
+  "name": "p2p-workshop",
   "owner": { "name": "Your team" },
   "description": "P2P hackathon plugins",
   "plugins": [
@@ -106,7 +106,7 @@ Install like a user (in Claude Code, from any folder):
 ```
 /plugin marketplace add ./path/to/the/repo        a local folder
 /plugin marketplace add owner/repo                a GitHub repository (needs git access on your machine)
-/plugin install p2p@archimed-p2p
+/plugin install p2p@p2p-workshop
 ```
 Then `/reload-plugins`. To share the best plugin at the end of the day: copy its folder and `marketplace.json` into one
 shared repository or folder and let everyone run the two commands above.

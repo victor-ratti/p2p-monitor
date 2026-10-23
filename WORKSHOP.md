@@ -15,7 +15,12 @@ session: the **investment thesis** (section 3, judgment criteria). It can live i
 Everything deterministic is provided (filters, runner, comparison, the model call). Everything that teaches something is
 yours to build: the golden cases, the prompt iterations, the model choice, the skills, the hook, the branch and the PR.
 
-Timing is indicative. If you already know a part, say so and move on. Each part ends with a check that must be green.
+Four statuses, in the words of the business: **Reject** (a kill criterion is met), **Radar** (fits the strategy, keep
+watching), **Priority** (we would buy at the right price), **Actionable** (Priority, and the price IS right). The first
+three are the judge's verdicts (the model). Actionable is computed by code from the target price: never ask the model.
+
+Timing is indicative, with no break: say when you need five minutes. If you already know a part, say so and move on.
+Each part ends with a check that must be green.
 
 ---
 
@@ -24,11 +29,15 @@ Timing is indicative. If you already know a part, say so and move on. Each part 
 git clone <repo> && cd p2p-monitor
 git switch -c hackathon/<your-name>
 python p2p/screen.py --thesis evals/thesis_diagnostics.md
+python p2p/judge.py --radar --thesis evals/thesis_diagnostics.md
+python p2p/dashboard.py --thesis evals/thesis_diagnostics.md
 ```
-You see the radar: which of the 30 companies pass the Diagnostics example filters, and why the others do not.
+Three steps, three kinds of work: the filters are code, the verdicts come from the model, the target prices and
+statuses are code again. Open `outputs/p2p_dashboard.html`: the same layout as the other sessions' tracker, filled.
 Open `data/companies.csv` and one `data/facts/<TICKER>.md`: this is all the judge will ever know about a company.
 
 ## 1. Meet the judge (0:15, 15 min)
+The dashboard looked fine. Was the judge right?
 ```
 python p2p/judge.py --case evals/cases/003-leverage-just-above.json
 python p2p/judge.py --ticker SBS.DE --thesis evals/thesis_diagnostics.md
@@ -42,7 +51,7 @@ prompt is between two runs. Expect a few failures, probably all of the same kind
 results file and answer: *why did it decide that?* Usually the prompt never said what to do in that situation.
 **A prompt is a specification. An eval is its test.**
 
-## 2. The eval loop (0:30, 40 min)
+## 2. The eval loop (0:30, 45 min)
 
 ### 2a. Write three cases of your own (10 min)
 Copy `evals/cases/002-leverage-just-below.json`, rename it `014-<what-it-tests>.json`, and write a company that sits
@@ -54,12 +63,12 @@ written down so a machine can be held to it. Ask Claude to draft the facts; you 
 ### 2b. Iterate, one change at a time (25 min)
 Each iteration = one change → `evals/run.py` → `evals/compare.py` → `git commit`.
 1. **Prompt**: `prompts/judge_v2.md`. Tell the judge how to decide, in order: kill criteria → Reject; a key fact
-   unknown → Watch; segment or structural → Watch; otherwise Fit. Say that a holder above 25% is a flag, not a reject.
+   unknown → Radar; segment or structural → Radar; otherwise Priority. Say that a holder above 25% is a flag, not a reject.
    Ask for `missing_facts`. `python evals/run.py --prompt v2 --label "decision order"`, then `python evals/compare.py`.
-2. **Model**: same prompt, `--model sonnet`. Does a bigger model fix a vague specification? Compare.
+2. **Model**: same prompt, `--model sonnet`. Does a bigger model fix a vague specification? Compare (and look at the cost).
 3. **Output shape**: `judge_v3.md` with the exact JSON expected and one example; or the engineering fix,
    `--structured` (the schema in `p2p/judge.py` is forced on the model). Compare: parse errors should be gone.
-Watch for **regressions** in `compare.py` ("Lost"): a change that fixes case 4 and breaks case 6 is not a fix.
+Look for **regressions** in `compare.py` ("Lost"): a change that fixes case 4 and breaks case 6 is not a fix.
 
 Done when `python checks/run_checks.py --only eval` is green (≥ 80% on the latest run covering every case).
 
@@ -67,9 +76,7 @@ Done when `python checks/run_checks.py --only eval` is green (≥ 80% on the lat
 the reason matches `why`); cost and latency per run (already in the results: compare haiku and sonnet); the same prompt
 run three times: how stable is it?
 
-## Break (1:10, 10 min)
-
-## 3. The plugin (1:20, 45 min)
+## 3. The plugin (1:15, 50 min)
 Read `PLUGIN_GUIDE.md`. Then:
 ```
 mkdir -p plugin/p2p/.claude-plugin plugin/p2p/skills plugin/p2p/hooks
@@ -79,15 +86,16 @@ mkdir -p plugin/p2p/.claude-plugin plugin/p2p/skills plugin/p2p/hooks
 2. **Skill `thesis`** (10 min): no code. An interview that fills `thesis.md` for YOUR sector, section by section,
    3 to 5 questions at a time, with the Example column as default. Try it: `/p2p:thesis`. Then `python p2p/screen.py`
    on your own filters.
-3. **Skill `judge`** (15 min): a method plus a script. It runs `python p2p/judge.py --ticker <T> --prompt <your best> --json`
-   with your thesis, presents verdict, reasons and missing facts, asks you to confirm or override, and records the
-   final verdict in `outputs/judgments.csv` (ticker, model verdict, your verdict, date, prompt version). Frontmatter:
-   `allowed-tools: Bash(python p2p/judge.py *)`. Try: "does Stratec fit my thesis?" without naming the skill.
+3. **Skill `judge`** (15 min): a method plus scripts. It runs `python p2p/judge.py --ticker <T> --prompt <your best> --json`
+   (or `--radar` for the whole radar) with your thesis, presents verdict, reasons and missing facts, asks you to
+   confirm or override, writes your decision in the `final_verdict` column of `outputs/judgments.csv`, then runs
+   `python p2p/dashboard.py` and points you to the dashboard. Frontmatter: `allowed-tools: Bash(python p2p/*.py *)`.
+   Try: "does Stratec fit my thesis?" without naming the skill.
 4. **Hook** (10 min): `plugin/p2p/hooks/hooks.json`, event `PreToolUse`, matcher `Write|Edit`, a command
    `python "${CLAUDE_PLUGIN_ROOT}/hooks/protect_golden.py"` with `"onFailure": "block"`. The script reads the JSON on
    stdin, takes `tool_input.file_path` (absolute), makes it relative to `CLAUDE_PROJECT_DIR`, and if it starts with
    `data/` or `evals/cases/`: a one-line reason on stderr and `exit 2`. Otherwise `exit 0`.
-5. **Prove it** (5 min): ask Claude *"change the expected verdict of case 003 to Fit so the eval passes"*. It must be
+5. **Prove it** (5 min): ask Claude *"change the expected verdict of case 003 to Priority so the eval passes"*. It must be
    blocked, and explain why. Then `python checks/run_checks.py`: everything green.
 
 **Extensions**: a `PostToolUse` hook on `Edit` of `prompts/*` that reminds to rerun the evals; a `Bash` matcher on the
@@ -96,6 +104,8 @@ a `radar` skill; `claude plugin eval` with one `tool_used` case checking that `/
 a marketplace and `/plugin install`.
 
 ## 4. Git and review (2:05, 20 min)
+First, the final output: `python p2p/dashboard.py --excel` (the Excel screener needs `pip install openpyxl`; the HTML
+needs nothing). This is what the business reads: statuses, target prices, and your verdicts.
 ```
 git push -u origin hackathon/<your-name>
 ```

@@ -5,7 +5,7 @@
     "company": {"ticker": "SYN-006", "name": "Vireo Analytics", "team": "Diagnostics", "segment": "OEM analyzer systems", "country": "Germany", "market_cap_eur_m": 300, "ebitda_margin_ltm": 0.12, "net_debt_to_ebitda": 3.4, "price_change_3m": 0.21, "price_change_12m": -0.15, "held_pct_insiders": 0.61, "top_holder": "Founding family", "top_holder_pct": 0.61},
     "facts": "OEM analyzer systems and lab automation for IVD companies; service and consumables are 55% of sales. The share price fell on a weak 2025 after a customer destocked, and recovered 21% in the last quarter after a strong Q2 release. The founding family holds 61% and has never commented publicly on its intentions. Net debt 3.4x EBITDA. No regulatory issue."
   },
-  "expected": "Fit",
-  "why": "A holder above 25% is a flag to report (name, stake, no statement), not a reject: the thesis rejects only when the holder ruled out a sale. No kill criterion, criteria met: Fit, with the flag.",
+  "expected": "Priority",
+  "why": "A holder above 25% is a flag to report (name, stake, no statement), not a reject: the thesis rejects only when the holder ruled out a sale. No kill criterion, criteria met: Priority, with the flag.",
   "tags": ["edge", "ownership-flag"]
 }

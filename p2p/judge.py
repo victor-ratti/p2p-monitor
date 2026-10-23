@@ -1,8 +1,12 @@
-"""Judge ONE company against the investment thesis: Fit, Watch or Reject.
+"""Judge ONE company against the investment thesis: Priority, Radar or Reject.
 
     python p2p/judge.py --ticker SBS.DE                          # a company of data/companies.csv, thesis ./thesis.md
     python p2p/judge.py --case evals/cases/003-leverage-just-above.json   # an eval case, thesis evals/thesis_diagnostics.md
-    options: --thesis PATH   --prompt v1|v2|...   --model haiku|sonnet   --structured   --json
+    python p2p/judge.py --radar                                  # every company of outputs/radar.csv -> outputs/judgments.csv
+    options: --thesis PATH   --prompt v1|v2|...   --model haiku|sonnet   --structured   --json   --workers 4
+
+Verdicts: Priority (we would buy at the right price), Radar (fits the strategy, keep watching), Reject (a kill criterion).
+Actionable is NOT a verdict: p2p/dashboard.py grants it to a Priority company whose takeout price is below the target price.
 
 The only place where a language model judges. The code computes nothing here: the figures (leverage, margins, price
 moves) come from data/companies.csv, already computed. The prompt is `prompts/judge_<version>.md`.
@@ -20,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from p2p.llm import complete  # noqa: E402
 
-VERDICTS = ("Fit", "Watch", "Reject")
+VERDICTS = ("Priority", "Radar", "Reject")
 COMPANIES = ROOT / "data" / "companies.csv"
 FACTS = ROOT / "data" / "facts"
 PROMPTS = ROOT / "prompts"
@@ -95,7 +99,7 @@ def parse_verdict(text: str) -> dict:
         return _unparsed(f"invalid JSON: {exc}")
     verdict = str(data.get("verdict", "")).strip().capitalize()
     if verdict not in VERDICTS:
-        return _unparsed(f"verdict '{data.get('verdict')}' is not Fit, Watch or Reject")
+        return _unparsed(f"verdict '{data.get('verdict')}' is not Priority, Radar or Reject")
     reasons = data.get("reasons") or []
     missing = data.get("missing_facts") or []
     return {"verdict": verdict,
@@ -122,11 +126,55 @@ def judge(inp: dict, thesis: str, prompt_version: str = "v1", model: str = "haik
     return out
 
 
+JUDGMENTS = ROOT / "outputs" / "judgments.csv"
+JUDGMENT_COLUMNS = ["ticker", "verdict", "final_verdict", "judged_on", "prompt", "model", "note"]
+
+
+def judge_radar(thesis_path: Path, prompt_version: str, model: str, structured: bool, workers: int) -> None:
+    """Judge every ticker of outputs/radar.csv and write outputs/judgments.csv (final_verdict = the model's, until a
+    person overrides it: the judge skill does that). Rows of tickers no longer on the radar are kept."""
+    from concurrent.futures import ThreadPoolExecutor
+    from datetime import date
+    radar = ROOT / "outputs" / "radar.csv"
+    if not radar.exists():
+        raise SystemExit("outputs/radar.csv not found: run python p2p/screen.py first")
+    if not thesis_path.exists():
+        raise SystemExit(f"Thesis not found: {thesis_path}. Fill in thesis.md first (or pass --thesis).")
+    with open(radar, encoding="utf-8", newline="") as fh:
+        tickers = [row["ticker"] for row in csv.DictReader(fh)]
+    thesis = load_thesis(thesis_path)
+    print(f"Judging {len(tickers)} radar companies with prompt {prompt_version}, model {model}...")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = list(pool.map(lambda t: (t, judge(load_company(t), thesis, prompt_version, model, structured)), tickers))
+    existing = {}
+    if JUDGMENTS.exists():
+        with open(JUDGMENTS, encoding="utf-8", newline="") as fh:
+            existing = {row["ticker"]: row for row in csv.DictReader(fh)}
+    today = date.today().isoformat()
+    for ticker, out in results:
+        note = out.get("parse_error") or (out["reasons"][0] if out["reasons"] else "")
+        existing[ticker] = {"ticker": ticker, "verdict": out["verdict"], "final_verdict": out["verdict"], "judged_on": today,
+                            "prompt": prompt_version, "model": out["model"], "note": note[:300]}
+        print(f"  {ticker:<10} {out['verdict']:<11} {note[:90]}")
+    JUDGMENTS.parent.mkdir(exist_ok=True)
+    with open(JUDGMENTS, "w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=JUDGMENT_COLUMNS)
+        writer.writeheader()
+        writer.writerows(existing[t] for t in sorted(existing))
+    counts = {}
+    for _, out in results:
+        counts[out["verdict"]] = counts.get(out["verdict"], 0) + 1
+    print(f"Wrote {JUDGMENTS.relative_to(ROOT)}: " + ", ".join(f"{n} {v}" for v, n in counts.items())
+          + ". Next: python p2p/dashboard.py")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     who = ap.add_mutually_exclusive_group(required=True)
     who.add_argument("--ticker", help="a ticker of data/companies.csv")
     who.add_argument("--case", type=Path, help="an eval case file (evals/cases/*.json)")
+    who.add_argument("--radar", action="store_true", help="judge every company of outputs/radar.csv, write outputs/judgments.csv")
+    ap.add_argument("--workers", type=int, default=4, help="parallel model calls with --radar")
     ap.add_argument("--thesis", type=Path, help="thesis file (default: ./thesis.md, or evals/thesis_diagnostics.md for a case)")
     ap.add_argument("--prompt", default="v1", help="prompt version: prompts/judge_<version>.md")
     ap.add_argument("--model", default="haiku")
@@ -134,6 +182,9 @@ def main() -> None:
     ap.add_argument("--json", action="store_true", help="print the full result as JSON")
     args = ap.parse_args()
 
+    if args.radar:
+        judge_radar(args.thesis or DEFAULT_THESIS, args.prompt, args.model, args.structured, args.workers)
+        return
     if args.case:
         case = load_case(args.case)
         inp, label, thesis_path = case["input"], case["id"], args.thesis or EVAL_THESIS

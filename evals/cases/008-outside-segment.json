@@ -5,7 +5,7 @@
     "company": {"ticker": "SYN-008", "name": "Lumen Imaging", "team": "Diagnostics", "segment": "Ultrasound imaging systems", "country": "United Kingdom", "market_cap_eur_m": 900, "ebitda_margin_ltm": 0.16, "net_debt_to_ebitda": 1.8, "price_change_3m": -0.07, "price_change_12m": -0.33, "held_pct_insiders": 0.06, "top_holder": "Baillie Gifford", "top_holder_pct": 0.11},
     "facts": "Ultrasound and point-of-care imaging systems for hospitals. Service contracts are 40% of sales. The share price fell 33% after a delayed hospital tender cycle in the UK that management expects to resume. Leverage 1.8x. No large holder. No regulatory issue."
   },
-  "expected": "Watch",
-  "why": "Imaging is outside the in-vitro diagnostics segments of the thesis: Watch. Not Reject (no kill criterion) and not Fit (a thesis criterion is not met).",
+  "expected": "Radar",
+  "why": "Imaging is outside the in-vitro diagnostics segments of the thesis: Radar. Not Reject (no kill criterion) and not Priority (a thesis criterion is not met).",
   "tags": ["segment"]
 }
