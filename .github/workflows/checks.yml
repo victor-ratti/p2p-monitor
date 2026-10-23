@@ -1,10 +1,10 @@
 # Continuous integration, for illustration: the same acceptance checks a participant runs locally, on every pull request.
+# Not on main: the starting repo is red on purpose (no plugin yet, prompt v1 under the threshold). A finished branch is green.
 # Who owns this file, which checks block a merge and where the code is deployed is the IT team's decision, not the workshop's.
 name: checks
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 jobs:
   checks:
     runs-on: ubuntu-latest
