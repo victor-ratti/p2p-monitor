@@ -1,0 +1,8 @@
+{
+  "id": "013-real-quidelortho",
+  "title": "Real data: QuidelOrtho (QDEL), net debt 6.1x EBITDA",
+  "input": {"ticker": "QDEL"},
+  "expected": "Reject",
+  "why": "Net debt / EBITDA of 6.09 in the data is above the 4x kill criterion. Reject, whatever the rest.",
+  "tags": ["real", "leverage", "kill"]
+}

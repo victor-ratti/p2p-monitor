@@ -1,0 +1,11 @@
+{
+  "id": "002-leverage-just-below",
+  "title": "Same profile as a clean fit, but net debt at 3.9x EBITDA",
+  "input": {
+    "company": {"ticker": "SYN-002", "name": "Assayline Diagnostics", "team": "Diagnostics", "segment": "Immunoassay instruments and reagents", "country": "France", "market_cap_eur_m": 610, "ebitda_margin_ltm": 0.19, "net_debt_to_ebitda": 3.9, "price_change_3m": -0.11, "price_change_12m": -0.29, "held_pct_insiders": 0.08, "top_holder": "Amundi", "top_holder_pct": 0.07},
+    "facts": "Immunoassay analyzers with a captive reagent business: reagents and service are 70% of sales. Net debt rose to 3.9x EBITDA after a debt-financed acquisition closed last year; management guides deleveraging to 3x within 18 months. The share price fell 29% after a one-off inventory write-down linked to the integration. No shareholder above 25%. No regulatory issue."
+  },
+  "expected": "Fit",
+  "why": "3.9x is below the 4x kill line: elevated leverage is not a kill criterion until it crosses the threshold written in the thesis. Everything else fits.",
+  "tags": ["edge", "leverage"]
+}

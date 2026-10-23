@@ -1,0 +1,11 @@
+{
+  "id": "004-leverage-unknown",
+  "title": "Attractive profile but net debt is unknown",
+  "input": {
+    "company": {"ticker": "SYN-004", "name": "Hemovista", "team": "Diagnostics", "segment": "Hematology analyzers", "country": "Sweden", "market_cap_eur_m": 380, "ebitda_margin_ltm": 0.22, "net_debt_to_ebitda": "", "price_change_3m": -0.14, "price_change_12m": -0.35, "held_pct_insiders": 0.18, "top_holder": "", "top_holder_pct": ""},
+    "facts": "Hematology analyzers with reagents and service at 65% of sales. The share price fell 35% after a product recall that was closed within the year, and volumes have recovered. The balance sheet figures (debt, cash) are not in the dataset and the latest report is not available. No shareholder information beyond 18% insiders. No regulatory issue reported."
+  },
+  "expected": "Watch",
+  "why": "Net leverage is a kill criterion and it is unknown: an unknown fact is never a pass. Watch, listing leverage under missing facts, not Fit.",
+  "tags": ["edge", "unknown", "leverage"]
+}

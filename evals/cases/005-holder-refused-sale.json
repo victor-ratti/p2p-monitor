@@ -1,0 +1,11 @@
+{
+  "id": "005-holder-refused-sale",
+  "title": "Controlling family publicly ruled out any sale",
+  "input": {
+    "company": {"ticker": "SYN-005", "name": "Bergmann Diagnostik", "team": "Diagnostics", "segment": "Molecular diagnostics instruments", "country": "Germany", "market_cap_eur_m": 720, "ebitda_margin_ltm": 0.21, "net_debt_to_ebitda": 1.2, "price_change_3m": -0.05, "price_change_12m": -0.27, "held_pct_insiders": 0.52, "top_holder": "Bergmann family holding", "top_holder_pct": 0.52},
+    "facts": "Molecular diagnostics instruments with reagent pull-through; recurring revenue 60% of sales. Share price down 27% over twelve months on a slower-than-expected recovery of testing volumes, which management expects to normalise. The Bergmann family holds 52%; in the H1 release the chairman stated that the family will remain the long-term majority owner and that the company is not for sale. Leverage 1.2x. No regulatory issue."
+  },
+  "expected": "Reject",
+  "why": "A controlling shareholder who ruled out a sale is a kill criterion. Reject, even though the business itself fits.",
+  "tags": ["ownership", "kill"]
+}

@@ -1,0 +1,17 @@
+# Continuous integration, for illustration: the same acceptance checks a participant runs locally, on every pull request.
+# Who owns this file, which checks block a merge and where the code is deployed is the IT team's decision, not the workshop's.
+name: checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # No model is called in CI: the eval check reads the results committed in evals/results/.
+      - run: python checks/run_checks.py --only structure,hook,eval,names

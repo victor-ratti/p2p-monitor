@@ -1,0 +1,11 @@
+{
+  "id": "003-leverage-just-above",
+  "title": "Same profile as a clean fit, but net debt at 4.1x EBITDA",
+  "input": {
+    "company": {"ticker": "SYN-003", "name": "Clearpath Labs", "team": "Diagnostics", "segment": "Clinical chemistry analyzers and reagents", "country": "Italy", "market_cap_eur_m": 540, "ebitda_margin_ltm": 0.18, "net_debt_to_ebitda": 4.1, "price_change_3m": -0.09, "price_change_12m": -0.31, "held_pct_insiders": 0.12, "top_holder": "Generali Investments", "top_holder_pct": 0.09},
+    "facts": "Clinical chemistry analyzers with captive reagents; recurring revenue is 68% of sales. Net debt stands at 4.1x EBITDA after an acquisition; management says it is comfortable with the level and plans no disposal. The share price fell 31% on a profit warning tied to a customer destocking cycle that management calls temporary. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Reject",
+  "why": "Net debt above 4x EBITDA is a kill criterion: Reject, however attractive the rest of the profile and whatever management says about comfort.",
+  "tags": ["edge", "leverage", "kill"]
+}

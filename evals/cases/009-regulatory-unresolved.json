@@ -1,0 +1,11 @@
+{
+  "id": "009-regulatory-unresolved",
+  "title": "In segment, cheap, but under an open FDA consent decree",
+  "input": {
+    "company": {"ticker": "SYN-009", "name": "Meridian Assay Corp", "team": "Diagnostics", "segment": "Immunoassay and point-of-care", "country": "United States", "market_cap_eur_m": 650, "ebitda_margin_ltm": 0.15, "net_debt_to_ebitda": 2.6, "price_change_3m": -0.22, "price_change_12m": -0.48, "held_pct_insiders": 0.03, "top_holder": "BlackRock", "top_holder_pct": 0.12},
+    "facts": "Immunoassay analyzers and point-of-care tests; reagents are 66% of sales. The company operates under an FDA consent decree since last year after repeated manufacturing quality findings; the decree remains open, shipments of two product lines are suspended and the remediation timeline is not disclosed. The share price is down 48%. Leverage 2.6x. No large holder."
+  },
+  "expected": "Reject",
+  "why": "A major unresolved regulatory issue is a kill criterion. Reject.",
+  "tags": ["regulatory", "kill"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "001-clean-fit",
+  "title": "Profitable OEM instrument maker, temporary dip, leverage 2.1x, family stake 31%",
+  "input": {
+    "company": {"ticker": "SYN-001", "name": "Northline Instruments", "team": "Diagnostics", "segment": "OEM analyzer systems", "country": "Germany", "market_cap_eur_m": 420, "ebitda_margin_ltm": 0.17, "net_debt_to_ebitda": 2.1, "price_change_3m": -0.06, "price_change_12m": -0.38, "held_pct_insiders": 0.31, "top_holder": "Founding family (Northline Beteiligungs)", "top_holder_pct": 0.31},
+    "facts": "Designs and builds analyzer systems sold under its customers brands (OEM) with multi-year supply contracts. Consumables and service are 62% of sales. The share price fell 38% over twelve months after the launch of the new analyzer platform slipped by two quarters; the H1 release shows order intake recovering and the first platform shipments done. The founding family holds 31% and has made no public statement about its stake. No regulatory matters reported."
+  },
+  "expected": "Fit",
+  "why": "In segment, recurring model, temporary reason for the drop, leverage well below 4x, no kill criterion. The family stake is a flag to report, not a reject.",
+  "tags": ["baseline", "ownership-flag"]
+}
