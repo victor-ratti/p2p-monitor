@@ -21,7 +21,7 @@ Numbers go in **Min / Max** (margin as a fraction: 0.10 = 10%); lists go in **Yo
 | Filter | Field | Min | Max | Your value | Example |
 |---|---|---|---|---|---|
 | Team | `team` | | | | Diagnostics |
-| Countries | `country` | | | | United States, United Kingdom, France, Germany, Switzerland, Italy, Spain, Sweden, Finland (names as in the data) |
+| Countries | `country` | | | | United States, Canada, United Kingdom, Ireland, France, Germany, Switzerland, Italy, Spain, Belgium, Netherlands, Sweden, Denmark, Norway, Finland (names as in the data) |
 | Market cap (€M) | `market_cap_eur_m` | | | | Min 100, Max 4000 |
 | EBITDA margin | `ebitda_margin_ltm` | | | | Min 0.10 |
 | Role | `role` | | | | candidate (consolidators are never targets) |

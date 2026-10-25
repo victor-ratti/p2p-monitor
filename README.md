@@ -10,7 +10,7 @@ Claude Code (a plugin: skills and hooks)**. The walkthrough is in [`WORKSHOP.md`
 3. Claude Code installed and logged in: `claude -p "say pong" --output-format json` must print a JSON answer.
    (`p2p/llm.py` calls the model through Claude Code: no API key needed.)
 
-## Three commands to see it work
+## See it work
 ```
 git clone <this repo> && cd p2p-monitor
 git switch -c hackathon/<your-name>

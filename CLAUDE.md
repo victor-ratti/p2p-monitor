@@ -22,7 +22,7 @@ A buyout monitor for listed companies, cut down to what the workshop needs. `WOR
 
 ## Rules
 1. Code calculates, the model judges. Never ask the model for a number that is in `data/`. Prices and statuses come from code.
-2. `data/` and `evals/cases/` are read-only for you (Claude). A human adds or changes a golden case, by hand, in the editor.
+2. `data/` and `evals/cases/` (and any `evals/cases_<sector>/`) are read-only for you (Claude). A human adds or changes a golden case, by hand, in the editor.
 3. One change at a time between two eval runs: the prompt, OR the model, OR the cases. Then `evals/run.py`, then `evals/compare.py`.
 4. Never edit a prompt version in place: copy `judge_vN.md` to `judge_vN+1.md`.
 5. One `git commit` per eval iteration, on the participant's branch, never on `main`. Messages in English.
