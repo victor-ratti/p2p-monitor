@@ -1,0 +1,11 @@
+{
+  "id": "014-regulatory-just-closed",
+  "title": "Clean fit whose FDA warning letter was formally closed three months ago",
+  "input": {
+    "company": {"ticker": "SYN-014", "name": "Lumora Diagnostics", "team": "Diagnostics", "segment": "Molecular diagnostic assays and instruments", "country": "Netherlands", "market_cap_eur_m": 720, "ebitda_margin_ltm": 0.21, "net_debt_to_ebitda": 2.3, "price_change_3m": -0.06, "price_change_12m": -0.33, "held_pct_insiders": 0.09, "top_holder": "Norges Bank", "top_holder_pct": 0.06},
+    "facts": "Molecular assay kits run on its own installed instruments: consumables and service are 72% of sales. In 2025 the FDA issued a warning letter on its main assay plant and shipments to the US were held; remediation was completed and the FDA issued a close-out letter in July 2026. US shipments have fully resumed. The share price fell 33% during the shipment hold. Leverage 2.3x. No holder above 25%. No open regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "The regulatory issue is resolved (FDA close-out letter), so the kill criterion 'major unresolved regulatory issue' is not met, and the drop came from a temporary shipment hold. A past issue that is formally closed is not a kill criterion.",
+  "tags": ["edge", "regulatory"]
+}

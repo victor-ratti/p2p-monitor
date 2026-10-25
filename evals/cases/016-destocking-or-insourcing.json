@@ -1,0 +1,11 @@
+{
+  "id": "016-destocking-or-insourcing",
+  "title": "Drop blamed on temporary destocking, but a major customer is also insourcing",
+  "input": {
+    "company": {"ticker": "SYN-016", "name": "Veritest Bio", "team": "Diagnostics", "segment": "Immunoassay reagents and instruments", "country": "United States", "market_cap_eur_m": 900, "ebitda_margin_ltm": 0.16, "net_debt_to_ebitda": 2.0, "price_change_3m": -0.18, "price_change_12m": -0.35, "held_pct_insiders": 0.06, "top_holder": "Vanguard", "top_holder_pct": 0.08},
+    "facts": "Immunoassay reagents run on its installed analyzers: reagents and service are 75% of sales. The share price fell 35% after a profit warning that management attributes to temporary customer destocking. In the same quarter, its second-largest customer, a US reference laboratory network worth about 15% of sales, announced it will move these tests to its own in-house platform from 2027. Leverage 2.0x. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Radar",
+  "why": "Part of the drop may be structural: losing a customer worth 15% of sales to insourcing is not destocking. The thesis requires a temporary cause; when the drop may be structural, Radar. No kill criterion is met, so not Reject.",
+  "tags": ["edge", "temporary-vs-structural"]
+}

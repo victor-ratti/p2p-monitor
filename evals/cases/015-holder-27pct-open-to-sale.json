@@ -1,0 +1,11 @@
+{
+  "id": "015-holder-27pct-open-to-sale",
+  "title": "Clean fit with a 27% private equity holder that said it would consider a fair offer",
+  "input": {
+    "company": {"ticker": "SYN-015", "name": "Cytonex", "team": "Diagnostics", "segment": "Hematology analyzers and reagents", "country": "Sweden", "market_cap_eur_m": 430, "ebitda_margin_ltm": 0.17, "net_debt_to_ebitda": 2.6, "price_change_3m": -0.08, "price_change_12m": -0.27, "held_pct_insiders": 0.04, "top_holder": "Nordic Growth Partners IV", "top_holder_pct": 0.27},
+    "facts": "Hematology analyzers with captive reagents: reagents and service are 64% of sales. The share price fell 27% after a one-off charge on a discontinued product line during the switch to its new analyzer generation, which launched on schedule. Nordic Growth Partners IV, a private equity fund, holds 27%; at the May 2026 AGM it said it would 'consider any offer that values the company fairly'. Leverage 2.6x. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "A holder above 25% is a flag only; the thesis rejects only if that holder ruled out a sale. Here the holder is openly receptive. Flag it (name, 27%, statement) and give Priority: everything else fits.",
+  "tags": ["edge", "ownership"]
+}
