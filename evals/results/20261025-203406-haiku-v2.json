@@ -1,0 +1,435 @@
+{
+  "summary": {
+    "timestamp": "2026-10-25 20:34:06",
+    "label": "v2 on haiku, rerun (shipping prompt)",
+    "prompt": "v2",
+    "model": "haiku",
+    "structured": false,
+    "thesis": "evals\\thesis_diagnostics.md",
+    "backend": "claude",
+    "cases": 16,
+    "correct": 16,
+    "accuracy": 1.0,
+    "parse_errors": 0,
+    "errors": 0,
+    "confusion": {
+      "Priority": {
+        "Priority": 6,
+        "Radar": 0,
+        "Reject": 0,
+        "ParseError": 0,
+        "Error": 0
+      },
+      "Radar": {
+        "Priority": 0,
+        "Radar": 6,
+        "Reject": 0,
+        "ParseError": 0,
+        "Error": 0
+      },
+      "Reject": {
+        "Priority": 0,
+        "Radar": 0,
+        "Reject": 4,
+        "ParseError": 0,
+        "Error": 0
+      }
+    },
+    "total_cost_usd": 0.5824,
+    "wall_s": 132.2
+  },
+  "cases": [
+    {
+      "id": "001-clean-fit",
+      "title": "Profitable OEM instrument maker, temporary dip, leverage 2.1x, family stake 31%",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criteria are met: net debt is 2.1x EBITDA (well below the 4x threshold), no major regulatory issues reported, and the founding family (31% stake) has made no public statement ruling out a sale.",
+        "The company is in OEM analyzer systems, which fits exactly the thesis segment of 'in-vitro diagnostics: instruments, assays, OEM analyzers, lab automation'.",
+        "The business model meets the thesis requirement: consumables and service represent 62% of sales, above the 50% recurring revenue threshold.",
+        "The 38% price decline over 12 months is temporary and attributable to a discrete product transition issue (two-quarter platform launch delay), not structural market decline; H1 results show order intake recovering and first platform shipments completed.",
+        "The founding family's 31% stake is flagged per the ownership rule but does not trigger rejection, as they have made no public statement about selling."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 20.4,
+      "cost_usd": 0.021552,
+      "tags": [
+        "baseline",
+        "ownership-flag"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"No kill criteria are met: net debt is 2.1x EBITDA (well below the 4x threshold), no major regulatory issues reported, and the founding family (31% stake) has made no public statement ruling out a sale.\",\n    \"The company is in OEM analyzer systems, which fits exactly the thesis segment of 'in-vitro diagnostics: instruments, assays, OEM analyzers, lab automation'.\",\n    \"The business model meets the thesis requirement: consumables and service represent 62% of sales, above the 50% recurring revenue threshold.\",\n    \"The 38% price decline over 12 months is temporary and attributable to a discrete product transition issue (two-quarter platform launch delay), not structural market decline; H1 results show order intake recovering and first platform shipments completed.\",\n    \"The founding family's 31% stake is flagged per the ownership rule but does not trigger rejection, as they have made no public statement about selling.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "002-leverage-just-below",
+      "title": "Same profile as a clean fit, but net debt at 3.9x EBITDA",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criterion is met: net debt is 3.9x EBITDA (the kill threshold is above 4x), there is no controlling shareholder (no holder above 25%), and there is no unresolved regulatory issue.",
+        "Company is in the correct segment: immunoassay instruments are in-vitro diagnostics, matching the thesis.",
+        "Business model criterion is met: reagents and service account for 70% of sales, exceeding the 50% recurring revenue threshold.",
+        "Price drop is temporary: the 29% fall is attributed to a one-off inventory write-down from the recent acquisition integration, not structural market loss.",
+        "All key facts needed to assess the thesis are known."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 22.6,
+      "cost_usd": 0.023103,
+      "tags": [
+        "edge",
+        "leverage"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"No kill criterion is met: net debt is 3.9x EBITDA (the kill threshold is above 4x), there is no controlling shareholder (no holder above 25%), and there is no unresolved regulatory issue.\",\n    \"Company is in the correct segment: immunoassay instruments are in-vitro diagnostics, matching the thesis.\",\n    \"Business model criterion is met: reagents and service account for 70% of sales, exceeding the 50% recurring revenue threshold.\",\n    \"Price drop is temporary: the 29% fall is attributed to a one-off inventory write-down from the recent acquisition integration, not structural market loss.\",\n    \"All key facts needed to assess the thesis are known.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "003-leverage-just-above",
+      "title": "Same profile as a clean fit, but net debt at 4.1x EBITDA",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion triggered: net debt at 4.1x EBITDA exceeds the 4x EBITDA threshold.",
+        "The company otherwise fits the thesis (clinical chemistry analyzers segment, 68% recurring revenue, temporary price decline from customer destocking)."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 39.0,
+      "cost_usd": 0.03256,
+      "tags": [
+        "edge",
+        "leverage",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion triggered: net debt at 4.1x EBITDA exceeds the 4x EBITDA threshold.\",\n    \"The company otherwise fits the thesis (clinical chemistry analyzers segment, 68% recurring revenue, temporary price decline from customer destocking).\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "004-leverage-unknown",
+      "title": "Attractive profile but net debt is unknown",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion for net debt cannot be checked: net debt to EBITDA ratio is unknown, but it is required from the data to check whether the company meets the threshold of 4x EBITDA.",
+        "Balance sheet figures (debt and cash) are not available in the dataset, and the latest report is not accessible.",
+        "The segment (hematology analyzers) is within the thesis scope, the business model meets the recurring revenue criterion (65% from reagents and service), and the price drop appears temporary (product recall resolved, volumes recovered).",
+        "No controlling shareholder identified and no regulatory issues remain unresolved."
+      ],
+      "missing_facts": [
+        "Net debt to EBITDA ratio (required to verify the 4x EBITDA kill criterion).",
+        "Balance sheet details including total debt and cash position."
+      ],
+      "parse_error": null,
+      "duration_s": 20.4,
+      "cost_usd": 0.021422000000000004,
+      "tags": [
+        "edge",
+        "unknown",
+        "leverage"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Kill criterion for net debt cannot be checked: net debt to EBITDA ratio is unknown, but it is required from the data to check whether the company meets the threshold of 4x EBITDA.\",\n    \"Balance sheet figures (debt and cash) are not available in the dataset, and the latest report is not accessible.\",\n    \"The segment (hematology analyzers) is within the thesis scope, the business model meets the recurring revenue criterion (65% from reagents and service), and the price drop appears temporary (product recall resolved, volumes recovered).\",\n    \"No controlling shareholder identified and no regulatory issues remain unresolved.\"\n  ],\n  \"missing_facts\": [\n    \"Net debt to EBITDA ratio (required to verify the 4x EBITDA kill criterion).\",\n    \"Balance sheet details including total debt and cash position.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "005-holder-refused-sale",
+      "title": "Controlling family publicly ruled out any sale",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: The controlling shareholder (Bergmann family, 52% stake) explicitly ruled out a sale. The chairman stated that 'the family will remain the long-term majority owner and that the company is not for sale.' This is a stated kill criterion in the thesis."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 11.8,
+      "cost_usd": 0.027684300000000002,
+      "tags": [
+        "ownership",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: The controlling shareholder (Bergmann family, 52% stake) explicitly ruled out a sale. The chairman stated that 'the family will remain the long-term majority owner and that the company is not for sale.' This is a stated kill criterion in the thesis.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "006-holder-large-silent",
+      "title": "Founding family holds 61%, has said nothing about selling",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "All kill criteria are not met: net debt 3.4x EBITDA is below the 4x threshold; the founding family holding 61% has never ruled out a sale (only flagged, not a reject); no regulatory issues.",
+        "Segment fit confirmed: OEM analyzer systems for IVD fall within the target segments (instruments, OEM analyzers, lab automation).",
+        "Business model criterion met: 55% recurring revenue (consumables and service) exceeds the 50% threshold (warning only, not a reject point).",
+        "Price decline is temporary: customer destocking, not structural. Share price recovered 21% in last 3 months after strong Q2 release, confirming the recovery.",
+        "Profitable and appropriately leveraged: 12% EBITDA margin is positive; 3.4x net debt-to-EBITDA is within acceptable range.",
+        "Ownership flag noted: Founding family holds 61%, a controlling stake; they have never commented publicly on selling intentions, so no ruling out of a sale."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 20.3,
+      "cost_usd": 0.0317493,
+      "tags": [
+        "edge",
+        "ownership-flag"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"All kill criteria are not met: net debt 3.4x EBITDA is below the 4x threshold; the founding family holding 61% has never ruled out a sale (only flagged, not a reject); no regulatory issues.\",\n    \"Segment fit confirmed: OEM analyzer systems for IVD fall within the target segments (instruments, OEM analyzers, lab automation).\",\n    \"Business model criterion met: 55% recurring revenue (consumables and service) exceeds the 50% threshold (warning only, not a reject point).\",\n    \"Price decline is temporary: customer destocking, not structural. Share price recovered 21% in last 3 months after strong Q2 release, confirming the recovery.\",\n    \"Profitable and appropriately leveraged: 12% EBITDA margin is positive; 3.4x net debt-to-EBITDA is within acceptable range.\",\n    \"Ownership flag noted: Founding family holds 61%, a controlling stake; they have never commented publicly on selling intentions, so no ruling out of a sale.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "007-structural-decline",
+      "title": "Profitable, cheap, but the market is going away",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "The price drop may be structural, not temporary: three consecutive years of revenue decline with the latest quarter worsening 30%, and management has no new product with meaningful sales to drive recovery.",
+        "No kill criteria are met: net debt 0.4x (well below 4x threshold), no controlling shareholder (Vanguard 9%, insiders 4%), and no regulatory issue.",
+        "Segment fits (in-vitro diagnostics: rapid antigen tests).",
+        "The thesis requires the price drop to be temporary (product transition, destocking, one-off charges), not a structural loss of market; the worsening multi-year decline suggests structural risk rather than temporary headwinds."
+      ],
+      "missing_facts": [
+        "Whether the rapid antigen test market has stabilized or continues to face structural decline post-pandemic.",
+        "Whether management has credible new products in development or any pipeline to recover from the revenue decline.",
+        "Breakdown of whether the cost-cutting maintaining positive margins is sustainable or represents one-time adjustments."
+      ],
+      "parse_error": null,
+      "duration_s": 32.9,
+      "cost_usd": 0.0372303,
+      "tags": [
+        "structural"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"The price drop may be structural, not temporary: three consecutive years of revenue decline with the latest quarter worsening 30%, and management has no new product with meaningful sales to drive recovery.\",\n    \"No kill criteria are met: net debt 0.4x (well below 4x threshold), no controlling shareholder (Vanguard 9%, insiders 4%), and no regulatory issue.\",\n    \"Segment fits (in-vitro diagnostics: rapid antigen tests).\",\n    \"The thesis requires the price drop to be temporary (product transition, destocking, one-off charges), not a structural loss of market; the worsening multi-year decline suggests structural risk rather than temporary headwinds.\"\n  ],\n  \"missing_facts\": [\n    \"Whether the rapid antigen test market has stabilized or continues to face structural decline post-pandemic.\",\n    \"Whether management has credible new products in development or any pipeline to recover from the revenue decline.\",\n    \"Breakdown of whether the cost-cutting maintaining positive margins is sustainable or represents one-time adjustments.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "008-outside-segment",
+      "title": "Good company, wrong segment: medical imaging equipment",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Company is outside the segments of the thesis. The thesis specifies in-vitro diagnostics (instruments, assays, OEM analyzers, lab automation), but Lumen Imaging makes ultrasound imaging systems, which are in-vivo imaging tools, not IVD.",
+        "Recurring revenue (service contracts) is 40% of sales, below the thesis requirement of at least 50% (warning only, does not reject but reflects weak fit).",
+        "No kill criteria are met: leverage at 1.8x EBITDA (well below 4x), no controlling shareholder, no regulatory issues, and price drop is explained as temporary (delayed UK hospital tender cycle expected to resume)."
+      ],
+      "missing_facts": [
+        "Whether the delayed hospital tender cycle will actually resume as management expects, or whether this signals a structural decline in ultrasound demand."
+      ],
+      "parse_error": null,
+      "duration_s": 25.1,
+      "cost_usd": 0.0341383,
+      "tags": [
+        "segment"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Company is outside the segments of the thesis. The thesis specifies in-vitro diagnostics (instruments, assays, OEM analyzers, lab automation), but Lumen Imaging makes ultrasound imaging systems, which are in-vivo imaging tools, not IVD.\",\n    \"Recurring revenue (service contracts) is 40% of sales, below the thesis requirement of at least 50% (warning only, does not reject but reflects weak fit).\",\n    \"No kill criteria are met: leverage at 1.8x EBITDA (well below 4x), no controlling shareholder, no regulatory issues, and price drop is explained as temporary (delayed UK hospital tender cycle expected to resume).\"\n  ],\n  \"missing_facts\": [\n    \"Whether the delayed hospital tender cycle will actually resume as management expects, or whether this signals a structural decline in ultrasound demand.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "009-regulatory-unresolved",
+      "title": "In segment, cheap, but under an open FDA consent decree",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: major unresolved regulatory issue. The FDA consent decree remains open (not formally closed or resolved).",
+        "Manufacturing quality findings led to repeated violations and two product lines have shipments suspended.",
+        "Remediation timeline is not disclosed, indicating continued uncertainty and lack of near-term resolution."
+      ],
+      "missing_facts": [
+        "Expected timeline for FDA consent decree closure and product line shipment re-authorization",
+        "Estimated financial impact of the two suspended product lines on total revenue and profitability"
+      ],
+      "parse_error": null,
+      "duration_s": 19.1,
+      "cost_usd": 0.023504599999999997,
+      "tags": [
+        "regulatory",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: major unresolved regulatory issue. The FDA consent decree remains open (not formally closed or resolved).\",\n    \"Manufacturing quality findings led to repeated violations and two product lines have shipments suspended.\",\n    \"Remediation timeline is not disclosed, indicating continued uncertainty and lack of near-term resolution.\"\n  ],\n  \"missing_facts\": [\n    \"Expected timeline for FDA consent decree closure and product line shipment re-authorization\",\n    \"Estimated financial impact of the two suspended product lines on total revenue and profitability\"\n  ]\n}\n```"
+    },
+    {
+      "id": "010-non-recurring-model",
+      "title": "Fits everything except the recurring-revenue rule (20% recurring)",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criteria are met: net debt 1.5x EBITDA (well below 4x threshold); no controlling shareholder (top holder 15%); no regulatory issue.",
+        "Company is in the thesis segment: lab automation systems for clinical laboratories is explicitly listed in 'in-vitro diagnostics: lab automation'.",
+        "Price drop appears temporary, not structural: the 30% fall was caused by two large hospital orders pushed from 2025 into 2026, both now confirmed as resolved.",
+        "Company is profitable (14% EBITDA margin) with low leverage (1.5x) and fits the profile of a recurring-revenue business with temporary headwinds.",
+        "Note: service revenue is only 20% of sales, below the 50%+ recurring revenue target, but this is flagged as warning only and does not affect the verdict."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 27.7,
+      "cost_usd": 0.101222,
+      "tags": [
+        "edge",
+        "business-model"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"No kill criteria are met: net debt 1.5x EBITDA (well below 4x threshold); no controlling shareholder (top holder 15%); no regulatory issue.\",\n    \"Company is in the thesis segment: lab automation systems for clinical laboratories is explicitly listed in 'in-vitro diagnostics: lab automation'.\",\n    \"Price drop appears temporary, not structural: the 30% fall was caused by two large hospital orders pushed from 2025 into 2026, both now confirmed as resolved.\",\n    \"Company is profitable (14% EBITDA margin) with low leverage (1.5x) and fits the profile of a recurring-revenue business with temporary headwinds.\",\n    \"Note: service revenue is only 20% of sales, below the 50%+ recurring revenue target, but this is flagged as warning only and does not affect the verdict.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "011-loss-making-reimbursement",
+      "title": "The bad-fit example of the thesis: loss-making genomics lab",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Net debt to EBITDA is unknown and required to check the kill criterion of net debt above 4x EBITDA.",
+        "Company is loss-making for five years; the 55% price decline may be structural rather than temporary.",
+        "Genomic testing services may fall outside the preferred segments (instruments, assays, OEM analyzers, lab automation).",
+        "Growth depends on a pending Medicare reimbursement decision whose outcome is unknown; the bad-fit example in the thesis is explicitly 'a loss-making genomics lab whose growth depends on reimbursement decisions', which describes this company."
+      ],
+      "missing_facts": [
+        "Net debt to EBITDA ratio (needed to check whether net debt exceeds 4x EBITDA kill criterion).",
+        "Whether the five-year losses stem from temporary factors (product launch, customer transitions, one-off charges) or represent structural market decline.",
+        "Status and likelihood of the pending Medicare reimbursement decision for the main test."
+      ],
+      "parse_error": null,
+      "duration_s": 58.5,
+      "cost_usd": 0.0502333,
+      "tags": [
+        "bad-fit-example"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Net debt to EBITDA is unknown and required to check the kill criterion of net debt above 4x EBITDA.\",\n    \"Company is loss-making for five years; the 55% price decline may be structural rather than temporary.\",\n    \"Genomic testing services may fall outside the preferred segments (instruments, assays, OEM analyzers, lab automation).\",\n    \"Growth depends on a pending Medicare reimbursement decision whose outcome is unknown; the bad-fit example in the thesis is explicitly 'a loss-making genomics lab whose growth depends on reimbursement decisions', which describes this company.\"\n  ],\n  \"missing_facts\": [\n    \"Net debt to EBITDA ratio (needed to check whether net debt exceeds 4x EBITDA kill criterion).\",\n    \"Whether the five-year losses stem from temporary factors (product launch, customer transitions, one-off charges) or represent structural market decline.\",\n    \"Status and likelihood of the pending Medicare reimbursement decision for the main test.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "012-real-stratec",
+      "title": "Real data: Stratec (SBS.DE), facts limited to the dataset",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Key fact unknown (step 2): The 15% share price decline over 12 months requires determining whether it is temporary (product transition, destocking, one-off charges) or structural market decline. This is essential to evaluate the thesis criterion 'Why the price is low—Must be temporary.' Headlines mention 'Strong Q2 Recovery' but do not explain the root cause or durability of the decline.",
+        "No kill criteria are met: net debt 3.41x EBITDA (below 4x threshold); no shareholder has publicly ruled out a sale; no regulatory issues are mentioned.",
+        "Company is in the right segment: OEM analyzer systems, part of in-vitro diagnostics.",
+        "Insiders hold 61.1% (potentially controlling), but the thesis kill criterion requires a controlling shareholder to have ruled out a sale—no such statement is documented."
+      ],
+      "missing_facts": [
+        "What caused the 15% share price decline over 12 months? Is it temporary (e.g., product transition, customer destocking, one-off charges) or structural market loss?",
+        "What is the nature of the Q2 2026 recovery mentioned in recent headlines, and which temporary issues does it resolve?",
+        "Identity and public statements of the largest shareholder(s) within the 61.1% insider holding.",
+        "Revenue breakdown between recurring (consumables, service) and one-time sales (needed to verify the business model criterion, though it is warning-only)."
+      ],
+      "parse_error": null,
+      "duration_s": 30.8,
+      "cost_usd": 0.038496300000000004,
+      "tags": [
+        "real",
+        "unknown"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Key fact unknown (step 2): The 15% share price decline over 12 months requires determining whether it is temporary (product transition, destocking, one-off charges) or structural market decline. This is essential to evaluate the thesis criterion 'Why the price is low—Must be temporary.' Headlines mention 'Strong Q2 Recovery' but do not explain the root cause or durability of the decline.\",\n    \"No kill criteria are met: net debt 3.41x EBITDA (below 4x threshold); no shareholder has publicly ruled out a sale; no regulatory issues are mentioned.\",\n    \"Company is in the right segment: OEM analyzer systems, part of in-vitro diagnostics.\",\n    \"Insiders hold 61.1% (potentially controlling), but the thesis kill criterion requires a controlling shareholder to have ruled out a sale—no such statement is documented.\"\n  ],\n  \"missing_facts\": [\n    \"What caused the 15% share price decline over 12 months? Is it temporary (e.g., product transition, customer destocking, one-off charges) or structural market loss?\",\n    \"What is the nature of the Q2 2026 recovery mentioned in recent headlines, and which temporary issues does it resolve?\",\n    \"Identity and public statements of the largest shareholder(s) within the 61.1% insider holding.\",\n    \"Revenue breakdown between recurring (consumables, service) and one-time sales (needed to verify the business model criterion, though it is warning-only).\"\n  ]\n}\n```"
+    },
+    {
+      "id": "013-real-quidelortho",
+      "title": "Real data: QuidelOrtho (QDEL), net debt 6.1x EBITDA",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: Net debt is 6.09x EBITDA, exceeding the 4x threshold.",
+        "The company's leverage (debt 3,076m, cash 123m, EBITDA 485m) leaves insufficient headroom for the thesis's financial restructuring strategy."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 12.2,
+      "cost_usd": 0.029512300000000005,
+      "tags": [
+        "real",
+        "leverage",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: Net debt is 6.09x EBITDA, exceeding the 4x threshold.\",\n    \"The company's leverage (debt 3,076m, cash 123m, EBITDA 485m) leaves insufficient headroom for the thesis's financial restructuring strategy.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "014-regulatory-just-closed",
+      "title": "Clean fit whose FDA warning letter was formally closed three months ago",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criteria are met: net debt is 2.3x EBITDA (well below 4x threshold); no holder above 25%; the FDA warning letter was formally resolved with a close-out letter in July 2026, so there is no unresolved regulatory issue.",
+        "Company is within liked segments: in-vitro diagnostics with molecular assays and instruments.",
+        "Business model strong: consumables and service are 72% of sales, well above the 50% recurring revenue threshold.",
+        "Price drop is clearly temporary: caused by a specific, time-bound regulatory event (FDA warning letter and shipment hold) that has been fully resolved with operations resumed.",
+        "Profitable company (21% EBITDA margin) with known, resolved issues and all key facts provided."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 18.5,
+      "cost_usd": 0.0314413,
+      "tags": [
+        "edge",
+        "regulatory"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"No kill criteria are met: net debt is 2.3x EBITDA (well below 4x threshold); no holder above 25%; the FDA warning letter was formally resolved with a close-out letter in July 2026, so there is no unresolved regulatory issue.\",\n    \"Company is within liked segments: in-vitro diagnostics with molecular assays and instruments.\",\n    \"Business model strong: consumables and service are 72% of sales, well above the 50% recurring revenue threshold.\",\n    \"Price drop is clearly temporary: caused by a specific, time-bound regulatory event (FDA warning letter and shipment hold) that has been fully resolved with operations resumed.\",\n    \"Profitable company (21% EBITDA margin) with known, resolved issues and all key facts provided.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "015-holder-27pct-open-to-sale",
+      "title": "Clean fit with a 27% private equity holder that said it would consider a fair offer",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criteria met: net debt is 2.6x EBITDA (below 4x threshold), top holder Nordic Growth Partners IV (27%) did not rule out a sale and stated it would consider fair offers, and no regulatory issues.",
+        "Fits target segment: in-vitro diagnostics, hematology analyzers (instruments and OEM analyzers).",
+        "Profitable: 17% EBITDA margin LTM.",
+        "Recurring revenue model: reagents and service are 64% of sales, exceeding the 50% threshold.",
+        "Price decline is temporary: one-off charge on discontinued product line during planned transition to new analyzer generation, which launched on schedule.",
+        "Ownership flag: Nordic Growth Partners IV holds 27% (above 25% threshold, flagged) but is not a controlling holder and remains open to offers."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 24.0,
+      "cost_usd": 0.0345033,
+      "tags": [
+        "edge",
+        "ownership"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"No kill criteria met: net debt is 2.6x EBITDA (below 4x threshold), top holder Nordic Growth Partners IV (27%) did not rule out a sale and stated it would consider fair offers, and no regulatory issues.\",\n    \"Fits target segment: in-vitro diagnostics, hematology analyzers (instruments and OEM analyzers).\",\n    \"Profitable: 17% EBITDA margin LTM.\",\n    \"Recurring revenue model: reagents and service are 64% of sales, exceeding the 50% threshold.\",\n    \"Price decline is temporary: one-off charge on discontinued product line during planned transition to new analyzer generation, which launched on schedule.\",\n    \"Ownership flag: Nordic Growth Partners IV holds 27% (above 25% threshold, flagged) but is not a controlling holder and remains open to offers.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "016-destocking-or-insourcing",
+      "title": "Drop blamed on temporary destocking, but a major customer is also insourcing",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "The price drop appears to be partially structural, not purely temporary as the thesis requires: a second-largest customer (15% of sales) has announced a permanent move to its own in-house platform from 2027, which represents structural loss of revenue, not temporary customer destocking.",
+        "Management attributes the profit warning to temporary destocking, but the concurrent customer platform migration announcement (announced in the same quarter) suggests a more fundamental challenge that contradicts the thesis criterion that the reason for the price fall 'must be temporary.'",
+        "All kill criteria are clear and not met: leverage is 2.0x (well below 4x), no holder above 25%, and no regulatory issue.",
+        "The company fits the segment (in-vitro diagnostics instruments and immunoassay assays) and meets the recurring revenue requirement (75% of sales, above the 50% threshold)."
+      ],
+      "missing_facts": [
+        "What proportion of the 35% stock decline is driven by the customer loss announcement versus the destocking profit warning, and whether the market differentiated between temporary and structural factors.",
+        "Whether this customer platform migration is an isolated incident or part of a broader trend of customers developing in-house alternatives, which would confirm structural decline.",
+        "The company's retention and replacement strategy for the 15% revenue at risk, and whether they have pipeline opportunities to offset this loss."
+      ],
+      "parse_error": null,
+      "duration_s": 45.3,
+      "cost_usd": 0.044021300000000006,
+      "tags": [
+        "edge",
+        "temporary-vs-structural"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"The price drop appears to be partially structural, not purely temporary as the thesis requires: a second-largest customer (15% of sales) has announced a permanent move to its own in-house platform from 2027, which represents structural loss of revenue, not temporary customer destocking.\",\n    \"Management attributes the profit warning to temporary destocking, but the concurrent customer platform migration announcement (announced in the same quarter) suggests a more fundamental challenge that contradicts the thesis criterion that the reason for the price fall 'must be temporary.'\",\n    \"All kill criteria are clear and not met: leverage is 2.0x (well below 4x), no holder above 25%, and no regulatory issue.\",\n    \"The company fits the segment (in-vitro diagnostics instruments and immunoassay assays) and meets the recurring revenue requirement (75% of sales, above the 50% threshold).\"\n  ],\n  \"missing_facts\": [\n    \"What proportion of the 35% stock decline is driven by the customer loss announcement versus the destocking profit warning, and whether the market differentiated between temporary and structural factors.\",\n    \"Whether this customer platform migration is an isolated incident or part of a broader trend of customers developing in-house alternatives, which would confirm structural decline.\",\n    \"The company's retention and replacement strategy for the 15% revenue at risk, and whether they have pipeline opportunities to offset this loss.\"\n  ]\n}\n```"
+    }
+  ]
+}
