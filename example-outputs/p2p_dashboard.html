@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P2P Screener</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-0: #f4f4f2; --surface-1: #fcfcfb; --band: #e7e6e3; --line: #d6d5d0; --line-strong: #0b0b0b;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+  --series-1: #2a78d6; --ref: #7a7974; --hover: #eef3fb; --selected: #dfe9f8;
+  --st-actionable: #0b6b2f; --st-priority: #1f4e9c; --st-radar: #52514e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-0: #121211; --surface-1: #1a1a19; --band: #2a2a28; --line: #3a3a37; --line-strong: #f0efec;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+    --series-1: #3987e5; --ref: #9a998f; --hover: #1f2a3a; --selected: #233554;
+    --st-actionable: #5fd08a; --st-priority: #8db5f2; --st-radar: #c3c2b7;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #121211; --surface-1: #1a1a19; --band: #2a2a28; --line: #3a3a37; --line-strong: #f0efec;
+  --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+  --series-1: #3987e5; --ref: #9a998f; --hover: #1f2a3a; --selected: #233554;
+  --st-actionable: #5fd08a; --st-priority: #8db5f2; --st-radar: #c3c2b7;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface-0); color: var(--text-primary);
+  font: 13px/1.4 "Segoe UI", Arial, sans-serif; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 20px 16px 40px; }
+header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--line-strong); padding-bottom: 8px; }
+header h1 { margin: 0; font-size: 18px; letter-spacing: .02em; }
+header .sub { color: var(--text-secondary); font-style: italic; }
+.tiles { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
+.tile { background: var(--surface-1); border: 1px solid var(--line); border-radius: 6px; padding: 10px 16px; min-width: 140px; }
+.tile .n { font-size: 26px; font-weight: 600; }
+.tile .l { color: var(--text-secondary); }
+.controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.chip { border: 1px solid var(--line); background: var(--surface-1); color: var(--text-primary); border-radius: 999px; padding: 4px 12px; cursor: pointer; font: inherit; }
+.chip[aria-pressed="true"] { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+input[type=search] { margin-left: auto; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-1); color: var(--text-primary); font: inherit; min-width: 220px; }
+.tablebox { overflow-x: auto; background: var(--surface-1); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; min-width: 1100px; }
+th, td { padding: 5px 6px; text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; }
+thead tr.cols th { white-space: normal; min-width: 52px; vertical-align: bottom; }
+th { font-size: 12px; }
+thead tr.groups th { font-weight: 600; border-bottom: 1px solid var(--line); }
+thead tr.groups th.g { border: 1px solid var(--line); }
+thead tr.cols th { border-bottom: 2px solid var(--line-strong); cursor: pointer; user-select: none; }
+thead tr.cols th:hover { color: var(--series-1); }
+th .arrow { color: var(--text-muted); font-size: 10px; }
+td.name, th.name { text-align: left; }
+tr.section td { background: var(--band); font-weight: 600; text-align: left; border-top: 1px solid var(--line); }
+tbody tr.row { cursor: pointer; border-bottom: 1px solid var(--line); }
+tbody tr.row:hover { background: var(--hover); }
+tbody tr.row.sel { background: var(--selected); }
+tr.empty td { text-align: left; font-style: italic; color: var(--text-muted); }
+.gs { border-left: 1px solid var(--line); }
+td.atp { color: var(--text-secondary); }
+.badge { font-size: 11px; font-weight: 600; border: 1px solid currentColor; border-radius: 4px; padding: 0 5px; margin-left: 6px; }
+.b-actionable { color: var(--st-actionable); } .b-priority { color: var(--st-priority); } .b-radar { color: var(--st-radar); }
+.detail { margin-top: 16px; background: var(--surface-1); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); gap: 20px; }
+.detail h2 { margin: 0 0 4px; font-size: 15px; }
+.detail .meta { color: var(--text-secondary); margin-bottom: 8px; }
+.chart { position: relative; }
+.chart svg { width: 100%; height: 260px; display: block; }
+.tip { position: absolute; pointer-events: none; background: var(--surface-1); border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; font-size: 12px; display: none; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+.kv { width: 100%; min-width: 0; }
+.kv td { text-align: left; padding: 3px 0; border-bottom: 1px solid var(--line); }
+.kv td:last-child { text-align: right; }
+.note { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+footer { margin-top: 18px; color: var(--text-muted); font-size: 12px; }
+@media (max-width: 800px) { .detail { grid-template-columns: 1fr; } input[type=search] { margin-left: 0; width: 100%; } }
+td.sig { white-space: normal; text-align: left; min-width: 120px; max-width: 170px; }
+tr.units th { font-weight: 400; font-size: 11px; color: var(--text-muted); font-style: italic; padding-top: 0; white-space: normal; min-width: 0; }
+details.explain { margin: 14px 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface-1); }
+details.explain summary { cursor: pointer; font-weight: 600; }
+details.explain dt { font-weight: 600; margin-top: 8px; } details.explain dd { margin: 2px 0 0 0; color: var(--text-secondary); line-height: 1.45; }
+h3.steps { font-size: 13px; margin: 14px 0 4px; } .note.status { color: var(--text-primary); font-weight: 600; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>P2P Screener</h1><div class="sub" id="sector"></div></div>
+    <div class="sub" id="asof"></div>
+  </header>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="controls" id="chips" role="group" aria-label="Filter by section"></div>
+
+  <div class="tablebox">
+    <table id="grid" aria-label="P2P screener">
+      <thead>
+        <tr class="groups">
+          <th></th>
+          <th class="g" colspan="5">Current Equity Market Data</th>
+          <th class="g" colspan="4">Recent Performance</th>
+          <th class="g" colspan="3">Key Metrics and Ratios</th>
+          <th class="g" colspan="4">Ability to Pay</th>
+          <th class="g" colspan="2">Flags</th>
+        </tr>
+        <tr class="cols" id="cols"></tr>
+        <tr class="units" id="units"></tr>
+      </thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <details class="explain"><summary>How to read the Ability to Pay columns and the statuses</summary><dl><dt>Three statuses</dt><dd>Radar = passes the screening filters (code). Priority = a company the team would buy: thesis-judge verdict Fit, or set by a person in watchlist.csv. Actionable = a Priority company whose Current Takeout ≤ Max Entry Price × (1 + 5%). Only Priority companies can become Actionable: a Radar company that passes the price test is flagged &#x27;Price test passed&#x27; but triggers no alert.</dd><dt>Max Entry Price (ability to pay)</dt><dd>The most the fund can pay and still earn 25% a year. Worked backwards: (1) the banks lend 4x today&#x27;s EBITDA; (2) for 5 years revenue grows 5%, the margin moves in a straight line to the exit margin, and free cash (50% of EBITDA minus 7.5% interest) repays debt; (3) the company is sold at 12x year-5 EBITDA; (4) equity at sale = sale value − debt left; (5) the maximum cheque today = equity at sale / (1 + 25%)^5; (6) maximum price for the company = (cheque + debt) / (1 + 3% fees); (7) per share = (that − net debt) / shares. The company panel shows these steps with each company&#x27;s numbers.</dd><dt>Current Takeout and Current IRR</dt><dd>Takeout = share price × (1 + 30% control premium). Current IRR = the yearly return if the fund paid that takeout today; above 25% means the takeout is affordable.</dd><dt>Multiple Price</dt><dd>Value per share at 13x EBITDA (the sector&#x27;s usual multiple). A cross-check: is the company cheap versus peers?</dd><dt>Settings</dt><dd>All from thesis.md section 4 (and per-company overrides in watchlist.csv). Estimates and derived figures are marked *. Every number&#x27;s inputs, source and date: Excel sheet Sources, or hover a cell.</dd></dl></details>
+  <section class="detail" id="detail" aria-live="polite"></section>
+
+  <footer id="foot"></footer>
+</div>
+
+<!-- ===================== DATA: replace this block with your own data ===================== -->
+<script id="screener-data" type="application/json">{"sector": "Healthcare IT", "as_of": "2026-10-19", "source": "data/market.json (frozen dataset, Yahoo Finance, retrieved 2026-10-19)", "multiples_basis": "LTM", "defs": {"name": {"label": "Entity Name", "unit": "", "definition": "Company name and listing (exchange code: ticker)", "formula": ""}, "currency": {"label": "Currency", "unit": "", "definition": "Currency of the share price; 'local' in the units row means this currency. London prices are shown in pounds (Yahoo gives pence)", "formula": ""}, "price": {"label": "Share Px", "unit": "local / share", "definition": "Last completed daily close (today's intraday price is ignored)", "formula": ""}, "vwap90": {"label": "90D VWAP", "unit": "local / share", "definition": "Average price weighted by traded volume over the last 90 calendar days", "formula": "Σ(close × volume) / Σ(volume)"}, "mkt_cap_m": {"label": "Mkt Cap", "unit": "local, m", "definition": "Market capitalisation, all share classes, as reported", "formula": "Yahoo market cap"}, "ev_m": {"label": "EV", "unit": "local, m", "definition": "Enterprise value: what the whole company costs (equity plus net debt)", "formula": "market cap + total debt − total cash"}, "d1": {"label": "% Δ 1D", "unit": "%", "definition": "Price change since the previous close", "formula": "close / previous close − 1"}, "w1": {"label": "% Δ 1W", "unit": "%", "definition": "Price change over 7 calendar days", "formula": "close / last close on or before 7 days ago − 1"}, "ytd": {"label": "% Δ YTD", "unit": "%", "definition": "Price change since the last close of the previous year", "formula": "close / last close of prior year − 1"}, "vs_vwap": {"label": "% Δ VWAP", "unit": "%", "definition": "Premium (+) or discount (−) of the share price to its 90D VWAP", "formula": "close / 90D VWAP − 1"}, "ev_sales": {"label": "EV / Sales LTM", "unit": "x", "definition": "EV over revenue of the last twelve months", "formula": "EV / revenue LTM (converted to the price currency)"}, "ev_ebitda": {"label": "EV / EBITDA LTM", "unit": "x", "definition": "EV over EBITDA of the last twelve months; NM if EBITDA ≤ 0", "formula": "EV / EBITDA LTM"}, "net_leverage": {"label": "Net Leverage", "unit": "x", "definition": "Net debt in years of EBITDA; in brackets = net cash. The thesis kill criterion uses this figure", "formula": "(total debt − total cash) / EBITDA LTM"}, "max_entry_price": {"label": "Max Entry Price", "unit": "local / share", "definition": "Target price: the most the fund can pay per share and still earn 25% a year over 5 years (method: lbo). A manual_target_price in watchlist.csv overrides it", "formula": "LBO worked backwards from the sale: debt 4x EBITDA; revenue +5%/yr; margin moves to the exit margin (blank = today's); free cash = 50% × EBITDA − 7.5% interest, repays debt; sale at 12x year-5 EBITDA; equity at sale / (1 + 25%)^5 = max cheque; (cheque + debt) / (1 + 3% fees) = max EV; (max EV − net debt) / shares"}, "current_takeout": {"label": "Current Takeout", "unit": "local / share", "definition": "What a bid would cost per share today: shareholders must be paid a 30% control premium to sell", "formula": "Share Px × (1 + 30%)"}, "current_irr": {"label": "Current IRR", "unit": "% / year", "definition": "Yearly equity return if the fund paid the Current Takeout today (same LBO as Max Entry Price). Above 25% = the takeout is affordable", "formula": "(equity at sale / cheque)^(1/5) − 1, cheque = (takeout × shares + net debt) × (1 + 3%) − debt raised"}, "multiple_price": {"label": "Multiple Price", "unit": "local / share", "definition": "Value per share if the company traded at the sector's usual 13x EBITDA. Says whether it is cheap versus peers, not whether the fund earns its return", "formula": "(13 × EBITDA LTM − net debt) / shares"}, "signals": {"label": "Signals", "unit": "", "definition": "Weekly flags from thesis.md section 5: below its own 90D VWAP on every close for 3 months; down more than 20% over 3 months; cheap = EV/EBITDA below 9.1x (13x − 30%); 'Price test passed' = a Radar company whose takeout is within the Actionable limit but which is not Priority", "formula": ""}, "data": {"label": "Data", "unit": "", "definition": "Quality of the company's inputs (step 3): OK; Warnings = usable, see outputs/data/data_quality.md; Blocking = no target price possible", "formula": ""}}, "rows": [{"section": "Radar", "ticker": "CRW.L", "name": "Craneware (CRW.L)", "currency": "GBP", "mkt_cap_m": 373.87, "ev_m": 370.654, "ev_sales": 1.8, "ev_ebitda": 9.467, "net_leverage": -0.212, "max_entry_price": 11.87, "current_takeout": 14.2, "current_irr": 0.1716, "multiple_price": 17.4, "actionable_below": 9.59, "exit_margin_used": 0.1901067207877334, "price": 10.92, "date": "2026-10-19", "vwap90": 12.051, "d1": -0.0018, "w1": 0.0055, "ytd": -0.4342, "vs_vwap": -0.0939, "history": [["2026-04-07", 13.96], ["2026-04-08", 14.22], ["2026-04-09", 13.64], ["2026-04-10", 13.98], ["2026-04-13", 14.04], ["2026-04-14", 14.46], ["2026-04-15", 14.7], ["2026-04-16", 14.96], ["2026-04-17", 15.12], ["2026-04-20", 14.98], ["2026-04-21", 15.38], ["2026-04-22", 15.26], ["2026-04-23", 15.64], ["2026-04-24", 15.56], ["2026-04-27", 15.58], ["2026-04-28", 15.3], ["2026-04-29", 15.24], ["2026-04-30", 15.24], ["2026-05-01", 15.26], ["2026-05-05", 15.44], ["2026-05-06", 15.68], ["2026-05-07", 15.76], ["2026-05-08", 15.46], ["2026-05-11", 15.22], ["2026-05-12", 14.96], ["2026-05-13", 15.24], ["2026-05-14", 13.8], ["2026-05-15", 14.1], ["2026-05-18", 14.12], ["2026-05-19", 14.06], ["2026-05-20", 14.6], ["2026-05-21", 14.48], ["2026-05-22", 14.56], ["2026-05-26", 14.54], ["2026-05-27", 14.6], ["2026-05-28", 14.6], ["2026-05-29", 15.04], ["2026-06-01", 15.46], ["2026-06-02", 15.06], ["2026-06-03", 14.96], ["2026-06-04", 15.54], ["2026-06-05", 15.08], ["2026-06-08", 14.9], ["2026-06-09", 14.4], ["2026-06-10", 14.76], ["2026-06-11", 14.32], ["2026-06-12", 14.4], ["2026-06-15", 14.52], ["2026-06-16", 14.52], ["2026-06-17", 14.3], ["2026-06-18", 14.16], ["2026-06-19", 14.2], ["2026-06-22", 13.78], ["2026-06-23", 13.5], ["2026-06-24", 13.5], ["2026-06-25", 13.72], ["2026-06-26", 13.92], ["2026-06-29", 13.6], ["2026-06-30", 13.48], ["2026-07-01", 14.48], ["2026-07-02", 14.62], ["2026-07-03", 10.82], ["2026-07-06", 11.14], ["2026-07-07", 11.26], ["2026-07-08", 11.18], ["2026-07-09", 11.1], ["2026-07-10", 11.38], ["2026-07-13", 11.52], ["2026-07-14", 11.86], ["2026-07-15", 12.22], ["2026-07-16", 12.38], ["2026-07-17", 12.14], ["2026-07-20", 11.38], ["2026-07-21", 11.72], ["2026-07-22", 11.92], ["2026-07-23", 11.36], ["2026-07-24", 11.48], ["2026-07-27", 11.8], ["2026-07-28", 12.18], ["2026-07-29", 12.38], ["2026-07-30", 11.94], ["2026-07-31", 11.64], ["2026-08-03", 12.08], ["2026-08-04", 12.6], ["2026-08-05", 13.16], ["2026-08-06", 13.4], ["2026-08-07", 13.18], ["2026-08-10", 13], ["2026-08-11", 13.38], ["2026-08-12", 13.4], ["2026-08-13", 13], ["2026-08-14", 12.84], ["2026-08-17", 12.64], ["2026-08-18", 12.5], ["2026-08-19", 12.64], ["2026-08-20", 12.86], ["2026-08-21", 13], ["2026-08-24", 12.96], ["2026-08-25", 12.72], ["2026-08-26", 12.64], ["2026-08-27", 13.48], ["2026-08-28", 13.94], ["2026-09-01", 13.26], ["2026-09-02", 13.9], ["2026-09-03", 13.88], ["2026-09-04", 13.92], ["2026-09-07", 13.66], ["2026-09-08", 13.36], ["2026-09-09", 13.1], ["2026-09-10", 13], ["2026-09-11", 13.2], ["2026-09-14", 13.06], ["2026-09-15", 12.9], ["2026-09-16", 12.82], ["2026-09-17", 13.2], ["2026-09-18", 13.42], ["2026-09-21", 9.96], ["2026-09-22", 10.34], ["2026-09-23", 10.52], ["2026-09-24", 10.1], ["2026-09-25", 10.36], ["2026-09-28", 10.42], ["2026-09-29", 10.6], ["2026-09-30", 10.9], ["2026-10-01", 10.66], ["2026-10-02", 10.18], ["2026-10-05", 10.44], ["2026-10-06", 10.8], ["2026-10-07", 10.86], ["2026-10-08", 10.82], ["2026-10-09", 11], ["2026-10-12", 10.86], ["2026-10-13", 10.82], ["2026-10-14", 10.98], ["2026-10-15", 11.04], ["2026-10-16", 10.94], ["2026-10-19", 10.92]], "signals": "", "data": "", "est": "", "src": {"price": "close 2026-10-19, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "financials": "TTM, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "target_price": "thesis section 4 (lbo), p2p/target_price.py"}, "status_note": "Radar: Radar under decision step 2: key facts needed to check the kill criteria are unknown, so the company cannot be rejected or passed.", "lbo_steps": [["Debt raised at entry", "195.8"], ["Year 1: revenue / EBITDA / free cash / debt", "220.4 / 41.9 / 10.5 / 185.3"], ["Year 2: revenue / EBITDA / free cash / debt", "235.8 / 44.8 / 13.0 / 172.3"], ["Year 3: revenue / EBITDA / free cash / debt", "252.3 / 48.0 / 15.9 / 156.5"], ["Year 4: revenue / EBITDA / free cash / debt", "270.0 / 51.3 / 19.1 / 137.4"], ["Year 5: revenue / EBITDA / free cash / debt", "288.9 / 54.9 / 22.6 / 114.8"], ["Exit value", "768.8"], ["Equity at exit", "654.1"], ["Maximum equity cheque today", "214.3"], ["Maximum EV", "398.1"]]}, {"section": "Radar", "ticker": "EQS.PA", "name": "Equasens (EQS.PA)", "currency": "EUR", "mkt_cap_m": 428.358, "ev_m": 441.752, "ev_sales": 1.803, "ev_ebitda": 9.285, "net_leverage": 0.036, "max_entry_price": 32.07, "current_takeout": 37.05, "current_irr": 0.1869, "multiple_price": 47.37, "actionable_below": 25.91, "exit_margin_used": 0.19414733441945278, "price": 28.5, "date": "2026-10-19", "vwap90": 31.7062, "d1": -0.0018, "w1": -0.0155, "ytd": -0.3667, "vs_vwap": -0.1011, "history": [["2026-04-07", 39.2], ["2026-04-08", 39.65], ["2026-04-09", 38.8], ["2026-04-10", 39.5], ["2026-04-13", 40.1], ["2026-04-14", 40.05], ["2026-04-15", 41.05], ["2026-04-16", 41], ["2026-04-17", 41.65], ["2026-04-20", 41.75], ["2026-04-21", 42.45], ["2026-04-22", 40.95], ["2026-04-23", 40.5], ["2026-04-24", 39.55], ["2026-04-27", 39.8], ["2026-04-28", 39.85], ["2026-04-29", 39.2], ["2026-04-30", 37.5], ["2026-05-04", 37.3], ["2026-05-05", 36.8], ["2026-05-06", 36.45], ["2026-05-07", 36.9], ["2026-05-08", 35.95], ["2026-05-11", 36.45], ["2026-05-12", 36.7], ["2026-05-13", 36.35], ["2026-05-14", 36.9], ["2026-05-15", 37], ["2026-05-18", 37.25], ["2026-05-19", 37.05], ["2026-05-20", 37.4], ["2026-05-21", 37.05], ["2026-05-22", 37.6], ["2026-05-25", 38.4], ["2026-05-26", 38.5], ["2026-05-27", 38.45], ["2026-05-28", 38.5], ["2026-05-29", 39.35], ["2026-06-01", 38.35], ["2026-06-02", 38.6], ["2026-06-03", 37.5], ["2026-06-04", 38.1], ["2026-06-05", 38.55], ["2026-06-08", 38.95], ["2026-06-09", 38.9], ["2026-06-10", 39.35], ["2026-06-11", 38.5], ["2026-06-12", 38], ["2026-06-15", 37.2], ["2026-06-16", 37.1], ["2026-06-17", 37.2], ["2026-06-18", 35.65], ["2026-06-19", 35.2], ["2026-06-22", 34.8], ["2026-06-23", 34.8], ["2026-06-24", 35.2], ["2026-06-25", 35.05], ["2026-06-26", 35.2], ["2026-06-29", 34.95], ["2026-06-30", 34.5], ["2026-07-01", 34.1], ["2026-07-02", 34.75], ["2026-07-03", 35], ["2026-07-06", 34], ["2026-07-07", 33.25], ["2026-07-08", 32.85], ["2026-07-09", 32.75], ["2026-07-10", 33.35], ["2026-07-13", 34.15], ["2026-07-14", 33.75], ["2026-07-15", 33.7], ["2026-07-16", 33.8], ["2026-07-17", 33.25], ["2026-07-20", 33.35], ["2026-07-21", 33.5], ["2026-07-22", 33.45], ["2026-07-23", 33.25], ["2026-07-24", 34.1], ["2026-07-27", 34.1], ["2026-07-28", 34.3], ["2026-07-29", 34.4], ["2026-07-30", 34.1], ["2026-07-31", 32.75], ["2026-08-03", 31.8], ["2026-08-04", 33.15], ["2026-08-05", 33.5], ["2026-08-06", 33.95], ["2026-08-07", 34], ["2026-08-10", 33.95], ["2026-08-11", 33.95], ["2026-08-12", 33.8], ["2026-08-13", 33.2], ["2026-08-14", 34.25], ["2026-08-17", 34.4], ["2026-08-18", 34.1], ["2026-08-19", 34.05], ["2026-08-20", 34.05], ["2026-08-21", 34.25], ["2026-08-24", 34.05], ["2026-08-25", 34.05], ["2026-08-26", 33.55], ["2026-08-27", 33.2], ["2026-08-28", 33.4], ["2026-08-31", 32.7], ["2026-09-01", 32.55], ["2026-09-02", 32.55], ["2026-09-03", 32.5], ["2026-09-04", 32.5], ["2026-09-07", 31.4], ["2026-09-08", 31.45], ["2026-09-09", 31.15], ["2026-09-10", 30.9], ["2026-09-11", 31.05], ["2026-09-14", 30.9], ["2026-09-15", 31.15], ["2026-09-16", 31.25], ["2026-09-17", 31.95], ["2026-09-18", 30.95], ["2026-09-21", 30.9], ["2026-09-22", 30.1], ["2026-09-23", 29.1], ["2026-09-24", 28.9], ["2026-09-25", 29.45], ["2026-09-28", 33.1], ["2026-09-29", 31.15], ["2026-09-30", 30.75], ["2026-10-01", 30.15], ["2026-10-02", 29.5], ["2026-10-05", 29.5], ["2026-10-06", 29.1], ["2026-10-07", 28.55], ["2026-10-08", 28.4], ["2026-10-09", 28.7], ["2026-10-12", 28.95], ["2026-10-13", 28.4], ["2026-10-14", 28.5], ["2026-10-15", 28.75], ["2026-10-16", 28.55], ["2026-10-19", 28.5]], "signals": "", "data": "", "est": "", "src": {"price": "close 2026-10-19, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "financials": "TTM, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "target_price": "thesis section 4 (lbo), p2p/target_price.py"}, "status_note": "Radar: Radar at step 2: a key fact needed to check a kill criterion is unknown. The dataset has no regulatory matters, so it cannot be confirmed that there is no major unresolved regulatory or data-protection issue.", "lbo_steps": [["Debt raised at entry", "237.9"], ["Year 1: revenue / EBITDA / free cash / debt", "262.2 / 50.9 / 12.7 / 225.2"], ["Year 2: revenue / EBITDA / free cash / debt", "280.6 / 54.5 / 15.8 / 209.4"], ["Year 3: revenue / EBITDA / free cash / debt", "300.2 / 58.3 / 19.3 / 190.1"], ["Year 4: revenue / EBITDA / free cash / debt", "321.2 / 62.4 / 23.2 / 167.0"], ["Year 5: revenue / EBITDA / free cash / debt", "343.7 / 66.7 / 27.5 / 139.4"], ["Exit value", "934.2"], ["Equity at exit", "794.7"], ["Maximum equity cheque today", "260.4"], ["Maximum EV", "483.8"]]}, {"section": "Key Sector Public Consolidators", "ticker": "RO.SW", "name": "Roche Holding (RO.SW)", "currency": "CHF", "mkt_cap_m": 306276.794, "ev_m": 334033.158, "ev_sales": 5.306, "ev_ebitda": 13.939, "net_leverage": 0.984, "max_entry_price": 2063.06, "current_takeout": 499.72, "current_irr": null, "multiple_price": 3148.21, "actionable_below": 1666.32, "exit_margin_used": 0.3806286574912903, "price": 384.4, "date": "2026-10-19", "vwap90": 366.9439, "d1": -0.0005, "w1": 0.0395, "ytd": 0.1468, "vs_vwap": 0.0476, "history": [["2026-04-07", 320.6], ["2026-04-08", 325], ["2026-04-09", 327.6], ["2026-04-10", 329], ["2026-04-13", 327.4], ["2026-04-14", 328.2], ["2026-04-15", 328], ["2026-04-16", 325.8], ["2026-04-17", 332.2], ["2026-04-20", 331.8], ["2026-04-21", 327.8], ["2026-04-22", 323.6], ["2026-04-23", 333.8], ["2026-04-24", 331.8], ["2026-04-27", 330], ["2026-04-28", 328.4], ["2026-04-29", 323.8], ["2026-04-30", 326.6], ["2026-05-04", 324.8], ["2026-05-05", 327], ["2026-05-06", 330.8], ["2026-05-07", 326.2], ["2026-05-08", 323], ["2026-05-11", 326.2], ["2026-05-12", 328.4], ["2026-05-13", 328.2], ["2026-05-15", 331.8], ["2026-05-18", 329.4], ["2026-05-19", 338.4], ["2026-05-20", 332.6], ["2026-05-21", 334.8], ["2026-05-22", 339.4], ["2026-05-26", 336.4], ["2026-05-27", 336], ["2026-05-28", 335.4], ["2026-05-29", 336.6], ["2026-06-01", 324.2], ["2026-06-02", 315.8], ["2026-06-03", 318.2], ["2026-06-04", 330.8], ["2026-06-05", 332.2], ["2026-06-08", 328.8], ["2026-06-09", 324.2], ["2026-06-10", 330], ["2026-06-11", 330.8], ["2026-06-12", 334], ["2026-06-15", 331], ["2026-06-16", 329.8], ["2026-06-17", 333], ["2026-06-18", 324.2], ["2026-06-19", 325], ["2026-06-22", 324.2], ["2026-06-23", 331], ["2026-06-24", 339.4], ["2026-06-25", 343.6], ["2026-06-26", 342], ["2026-06-29", 344.2], ["2026-06-30", 339.2], ["2026-07-01", 334.2], ["2026-07-02", 347.2], ["2026-07-03", 346.2], ["2026-07-06", 338.2], ["2026-07-07", 344.4], ["2026-07-08", 341.6], ["2026-07-09", 340.4], ["2026-07-10", 341], ["2026-07-13", 336.2], ["2026-07-14", 333.8], ["2026-07-15", 335.2], ["2026-07-16", 336.8], ["2026-07-17", 339.6], ["2026-07-20", 336.6], ["2026-07-21", 337.4], ["2026-07-22", 338], ["2026-07-23", 355.4], ["2026-07-24", 360], ["2026-07-27", 365], ["2026-07-28", 373.6], ["2026-07-29", 371.6], ["2026-07-30", 358.8], ["2026-07-31", 358.6], ["2026-08-03", 360], ["2026-08-04", 363.2], ["2026-08-05", 370], ["2026-08-06", 368.4], ["2026-08-07", 372.6], ["2026-08-10", 378.4], ["2026-08-11", 374], ["2026-08-12", 370.4], ["2026-08-13", 367.8], ["2026-08-14", 361.8], ["2026-08-17", 362.8], ["2026-08-18", 366.8], ["2026-08-19", 372.4], ["2026-08-20", 376], ["2026-08-21", 379.6], ["2026-08-24", 375.6], ["2026-08-25", 379], ["2026-08-26", 374.6], ["2026-08-27", 373.6], ["2026-08-28", 366], ["2026-08-31", 360.4], ["2026-09-01", 357.2], ["2026-09-02", 359.6], ["2026-09-03", 366.8], ["2026-09-04", 364.2], ["2026-09-07", 360.6], ["2026-09-08", 357.2], ["2026-09-09", 356.2], ["2026-09-10", 352.6], ["2026-09-11", 352.6], ["2026-09-14", 368.4], ["2026-09-15", 367.8], ["2026-09-16", 369.8], ["2026-09-17", 368.6], ["2026-09-18", 364.8], ["2026-09-21", 373.2], ["2026-09-22", 375.2], ["2026-09-23", 375.2], ["2026-09-24", 376.4], ["2026-09-25", 375.2], ["2026-09-28", 368.2], ["2026-09-29", 362.8], ["2026-09-30", 360.8], ["2026-10-01", 358.8], ["2026-10-02", 355.8], ["2026-10-05", 358], ["2026-10-06", 359.2], ["2026-10-07", 368.8], ["2026-10-08", 361], ["2026-10-09", 366.6], ["2026-10-12", 369.8], ["2026-10-13", 368.4], ["2026-10-14", 378.6], ["2026-10-15", 386.2], ["2026-10-16", 384.6], ["2026-10-19", 384.4]], "signals": "", "data": "no judgment yet", "est": "", "src": {"price": "close 2026-10-19, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "financials": "TTM, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "target_price": "thesis section 4 (lbo), p2p/target_price.py"}, "status_note": "Not judged yet (python p2p/judge.py --radar)", "lbo_steps": [["Debt raised at entry", "119,820.0"], ["Year 1: revenue / EBITDA / free cash / debt", "67,366.1 / 25,641.5 / 6,398.4 / 113,421.6"], ["Year 2: revenue / EBITDA / free cash / debt", "72,081.8 / 27,436.4 / 7,955.2 / 105,466.4"], ["Year 3: revenue / EBITDA / free cash / debt", "77,127.5 / 29,356.9 / 9,704.2 / 95,762.2"], ["Year 4: revenue / EBITDA / free cash / debt", "82,526.4 / 31,411.9 / 11,665.0 / 84,097.2"], ["Year 5: revenue / EBITDA / free cash / debt", "88,303.3 / 33,610.8 / 13,859.2 / 70,238.1"], ["Exit value", "470,550.5"], ["Equity at exit", "400,312.4"], ["Maximum equity cheque today", "131,174.4"], ["Maximum EV", "243,683.9"]]}, {"section": "Key Sector Public Consolidators", "ticker": "SHL.DE", "name": "Siemens Healthineers (SHL.DE)", "currency": "EUR", "mkt_cap_m": 46110.999, "ev_m": 58919.752, "ev_sales": 2.543, "ev_ebitda": 14.649, "net_leverage": 3.143, "max_entry_price": 25.25, "current_takeout": 53.56, "current_irr": 0.0422, "multiple_price": 42.61, "actionable_below": 20.39, "exit_margin_used": 0.17360152486187846, "price": 41.2, "date": "2026-10-19", "vwap90": 38.3615, "d1": -0.006, "w1": 0.0396, "ytd": -0.0828, "vs_vwap": 0.074, "history": [["2026-04-07", 35.94], ["2026-04-08", 37.88], ["2026-04-09", 37.34], ["2026-04-10", 37.77], ["2026-04-13", 37.79], ["2026-04-14", 38.29], ["2026-04-15", 38.34], ["2026-04-16", 38.35], ["2026-04-17", 38.91], ["2026-04-20", 38.29], ["2026-04-21", 38.06], ["2026-04-22", 36.87], ["2026-04-23", 35.97], ["2026-04-24", 35.43], ["2026-04-27", 35.57], ["2026-04-28", 35.26], ["2026-04-29", 33.95], ["2026-04-30", 34.88], ["2026-05-04", 34.87], ["2026-05-05", 35.2], ["2026-05-06", 35.61], ["2026-05-07", 33.93], ["2026-05-08", 33.64], ["2026-05-11", 33.57], ["2026-05-12", 33.9], ["2026-05-13", 33.93], ["2026-05-14", 34.11], ["2026-05-15", 33.4], ["2026-05-18", 33.66], ["2026-05-19", 33.86], ["2026-05-20", 34.23], ["2026-05-21", 34.51], ["2026-05-22", 34.5], ["2026-05-25", 35.12], ["2026-05-26", 34.62], ["2026-05-27", 35.08], ["2026-05-28", 34.88], ["2026-05-29", 34.92], ["2026-06-01", 34.26], ["2026-06-02", 34.04], ["2026-06-03", 33.5], ["2026-06-04", 34.65], ["2026-06-05", 34.84], ["2026-06-08", 34.37], ["2026-06-09", 35.09], ["2026-06-10", 35.1], ["2026-06-11", 34.4], ["2026-06-12", 34.63], ["2026-06-15", 34.96], ["2026-06-16", 35.3], ["2026-06-17", 34.65], ["2026-06-18", 34.43], ["2026-06-19", 34.23], ["2026-06-22", 34.5], ["2026-06-23", 34.52], ["2026-06-24", 34.23], ["2026-06-25", 34.23], ["2026-06-26", 34.22], ["2026-06-29", 34.06], ["2026-06-30", 34.2], ["2026-07-01", 34.48], ["2026-07-02", 34.96], ["2026-07-03", 34.97], ["2026-07-06", 34.88], ["2026-07-07", 35.25], ["2026-07-08", 34.25], ["2026-07-09", 34.38], ["2026-07-10", 34.59], ["2026-07-13", 35.56], ["2026-07-14", 34.29], ["2026-07-15", 34.75], ["2026-07-16", 35.16], ["2026-07-17", 35.12], ["2026-07-20", 35.35], ["2026-07-21", 34.51], ["2026-07-22", 34.57], ["2026-07-23", 34.03], ["2026-07-24", 35.06], ["2026-07-27", 35.56], ["2026-07-28", 35.92], ["2026-07-29", 37.54], ["2026-07-30", 37.2], ["2026-07-31", 36.86], ["2026-08-03", 39.11], ["2026-08-04", 39], ["2026-08-05", 39.24], ["2026-08-06", 39.1], ["2026-08-07", 39.51], ["2026-08-10", 39.17], ["2026-08-11", 39.59], ["2026-08-12", 39.03], ["2026-08-13", 39.04], ["2026-08-14", 39.31], ["2026-08-17", 39], ["2026-08-18", 39.46], ["2026-08-19", 39.98], ["2026-08-20", 39.81], ["2026-08-21", 40.2], ["2026-08-24", 40.39], ["2026-08-25", 39.7], ["2026-08-26", 39.26], ["2026-08-27", 39.26], ["2026-08-28", 39.52], ["2026-08-31", 39.13], ["2026-09-01", 39.3], ["2026-09-02", 39.46], ["2026-09-03", 38.81], ["2026-09-04", 39], ["2026-09-07", 38.62], ["2026-09-08", 39], ["2026-09-09", 38.69], ["2026-09-10", 38.42], ["2026-09-11", 38.23], ["2026-09-14", 38.99], ["2026-09-15", 38.87], ["2026-09-16", 38.36], ["2026-09-17", 38.42], ["2026-09-18", 37.77], ["2026-09-21", 37.97], ["2026-09-22", 37.43], ["2026-09-23", 37.2], ["2026-09-24", 37.21], ["2026-09-25", 37.79], ["2026-09-28", 38.67], ["2026-09-29", 38.65], ["2026-09-30", 37.97], ["2026-10-01", 37.61], ["2026-10-02", 37.86], ["2026-10-05", 37.45], ["2026-10-06", 38.07], ["2026-10-07", 38.56], ["2026-10-08", 38.26], ["2026-10-09", 39.14], ["2026-10-12", 39.63], ["2026-10-13", 39.92], ["2026-10-14", 40.07], ["2026-10-15", 40.85], ["2026-10-16", 41.45], ["2026-10-19", 41.2]], "signals": "", "data": "no judgment yet", "est": "", "src": {"price": "close 2026-10-19, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "financials": "TTM, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "target_price": "thesis section 4 (lbo), p2p/target_price.py"}, "status_note": "Not judged yet (python p2p/judge.py --radar)", "lbo_steps": [["Debt raised at entry", "20,110.0"], ["Year 1: revenue / EBITDA / free cash / debt", "24,789.8 / 4,303.5 / 1,073.9 / 19,036.1"], ["Year 2: revenue / EBITDA / free cash / debt", "26,525.0 / 4,604.8 / 1,335.2 / 17,701.0"], ["Year 3: revenue / EBITDA / free cash / debt", "28,381.8 / 4,927.1 / 1,628.7 / 16,072.3"], ["Year 4: revenue / EBITDA / free cash / debt", "30,368.5 / 5,272.0 / 1,957.8 / 14,114.5"], ["Year 5: revenue / EBITDA / free cash / debt", "32,494.3 / 5,641.1 / 2,326.1 / 11,788.4"], ["Exit value", "78,974.9"], ["Equity at exit", "67,186.5"], ["Maximum equity cheque today", "22,015.7"], ["Maximum EV", "40,898.7"]]}, {"section": "Key Sector Public Consolidators", "ticker": "TMO", "name": "Thermo Fisher Scientific (TMO)", "currency": "USD", "mkt_cap_m": 255125.635, "ev_m": 293738.643, "ev_sales": 6.339, "ev_ebitda": 25.022, "net_leverage": 3.278, "max_entry_price": 218.76, "current_takeout": 897.0, "current_irr": -0.0947, "multiple_price": 372.15, "actionable_below": 176.69, "exit_margin_used": 0.2533451270718232, "price": 690, "date": "2026-10-16", "vwap90": 621.6715, "d1": -0.0093, "w1": 0.0486, "ytd": 0.1908, "vs_vwap": 0.1099, "history": [["2026-04-06", 488.19], ["2026-04-07", 489.5], ["2026-04-08", 503.46], ["2026-04-09", 500.46], ["2026-04-10", 496.11], ["2026-04-13", 514.23], ["2026-04-14", 527.22], ["2026-04-15", 531.67], ["2026-04-16", 516], ["2026-04-17", 526.6], ["2026-04-20", 526.02], ["2026-04-21", 524.57], ["2026-04-22", 513.98], ["2026-04-23", 466.7], ["2026-04-24", 469.71], ["2026-04-27", 468.04], ["2026-04-28", 470.22], ["2026-04-29", 466.26], ["2026-04-30", 478.96], ["2026-05-01", 469.21], ["2026-05-04", 462.6], ["2026-05-05", 466.76], ["2026-05-06", 472.95], ["2026-05-07", 474.46], ["2026-05-08", 465], ["2026-05-11", 452.6], ["2026-05-12", 459.3], ["2026-05-13", 446.03], ["2026-05-14", 448.21], ["2026-05-15", 438.34], ["2026-05-18", 442], ["2026-05-19", 447.81], ["2026-05-20", 451.79], ["2026-05-21", 449.37], ["2026-05-22", 448.28], ["2026-05-26", 448.18], ["2026-05-27", 456.21], ["2026-05-28", 487.22], ["2026-05-29", 492.51], ["2026-06-01", 494.04], ["2026-06-02", 482.08], ["2026-06-03", 473.95], ["2026-06-04", 482.03], ["2026-06-05", 472.8], ["2026-06-08", 469.63], ["2026-06-09", 494.07], ["2026-06-10", 482.04], ["2026-06-11", 475.66], ["2026-06-12", 469.34], ["2026-06-15", 473.72], ["2026-06-16", 472.63], ["2026-06-17", 461.69], ["2026-06-18", 464.61], ["2026-06-22", 464.01], ["2026-06-23", 469.35], ["2026-06-24", 492.2], ["2026-06-25", 505.75], ["2026-06-26", 513.03], ["2026-06-29", 506.42], ["2026-06-30", 501.36], ["2026-07-01", 513.33], ["2026-07-02", 523.44], ["2026-07-06", 517.6], ["2026-07-07", 516.62], ["2026-07-08", 510.13], ["2026-07-09", 524.71], ["2026-07-10", 527.05], ["2026-07-13", 528.51], ["2026-07-14", 534.07], ["2026-07-15", 535.29], ["2026-07-16", 543.19], ["2026-07-17", 532.48], ["2026-07-20", 526.23], ["2026-07-21", 523.46], ["2026-07-22", 526.46], ["2026-07-23", 572.32], ["2026-07-24", 568.26], ["2026-07-27", 559.53], ["2026-07-28", 576.41], ["2026-07-29", 576.46], ["2026-07-30", 576.77], ["2026-07-31", 574.3], ["2026-08-03", 574.03], ["2026-08-04", 564.75], ["2026-08-05", 577.83], ["2026-08-06", 580.02], ["2026-08-07", 594], ["2026-08-10", 599.69], ["2026-08-11", 605], ["2026-08-12", 603.01], ["2026-08-13", 595.89], ["2026-08-14", 588.29], ["2026-08-17", 585.51], ["2026-08-18", 589.04], ["2026-08-19", 613.54], ["2026-08-20", 627.55], ["2026-08-21", 629.27], ["2026-08-24", 628.74], ["2026-08-25", 628.15], ["2026-08-26", 633.71], ["2026-08-27", 630.7], ["2026-08-28", 622.18], ["2026-08-31", 617.1], ["2026-09-01", 600.5], ["2026-09-02", 608.54], ["2026-09-03", 618.43], ["2026-09-04", 613.78], ["2026-09-08", 603.02], ["2026-09-09", 605.69], ["2026-09-10", 603.18], ["2026-09-11", 609.82], ["2026-09-14", 613.62], ["2026-09-15", 641.39], ["2026-09-16", 648.43], ["2026-09-17", 658.32], ["2026-09-18", 651.45], ["2026-09-21", 658.76], ["2026-09-22", 658.52], ["2026-09-23", 665.3], ["2026-09-24", 678.39], ["2026-09-25", 675], ["2026-09-28", 678.6], ["2026-09-29", 679.61], ["2026-09-30", 675.05], ["2026-10-01", 652.51], ["2026-10-02", 654.8], ["2026-10-05", 676.76], ["2026-10-06", 656.58], ["2026-10-07", 662.06], ["2026-10-08", 651.98], ["2026-10-09", 658.02], ["2026-10-12", 662.24], ["2026-10-13", 663.04], ["2026-10-14", 673.2], ["2026-10-15", 696.49], ["2026-10-16", 690]], "signals": "", "data": "no judgment yet", "est": "", "src": {"price": "close 2026-10-16, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "financials": "TTM, p2p_frozen_dataset.xlsx (Yahoo Finance via yfinance 1.7.0, retrieved 2026-10-19)", "target_price": "thesis section 4 (lbo), p2p/target_price.py"}, "status_note": "Not judged yet (python p2p/judge.py --radar)", "lbo_steps": [["Debt raised at entry", "58,695.0"], ["Year 1: revenue / EBITDA / free cash / debt", "49,579.5 / 12,560.7 / 3,134.3 / 55,560.7"], ["Year 2: revenue / EBITDA / free cash / debt", "53,050.1 / 13,440.0 / 3,896.9 / 51,663.7"], ["Year 3: revenue / EBITDA / free cash / debt", "56,763.6 / 14,380.8 / 4,753.7 / 46,910.1"], ["Year 4: revenue / EBITDA / free cash / debt", "60,737.0 / 15,387.4 / 5,714.2 / 41,195.9"], ["Year 5: revenue / EBITDA / free cash / debt", "64,988.6 / 16,464.6 / 6,789.0 / 34,406.8"], ["Exit value", "230,503.8"], ["Equity at exit", "196,096.9"], ["Maximum equity cheque today", "64,257.0"], ["Maximum EV", "119,370.9"]]}]}</script>
+<!-- ======================================================================================= -->
+
+<script>
+const D = JSON.parse(document.getElementById("screener-data").textContent);
+const SECTIONS = ["Priority - Actionable", "Priority - Not Actionable", "Radar", "Key Sector Public Consolidators", "Important Reference Indices"];
+const COLS = [
+  {k: "name", l: "Entity Name", cls: "name", f: "text"},
+  {k: "currency", l: "Currency", f: "text", cls: "gs"}, {k: "price", l: "Share Px", f: "num2"}, {k: "vwap90", l: "90D VWAP", f: "num2"},
+  {k: "mkt_cap_m", l: "Mkt Cap", f: "num0"}, {k: "ev_m", l: "EV", f: "num0"},
+  {k: "d1", l: "% Δ 1D", f: "pct", cls: "gs"}, {k: "w1", l: "% Δ 1W", f: "pct"}, {k: "ytd", l: "% Δ YTD", f: "pct"}, {k: "vs_vwap", l: "% Δ VWAP", f: "pct"},
+  {k: "ev_sales", l: "EV / Sales " + D.multiples_basis, f: "mult", cls: "gs"}, {k: "ev_ebitda", l: "EV / EBITDA " + D.multiples_basis, f: "mult"}, {k: "net_leverage", l: "Net Leverage", f: "mult"},
+  {k: "max_entry_price", l: "Max Entry Price", f: "num2", cls: "gs"}, {k: "current_takeout", l: "Current Takeout", f: "num2"}, {k: "current_irr", l: "Current IRR", f: "pct"}, {k: "multiple_price", l: "Multiple Price", f: "num2"},
+  {k: "signals", l: "Signals", f: "text", cls: "gs sig"}, {k: "data", l: "Data", f: "text"},
+];
+const nf0 = new Intl.NumberFormat("en-US", {maximumFractionDigits: 0});
+const nf2 = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+function fmt(v, f) {
+  if (v === null || v === undefined || v === "") return "";
+  if (typeof v === "string") return v;              // "NM", "[XX]", text
+  if (f === "num0") return nf0.format(v);
+  if (f === "num2") return v !== 0 && Math.abs(v) < 1 ? v.toFixed(4) : nf2.format(v);
+  if (f === "pct") { const s = Math.round(Math.abs(v) * 100) + "%"; return v < 0 ? "(" + s + ")" : s; }
+  if (f === "mult") { const s = Math.abs(v).toFixed(1) + "x"; return v < 0 ? "(" + s + ")" : s; }
+  return String(v);
+}
+function status(r) {
+  if (r.section === "Priority - Actionable") return ["Actionable", "b-actionable"];
+  if (r.section === "Priority - Not Actionable") return ["Priority", "b-priority"];
+  if (r.section === "Radar") return ["Radar", "b-radar"];
+  return null;
+}
+
+let filter = "All", query = "", sortKey = null, sortDir = 1, selected = null;
+
+document.getElementById("sector").textContent = D.sector + " Sector";
+document.getElementById("asof").textContent = "As of " + D.as_of;
+document.getElementById("foot").textContent =
+  "Data as of " + D.as_of + " — sources: " + D.source + ". Mkt Cap and EV in millions of the price currency. Multiples on " + D.multiples_basis +
+  " figures. NM = not meaningful. Ability to Pay: target price per thesis.md section 4 (see target-price.md); Actionable when takeout ≤ target x (1 + near threshold). * = estimate or derived fallback (hover a cell for its inputs, source and date). [XX] = filled by the code: Signals and Data in step 4, Ability to Pay in step 5; status sections are illustrative until steps 5-6.";
+
+const count = s => D.rows.filter(r => r.section === s).length;
+document.getElementById("tiles").innerHTML = [
+  ["Actionable", count("Priority - Actionable")], ["Priority (not actionable)", count("Priority - Not Actionable")],
+  ["Radar", count("Radar")], ["Consolidators", count("Key Sector Public Consolidators")]
+].map(([l, n]) => `<div class="tile"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+
+const CHIPS = ["All", "Priority", "Radar", "Consolidators", "Indices"];
+const chipSections = {All: SECTIONS, Priority: SECTIONS.slice(0, 2), Radar: ["Radar"], Consolidators: ["Key Sector Public Consolidators"], Indices: ["Important Reference Indices"]};
+const chipsEl = document.getElementById("chips");
+chipsEl.innerHTML = CHIPS.map(c => `<button class="chip" aria-pressed="${c === filter}" data-c="${c}">${c}</button>`).join("") +
+  `<input type="search" id="q" placeholder="Search company or ticker" aria-label="Search">`;
+chipsEl.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; filter = b.dataset.c;
+  chipsEl.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x.dataset.c === filter)); render(); });
+document.getElementById("q").addEventListener("input", e => { query = e.target.value.toLowerCase(); render(); });
+
+const tip = k => { const d = (D.defs || {})[k] || {}; return ((d.definition || "") + (d.formula ? ". Formula: " + d.formula : "") + (d.unit ? ". Unit: " + d.unit : "")).replace(/"/g, "&quot;"); };
+const colsEl = document.getElementById("cols");
+colsEl.innerHTML = COLS.map(c => c.gap ? `<th class="gap"></th>` :
+  `<th class="${c.cls || ""}" data-k="${c.k}" title="${tip(c.k)} (click to sort)">${c.l} <span class="arrow"></span></th>`).join("");
+document.getElementById("units").innerHTML = COLS.map(c => `<th class="${c.cls || ""}">${((D.defs || {})[c.k] || {}).unit || ""}</th>`).join("");
+colsEl.addEventListener("click", e => { const th = e.target.closest("th[data-k]"); if (!th) return;
+  const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (k === "name" ? 1 : -1); sortKey = k; render(); });
+
+function cmp(a, b) {
+  const x = a[sortKey], y = b[sortKey];
+  const nx = typeof x === "number", ny = typeof y === "number";
+  if (nx && ny) return (x - y) * sortDir;
+  if (nx) return -1; if (ny) return 1;               // numbers before NM / blanks
+  return String(x ?? "").localeCompare(String(y ?? "")) * sortDir;
+}
+
+function render() {
+  colsEl.querySelectorAll("th[data-k]").forEach(th => th.querySelector(".arrow").textContent = th.dataset.k === sortKey ? (sortDir > 0 ? "▲" : "▼") : "");
+  const body = [];
+  for (const s of chipSections[filter]) {
+    let rows = D.rows.filter(r => r.section === s && (!query || (r.name + " " + r.ticker).toLowerCase().includes(query)));
+    if (sortKey) rows = rows.slice().sort(cmp);
+    body.push(`<tr class="section"><td colspan="${COLS.length}">${s}</td></tr>`);
+    if (!rows.length) body.push(`<tr class="empty"><td colspan="${COLS.length}">${query ? "No match" : "To be populated"}</td></tr>`);
+    for (const r of rows) {
+      const st = status(r);
+      body.push(`<tr class="row${selected === r.ticker ? " sel" : ""}" data-t="${r.ticker}" tabindex="0">` + COLS.map(c => {
+        if (c.gap) return `<td class="gap"></td>`;
+        if (c.k === "name") return `<td class="name">${r.name}${st ? `<span class="badge ${st[1]}">${st[0]}</span>` : ""}</td>`;
+        return `<td class="${c.f === "atp" ? "atp " : ""}${c.cls || ""}" title="${c.l}: ${(r.src && r.src[c.k]) || D.source}">${fmt(r[c.k], c.f)}${r.est && r.est.includes(c.k) && typeof r[c.k] === "number" ? "*" : ""}</td>`;
+      }).join("") + `</tr>`);
+    }
+  }
+  document.getElementById("body").innerHTML = body.join("");
+}
+document.getElementById("body").addEventListener("click", e => { const tr = e.target.closest("tr.row"); if (tr) select(tr.dataset.t); });
+document.getElementById("body").addEventListener("keydown", e => { if (e.key === "Enter") { const tr = e.target.closest("tr.row"); if (tr) select(tr.dataset.t); } });
+
+function select(t) {
+  selected = t; render();
+  const r = D.rows.find(x => x.ticker === t);
+  const st = status(r);
+  const kv = [["Share price", fmt(r.price, "num2") + " " + (r.currency || "")], ["90D VWAP", fmt(r.vwap90, "num2")],
+    ["Mkt Cap / EV (m)", r.mkt_cap_m ? fmt(r.mkt_cap_m, "num0") + " / " + fmt(r.ev_m, "num0") : "—"],
+    ["EV / EBITDA " + D.multiples_basis, fmt(r.ev_ebitda, "mult") || "—"], ["Net leverage", fmt(r.net_leverage, "mult") || "—"],
+    ["Max entry price", fmt(r.max_entry_price, "num2") || "—"], ["Current takeout", fmt(r.current_takeout, "num2") || "—"], ["Current IRR", fmt(r.current_irr, "pct") || "—"], ["Multiple price", fmt(r.multiple_price, "num2") || "—"], ["Actionable if price ≤", fmt(r.actionable_below, "num2") || "—"], ["Exit margin used", typeof r.exit_margin_used === "number" ? (r.exit_margin_used * 100).toFixed(1) + "%" : "—"], ["Signals", r.signals || "—"], ["Data quality", r.data || "—"]];
+  document.getElementById("detail").innerHTML = `
+    <div><h2>${r.name}</h2><div class="meta">${st ? st[0] + " · " : ""}Share price, last 6 months (${r.currency || "index points"})</div>
+      <div class="chart" id="chart"><svg role="img" aria-label="6-month share price of ${r.name}"></svg><div class="tip" id="tip"></div></div>
+      <div class="note">Dashed line: 90-day VWAP. Dotted lines: current takeout price and maximum entry price (Radar and Priority companies).</div></div>
+    <div><table class="kv">${kv.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>
+      ${r.status_note ? `<div class="note status">${r.status_note}</div>` : ""}${r.lbo_steps && r.lbo_steps.length ? `<h3 class="steps">Ability to pay, step by step</h3><table class="kv">${r.lbo_steps.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("")}</table>` : ""}<div class="note">Data as of ${r.date}. Source: ${D.source}.</div></div>`;
+  drawChart(r);
+}
+
+function drawChart(r) {
+  const svg = document.querySelector("#chart svg"), tip = document.getElementById("tip");
+  const W = svg.clientWidth || 700, H = 260, m = {l: 52, r: 70, t: 10, b: 24};
+  const pts = r.history.map(([d, v]) => [new Date(d), v]);
+  const xs = pts.map(p => p[0].getTime()), ys = pts.map(p => p[1]).concat([r.vwap90, r.current_takeout, r.max_entry_price].filter(v => typeof v === "number"));
+  const x0 = Math.min(...xs), x1 = Math.max(...xs);
+  let y0 = Math.min(...ys), y1 = Math.max(...ys); const pad = (y1 - y0) * 0.08 || 1; y0 -= pad; y1 += pad;
+  const X = t => m.l + (t - x0) / (x1 - x0) * (W - m.l - m.r), Y = v => m.t + (1 - (v - y0) / (y1 - y0)) * (H - m.t - m.b);
+  const ticks = 4, cs = getComputedStyle(document.documentElement);
+  let g = "";
+  for (let i = 0; i <= ticks; i++) { const v = y0 + (y1 - y0) * i / ticks, y = Y(v);
+    g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y}" y2="${y}" stroke="var(--line)" stroke-width="1"/>` +
+         `<text x="${m.l - 6}" y="${y + 4}" text-anchor="end" font-size="11" fill="var(--text-muted)">${nf2.format(v)}</text>`; }
+  const months = []; const d = new Date(x0); d.setDate(1); d.setMonth(d.getMonth() + 1);
+  while (d.getTime() <= x1) { months.push(new Date(d)); d.setMonth(d.getMonth() + 2); }
+  g += months.map(mm => `<text x="${X(mm.getTime())}" y="${H - 6}" text-anchor="middle" font-size="11" fill="var(--text-muted)">${mm.toLocaleString("en-US", {month: "short", year: "2-digit"})}</text>`).join("");
+  const path = pts.map((p, i) => (i ? "L" : "M") + X(p[0].getTime()).toFixed(1) + "," + Y(p[1]).toFixed(1)).join("");
+  const vy = Y(r.vwap90);
+  g += `<line x1="${m.l}" x2="${W - m.r}" y1="${vy}" y2="${vy}" stroke="var(--ref)" stroke-width="1.5" stroke-dasharray="5 4"/>` +
+       `<text x="${W - m.r + 6}" y="${vy + 4}" font-size="11" fill="var(--text-secondary)">90D VWAP</text>`;
+  const refLine = (v, label, color) => typeof v !== "number" ? "" :
+    `<line x1="${m.l}" x2="${W - m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="${color}" stroke-width="1.5" stroke-dasharray="2 3"/><text x="${W - m.r + 6}" y="${Y(v) + 4}" font-size="11" fill="${color}">${label}</text>`;
+  g += refLine(r.current_takeout, "Takeout", "var(--st-priority)") + refLine(r.max_entry_price, "Max entry", "var(--st-actionable)");
+  g += `<path d="${path}" fill="none" stroke="var(--series-1)" stroke-width="2" stroke-linejoin="round"/>`;
+  g += `<line id="xh" y1="${m.t}" y2="${H - m.b}" stroke="var(--text-muted)" stroke-width="1" visibility="hidden"/>` +
+       `<circle id="dot" r="4" fill="var(--series-1)" stroke="var(--surface-1)" stroke-width="2" visibility="hidden"/>` +
+       `<rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent" id="hit"/>`;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = g;
+  const xh = svg.querySelector("#xh"), dot = svg.querySelector("#dot");
+  svg.querySelector("#hit").addEventListener("mousemove", e => {
+    const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * W / rect.width;
+    const t = x0 + (px - m.l) / (W - m.l - m.r) * (x1 - x0);
+    let best = 0; for (let i = 1; i < pts.length; i++) if (Math.abs(pts[i][0] - t) < Math.abs(pts[best][0] - t)) best = i;
+    const [dd, v] = pts[best], cx = X(dd.getTime()), cy = Y(v);
+    xh.setAttribute("x1", cx); xh.setAttribute("x2", cx); xh.setAttribute("visibility", "visible");
+    dot.setAttribute("cx", cx); dot.setAttribute("cy", cy); dot.setAttribute("visibility", "visible");
+    tip.style.display = "block"; tip.textContent = dd.toISOString().slice(0, 10) + " · " + nf2.format(v);
+    const left = cx * rect.width / W; tip.style.left = Math.min(left + 10, rect.width - 130) + "px"; tip.style.top = (cy * rect.height / H - 30) + "px";
+  });
+  svg.querySelector("#hit").addEventListener("mouseleave", () => { xh.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); tip.style.display = "none"; });
+}
+window.addEventListener("resize", () => { if (selected) drawChart(D.rows.find(x => x.ticker === selected)); });
+
+render();
+const first = D.rows.find(r => r.section.startsWith("Priority")) || D.rows[0];
+if (first) select(first.ticker);
+</script>
+</body>
+</html>
