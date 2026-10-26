@@ -97,6 +97,8 @@ def _run_hook(command: str, file_path: Path) -> tuple:
                "tool_input": {"file_path": str(file_path), "content": "tampered"}}
     env = {**os.environ, "CLAUDE_PLUGIN_ROOT": str(PLUGIN), "CLAUDE_PROJECT_DIR": str(ROOT)}
     argv = shlex.split(cmd, posix=(os.name != "nt"))
+    if os.name == "nt":  # non-POSIX split keeps the quotes: "C:\...\x.py" would reach python with its quotes
+        argv = [a[1:-1] if len(a) >= 2 and a[0] == a[-1] and a[0] in "\"'" else a for a in argv]
     if argv and not shutil.which(argv[0]):
         other = {"python": "python3", "python3": "python"}.get(argv[0])
         expect(other is not None and shutil.which(other) is not None,
