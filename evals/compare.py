@@ -20,7 +20,7 @@ def main() -> None:
     if len(sys.argv) == 3:
         a_path, b_path = Path(sys.argv[1]), Path(sys.argv[2])
     else:
-        runs = sorted(RESULTS.glob("*.json"), key=lambda p: p.stat().st_mtime)
+        runs = sorted(RESULTS.glob("*.json"))  # names start with a timestamp; file times are reset by a fresh checkout
         if len(runs) < 2:
             raise SystemExit("Need two runs in evals/results/ (run evals/run.py twice).")
         a_path, b_path = runs[-2], runs[-1]

@@ -1,6 +1,6 @@
 # Investment thesis: Diagnostics (eval fixture)
 
-This file is the FIXED thesis the evals run against. It is the Diagnostics example of `data/thesis.md`, filled in.
+This file is the FIXED thesis the evals run against. It is the Diagnostics example of `thesis.md` (repo root), filled in.
 The eval cases in `evals/cases/` are labelled against it: change it and every label may become wrong.
 Your own sector thesis lives in `thesis.md` (repo root) and is used by the plugin, not by the evals.
 

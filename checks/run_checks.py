@@ -146,7 +146,7 @@ def check_eval() -> str:
         expect(data["expected"] in ("Priority", "Radar", "Reject"), f"{rel(case)}: expected must be Priority, Radar or Reject")
         expect(data["id"] not in ids, f"duplicate case id {data['id']}")
         ids.add(data["id"])
-    runs = sorted(RESULTS.glob("*.json"), key=lambda p: p.stat().st_mtime)
+    runs = sorted(RESULTS.glob("*.json"))  # names start with a timestamp; file times are reset by a fresh checkout (CI)
     expect(runs, f"no run in {rel(RESULTS)}: python evals/run.py")
     latest = json.loads(runs[-1].read_text(encoding="utf-8"))
     summary = latest["summary"]

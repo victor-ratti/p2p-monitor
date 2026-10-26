@@ -6,7 +6,7 @@ Your settings live in `thesis.md` (section 4); the calculation is done in code, 
 - A **Priority** company is one we would buy at a **target price** per share.
 - Buying a listed company means paying the share price **plus a control premium** (shareholders must be paid to sell): that is the **takeout price**.
 - The company becomes **Actionable** when the takeout price is close to or below the target price.
-- the July 2025 note allows two ways to set the target price: **multiples** or **ability to pay** (5-year LBO, 25% target IRR). The system computes both; your thesis chooses which one triggers the alert (default: ability to pay).
+- There are two ways to set the target price: **multiples** or **ability to pay** (5-year LBO, 25% target IRR). The system computes both; your thesis chooses which one triggers the alert (default: ability to pay).
 
 ## Method 1: multiples ("what is it worth?")
 Companies in a sector tend to trade at a similar multiple of EBITDA. Value the company at that multiple:
@@ -18,7 +18,7 @@ multiple price = (reference multiple × EBITDA − net debt) / shares
 Tells you if the company is cheap versus peers. Does not tell you if the fund can earn its return.
 
 ## Method 2: ability to pay ("the most we can pay and still earn our target return")
-the fund buys with its own money (equity) plus a bank loan (debt), holds 5 years, then sells. A 25% IRR over 5 years means getting back **1.25⁵ ≈ 3.05×** the equity put in. Work backwards from the exit:
+The fund buys with its own money (equity) plus a bank loan (debt), holds 5 years, then sells. A 25% IRR over 5 years means getting back **1.25⁵ ≈ 3.05×** the equity put in. Work backwards from the exit:
 
 | # | Step | Formula |
 |---|---|---|
@@ -36,15 +36,14 @@ Debt is sized on EBITDA and the exit multiple is a fixed number, so the maximum 
 
 ## From target price to status
 ```
-target price  = manual_target_price in watchlist.csv if set,
-                otherwise the method in thesis.md: lbo | multiple | lower (of the two)
+target price  = the method in thesis.md section 4: lbo | multiple | lower (of the two)
 takeout price = share price (premium basis) × (1 + control premium)
 Actionable    = Priority and takeout price ≤ target price × (1 + near threshold)
 ```
 Negative or zero EBITDA: both methods are "NM" (not meaningful) and the company cannot become Actionable.
 
 ## Worked example: Stratec (Diagnostics), frozen data as of 2026-10-19
-Inputs (EUR millions, from `p2p_frozen_dataset.xlsx`, sheet Observations, ticker `SBS.DE`): revenue = `Total Revenue (TTM)` 244.809; EBITDA = `EBITDA (TTM)` 28.325, margin 11.6%; net debt = `Total Debt (TTM)` 115.720 − `Total Cash (TTM)` 19.033 = 96.687; shares = `shares_outstanding` 12.155942M; price = `share_price_close` €23.65.
+Inputs (EUR millions, from `data/market.json`, ticker `SBS.DE`): revenue = `revenue_ttm` 244.809; EBITDA = `ebitda_ttm` 28.325, margin 11.6%; net debt = `total_debt` 115.720 − `total_cash` 19.033 = 96.687; shares = `shares_outstanding` 12.155942M; price = `price` €23.65.
 
 Settings (example values, not the fund's house view): reference multiple 13x; target IRR 25%; 5 years; leverage 4.0x; exit multiple 12x; revenue growth 5%; **exit margin 18%** (Stratec's FY2024 EBITDA margin was 18.4%: the thesis is a margin recovery); cash conversion 50%; interest 7.5%; fees 3%; control premium 30% on last close; near threshold 5%.
 
@@ -70,7 +69,7 @@ Settings (example values, not the fund's house view): reference multiple 13x; ta
 | Status today | Not Actionable (30.75 > 17.80 × 1.05 = 18.69) |
 | Share price that makes it Actionable | ≤ €14.37 (a ~39% drop) |
 
-Your tests must reproduce these figures (to the cent) with the example settings. Ask Claude to write them **before** the calculation.
+Reproduce it: `python p2p/target_price.py --ticker SBS.DE --exit-margin 0.18` (the other settings are the defaults).
 
 ## Simulations (stretch goal)
 Pick one of your Priority companies. Ask Claude to create a **SYNTHETIC** price series that falls to just below the price that makes it Actionable, computed by your code from your own target price. Label it SYNTHETIC everywhere it appears. With the example settings, Stratec at €14.00 gives a takeout of €18.20 ≤ €18.69: Actionable.

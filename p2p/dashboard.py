@@ -53,7 +53,7 @@ def build_rows(thesis: Path, out_dir: Path) -> tuple:
         judgments = {r["ticker"]: r for r in read_rows(jpath)}
     market = load_market()
     settings = read_settings(thesis)
-    rows, rejected = [], []
+    rows, rejected, failed = [], [], []
     for ticker in tickers + consolidators:
         c, m = companies[ticker], market.get(ticker)
         if m is None:
@@ -70,6 +70,8 @@ def build_rows(thesis: Path, out_dir: Path) -> tuple:
             section = "Priority - Actionable" if tp["actionable"] else "Priority - Not Actionable"
         else:
             section = "Radar"
+            if verdict in ("Error", "ParseError"):  # the judge failed: shown on the radar, flagged, never silent
+                failed.append(ticker)
         ebitda, revenue, ev = m.get("ebitda_ttm"), m.get("revenue_ttm"), m.get("ev")
         net_debt = None if m.get("total_debt") is None or m.get("total_cash") is None else m["total_debt"] - m["total_cash"]
         nm = ebitda is not None and ebitda <= 0
@@ -83,7 +85,8 @@ def build_rows(thesis: Path, out_dir: Path) -> tuple:
             "max_entry_price": tp["max_entry_price"], "current_takeout": tp["current_takeout"], "current_irr": tp["current_irr"],
             "multiple_price": tp["multiple_price"], "actionable_below": tp["actionable_below"], "exit_margin_used": tp["exit_margin_used"],
             "price": m["price"], "date": m["date"], "vwap90": m["vwap90"], "d1": m["d1"], "w1": m["w1"], "ytd": m["ytd"], "vs_vwap": m["vs_vwap"],
-            "history": m["history"], "signals": "", "data": "" if verdict else "no judgment yet", "est": "",
+            "history": m["history"], "signals": "",
+            "data": "judgment failed" if ticker in failed else ("" if verdict else "no judgment yet"), "est": "",
             "src": {"price": f"close {m['date']}, {m['source']}", "financials": f"TTM, {m['source']}",
                     "target_price": f"thesis section 4 ({settings.method}), p2p/target_price.py"},
             "status_note": (f"{verdict}: {j.get('note', '')}".strip(": ") if verdict else "Not judged yet (python p2p/judge.py --radar)"),
@@ -91,19 +94,21 @@ def build_rows(thesis: Path, out_dir: Path) -> tuple:
         }
         rows.append(row)
     rows.sort(key=lambda r: (SECTIONS.index(r["section"]), r["name"]))
-    return rows, rejected, settings
+    return rows, rejected, failed, settings
 
 
 def sector_name(thesis: Path) -> str:
     if not thesis.exists():
         return "All teams"
-    text = thesis.read_text(encoding="utf-8")
-    m = re.search(r"(?m)^\|\s*Team\s*\|[^\n]*$", text)
-    if m:
-        cells = [c.strip() for c in m.group(0).strip().strip("|").split("|")]
-        for cell in cells[2:]:
-            if cell and cell.lower() not in ("min", "max") and not cell.startswith("`"):
-                return cell
+    # Only the "Your value" column counts: the Example column of a blank thesis.md must not name the sector.
+    rows = [l for l in thesis.read_text(encoding="utf-8").splitlines() if l.strip().startswith("|")]
+    header = next((r for r in rows if "your value" in r.lower()), None)
+    team = next((r for r in rows if re.match(r"^\|\s*Team\s*\|", r)), None)
+    if header and team:
+        col = [c.strip().lower() for c in header.strip().strip("|").split("|")].index("your value")
+        cells = [c.strip() for c in team.strip().strip("|").split("|")]
+        if col < len(cells) and cells[col]:
+            return cells[col]
     return "All teams"
 
 
@@ -185,7 +190,7 @@ def main() -> None:
     ap.add_argument("--excel", action="store_true", help="also fill the Excel screener (needs openpyxl)")
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    rows, rejected, settings = build_rows(args.thesis, args.out)
+    rows, rejected, failed, settings = build_rows(args.thesis, args.out)
     as_of = json.loads((ROOT / "data" / "market.json").read_text(encoding="utf-8"))["as_of"]
     sector = sector_name(args.thesis)
     write_html(rows, sector, as_of, args.out / "p2p_dashboard.html")
@@ -196,6 +201,8 @@ def main() -> None:
     for r in rows:
         if r["section"].startswith("Priority"):
             print(f"  {r['section']:<26} {r['name']:<34} price {r['price']} vs actionable below {r['actionable_below']}")
+    if failed:
+        print(f"  ! the judge failed on {', '.join(failed)} (shown as Radar): rerun python p2p/judge.py --radar")
     print(f"Wrote {args.out / 'p2p_dashboard.html'} and screener.csv")
     if args.excel and write_excel(rows, sector, as_of, args.out / "p2p_screener.xlsx"):
         print(f"Wrote {args.out / 'p2p_screener.xlsx'}")
