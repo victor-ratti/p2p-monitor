@@ -1,0 +1,444 @@
+{
+  "summary": {
+    "timestamp": "2026-10-28 11:09:52",
+    "label": "baseline v1 sonnet, 16 cases",
+    "prompt": "v1",
+    "model": "sonnet",
+    "structured": false,
+    "thesis": "evals\\thesis_diagnostics.md",
+    "backend": "claude",
+    "cases": 16,
+    "correct": 14,
+    "accuracy": 0.875,
+    "parse_errors": 1,
+    "errors": 0,
+    "confusion": {
+      "Priority": {
+        "Priority": 6,
+        "Radar": 1,
+        "Reject": 0,
+        "ParseError": 0,
+        "Error": 0
+      },
+      "Radar": {
+        "Priority": 0,
+        "Radar": 4,
+        "Reject": 0,
+        "ParseError": 1,
+        "Error": 0
+      },
+      "Reject": {
+        "Priority": 0,
+        "Radar": 0,
+        "Reject": 4,
+        "ParseError": 0,
+        "Error": 0
+      }
+    },
+    "total_cost_usd": 0.4095,
+    "wall_s": 71.2
+  },
+  "cases": [
+    {
+      "id": "001-clean-fit",
+      "title": "Profitable OEM instrument maker, temporary dip, leverage 2.1x, family stake 31%",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: OEM analyzer systems fall squarely within the in-vitro diagnostics segments we like (instruments, OEM analyzers). No segment-based downgrade to Radar.",
+        "Business model: consumables and service are 62% of sales, above the 50% recurring-revenue bar, with multi-year supply contracts. No warning needed.",
+        "Why the price is low: the 38% 12-month drop follows a two-quarter slip in the new analyzer platform launch, which is a product transition and so a temporary cause. The H1 release shows order intake recovering and the first platform shipments done. The 3-month change of -6% shows the decline is slowing. There is no evidence of structural market-share loss.",
+        "Kill criteria: net debt/EBITDA is 2.1x (data figure), well below the 4x threshold. No regulatory matters are reported. The only holder above 25% is the founding family, and it has made no public statement ruling out a sale, so the controlling-shareholder kill criterion is not met.",
+        "Ownership flag (flag only): Founding family (Northline Beteiligungs) holds 31%. It has made no public statement about its stake. A sale is therefore neither ruled out nor signalled, and its willingness is an open question for engagement. An unknown here is not a pass, but under the ownership rule it triggers a flag, not a downgrade or a reject.",
+        "Profitability: LTM EBITDA margin is 17% and the company is profitable. Market cap of EUR 420m is mid-sized. This matches the good-fit example (profitable OEM instrument maker, long supply contracts, sharp drop after a product transition, founding family with a large stake).",
+        "Caveat: Priority means we would buy at the right price. Whether it is Actionable depends on the code-computed takeout price against the target price. The family's 31% stake is the key deal-execution risk, since it carries a blocking position. Early, discreet engagement with the family is the first step."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 16.3,
+      "cost_usd": 0.017810399999999997,
+      "tags": [
+        "baseline",
+        "ownership-flag"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Segment fit: OEM analyzer systems fall squarely within the in-vitro diagnostics segments we like (instruments, OEM analyzers). No segment-based downgrade to Radar.\",\n    \"Business model: consumables and service are 62% of sales, above the 50% recurring-revenue bar, with multi-year supply contracts. No warning needed.\",\n    \"Why the price is low: the 38% 12-month drop follows a two-quarter slip in the new analyzer platform launch, which is a product transition and so a temporary cause. The H1 release shows order intake recovering and the first platform shipments done. The 3-month change of -6% shows the decline is slowing. There is no evidence of structural market-share loss.\",\n    \"Kill criteria: net debt/EBITDA is 2.1x (data figure), well below the 4x threshold. No regulatory matters are reported. The only holder above 25% is the founding family, and it has made no public statement ruling out a sale, so the controlling-shareholder kill criterion is not met.\",\n    \"Ownership flag (flag only): Founding family (Northline Beteiligungs) holds 31%. It has made no public statement about its stake. A sale is therefore neither ruled out nor signalled, and its willingness is an open question for engagement. An unknown here is not a pass, but under the ownership rule it triggers a flag, not a downgrade or a reject.\",\n    \"Profitability: LTM EBITDA margin is 17% and the company is profitable. Market cap of EUR 420m is mid-sized. This matches the good-fit example (profitable OEM instrument maker, long supply contracts, sharp drop after a product transition, founding family with a large stake).\",\n    \"Caveat: Priority means we would buy at the right price. Whether it is Actionable depends on the code-computed takeout price against the target price. The family's 31% stake is the key deal-execution risk, since it carries a blocking position. Early, discreet engagement with the family is the first step.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "002-leverage-just-below",
+      "title": "Same profile as a clean fit, but net debt at 3.9x EBITDA",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: immunoassay analyzers with a captive reagent business is in-vitro diagnostics (instruments and assays), which is a segment we like.",
+        "Business model: reagents and service are 70% of sales, above the 50% recurring-revenue threshold. No warning.",
+        "Why the price is low: the 29% 12-month fall (11% over 3 months) is attributed to a one-off inventory write-down tied to integration of an acquisition. That is a one-off charge, a temporary reason named in the thesis, and not a structural loss of market. Caveat: this rests on management's account and we have not verified it independently.",
+        "Kill criterion, leverage: net debt/EBITDA is 3.9x, taken from the data. The kill threshold is above 4x, so it is not met. The headroom is only 0.1x, so this is the main risk. The cause is a debt-financed acquisition, and management guides to 3x within 18 months. Mitigant: a 19% EBITDA margin shows the company is profitable.",
+        "Kill criterion, controlling shareholder: none. No holder is above 25%. The top holder is Amundi at 7% and insiders hold 8%. The ownership flag is not triggered, and nobody has ruled out a sale.",
+        "Kill criterion, regulatory: no regulatory issue is reported.",
+        "Overall: no kill criterion is met and the thesis criteria are met. Mid-sized (about EUR 610m market cap), profitable, recurring revenue, temporary price weakness. We would buy at the right price. Whether it is Actionable is for the code to decide from the takeout and target price, and the LBO should be stress-tested because leverage is close to the limit.",
+        "Points to monitor: the 3.9x figure sits close to 4x, so a small EBITDA miss or more debt would trigger the kill criterion. Also check whether the deleveraging guidance holds, and whether the write-down really is a one-off."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 15.6,
+      "cost_usd": 0.060476499999999996,
+      "tags": [
+        "edge",
+        "leverage"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Segment fit: immunoassay analyzers with a captive reagent business is in-vitro diagnostics (instruments and assays), which is a segment we like.\",\n    \"Business model: reagents and service are 70% of sales, above the 50% recurring-revenue threshold. No warning.\",\n    \"Why the price is low: the 29% 12-month fall (11% over 3 months) is attributed to a one-off inventory write-down tied to integration of an acquisition. That is a one-off charge, a temporary reason named in the thesis, and not a structural loss of market. Caveat: this rests on management's account and we have not verified it independently.\",\n    \"Kill criterion, leverage: net debt/EBITDA is 3.9x, taken from the data. The kill threshold is above 4x, so it is not met. The headroom is only 0.1x, so this is the main risk. The cause is a debt-financed acquisition, and management guides to 3x within 18 months. Mitigant: a 19% EBITDA margin shows the company is profitable.\",\n    \"Kill criterion, controlling shareholder: none. No holder is above 25%. The top holder is Amundi at 7% and insiders hold 8%. The ownership flag is not triggered, and nobody has ruled out a sale.\",\n    \"Kill criterion, regulatory: no regulatory issue is reported.\",\n    \"Overall: no kill criterion is met and the thesis criteria are met. Mid-sized (about EUR 610m market cap), profitable, recurring revenue, temporary price weakness. We would buy at the right price. Whether it is Actionable is for the code to decide from the takeout and target price, and the LBO should be stress-tested because leverage is close to the limit.\",\n    \"Points to monitor: the 3.9x figure sits close to 4x, so a small EBITDA miss or more debt would trigger the kill criterion. Also check whether the deleveraging guidance holds, and whether the write-down really is a one-off.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "003-leverage-just-above",
+      "title": "Same profile as a clean fit, but net debt at 4.1x EBITDA",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: net debt/EBITDA is 4.1x, above the 4x threshold in the thesis. The figure comes from the data, and the judge does not recompute it. The breach is narrow, but the rule is a hard line, and an unknown or borderline fact is not a pass.",
+        "Management's comfort with the leverage and its decision not to dispose of assets do not change this. The kill criterion is quantitative and has no management-assurance exception. Leverage taken on for an acquisition also reduces the debt capacity a buyout would need.",
+        "Everything else fits. Segment: clinical chemistry analyzers and reagents is in-vitro diagnostics, which is a segment we like. Business model: recurring revenue is 68% of sales, above the 50% bar. Price drop: -31% over 12 months follows a profit warning tied to customer destocking, which is a temporary cause named in the thesis. Ownership: no holder above 25%. The largest is Generali Investments at 9%, and insiders hold 12%. There is no controlling shareholder who ruled out a sale. Regulatory: no issue.",
+        "Because the leverage kill criterion is the only one met and the miss is small, this is a near-miss. If the company deleverages, for example through EBITDA recovery as destocking ends, it could be re-screened. Under the thesis rules as written, though, the verdict is Reject."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 14.8,
+      "cost_usd": 0.0586265,
+      "tags": [
+        "edge",
+        "leverage",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: net debt/EBITDA is 4.1x, above the 4x threshold in the thesis. The figure comes from the data, and the judge does not recompute it. The breach is narrow, but the rule is a hard line, and an unknown or borderline fact is not a pass.\",\n    \"Management's comfort with the leverage and its decision not to dispose of assets do not change this. The kill criterion is quantitative and has no management-assurance exception. Leverage taken on for an acquisition also reduces the debt capacity a buyout would need.\",\n    \"Everything else fits. Segment: clinical chemistry analyzers and reagents is in-vitro diagnostics, which is a segment we like. Business model: recurring revenue is 68% of sales, above the 50% bar. Price drop: -31% over 12 months follows a profit warning tied to customer destocking, which is a temporary cause named in the thesis. Ownership: no holder above 25%. The largest is Generali Investments at 9%, and insiders hold 12%. There is no controlling shareholder who ruled out a sale. Regulatory: no issue.\",\n    \"Because the leverage kill criterion is the only one met and the miss is small, this is a near-miss. If the company deleverages, for example through EBITDA recovery as destocking ends, it could be re-screened. Under the thesis rules as written, though, the verdict is Reject.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "004-leverage-unknown",
+      "title": "Attractive profile but net debt is unknown",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: Hematology analyzers with reagents and service are in-vitro diagnostics (instruments and assays), so the segment is one we like.",
+        "Business model: Reagents and service are 65% of sales, above the 50% threshold, so there is no warning.",
+        "Why the price is low: The 35% 12-month drop follows a product recall that was closed within the year, and volumes have recovered. This is a temporary, one-off cause and not a structural loss of market. It fits the thesis. The 3-month fall of 14% is a small caveat: the price is still falling after the recall closed, and the facts do not explain why.",
+        "Profitability: The LTM EBITDA margin of 22% is healthy, which fits 'profitable mid-sized'. A market cap of EUR 380m is mid-sized.",
+        "Kill criterion, leverage: Net debt/EBITDA is unknown. The balance sheet figures are not in the dataset and the latest report is not available. The kill threshold is 4x, and the judge must not compute it. We cannot show that the criterion is not met, and an unknown fact is never a pass. This is the key gap.",
+        "Kill criterion, controlling shareholder: Insiders hold 18% and no other holder is known (top holder unknown). No one is known above 25%, so there is no ownership flag and no stated refusal to sell. The shareholder register is still incomplete, so a holder above 25% cannot be excluded.",
+        "Kill criterion, regulatory: The recall is closed and no regulatory issue is reported. This is clear on the available information.",
+        "Conclusion: No kill criterion is confirmed, so this is not a Reject. It is not a Priority either, because the leverage figure and the shareholder structure are unknown. The thesis fit is otherwise good, so keep it on Radar. It can move to Priority if net debt/EBITDA is confirmed at or below 4x and the register shows no holder above 25% who has ruled out a sale."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 15.8,
+      "cost_usd": 0.060476499999999996,
+      "tags": [
+        "edge",
+        "unknown",
+        "leverage"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Segment fit: Hematology analyzers with reagents and service are in-vitro diagnostics (instruments and assays), so the segment is one we like.\",\n    \"Business model: Reagents and service are 65% of sales, above the 50% threshold, so there is no warning.\",\n    \"Why the price is low: The 35% 12-month drop follows a product recall that was closed within the year, and volumes have recovered. This is a temporary, one-off cause and not a structural loss of market. It fits the thesis. The 3-month fall of 14% is a small caveat: the price is still falling after the recall closed, and the facts do not explain why.\",\n    \"Profitability: The LTM EBITDA margin of 22% is healthy, which fits 'profitable mid-sized'. A market cap of EUR 380m is mid-sized.\",\n    \"Kill criterion, leverage: Net debt/EBITDA is unknown. The balance sheet figures are not in the dataset and the latest report is not available. The kill threshold is 4x, and the judge must not compute it. We cannot show that the criterion is not met, and an unknown fact is never a pass. This is the key gap.\",\n    \"Kill criterion, controlling shareholder: Insiders hold 18% and no other holder is known (top holder unknown). No one is known above 25%, so there is no ownership flag and no stated refusal to sell. The shareholder register is still incomplete, so a holder above 25% cannot be excluded.\",\n    \"Kill criterion, regulatory: The recall is closed and no regulatory issue is reported. This is clear on the available information.\",\n    \"Conclusion: No kill criterion is confirmed, so this is not a Reject. It is not a Priority either, because the leverage figure and the shareholder structure are unknown. The thesis fit is otherwise good, so keep it on Radar. It can move to Priority if net debt/EBITDA is confirmed at or below 4x and the register shows no holder above 25% who has ruled out a sale.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "005-holder-refused-sale",
+      "title": "Controlling family publicly ruled out any sale",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: a controlling shareholder has ruled out a sale. The Bergmann family holding owns 52% (majority control). In the H1 release the chairman said the family will remain the long-term majority owner and that the company is not for sale. The thesis says to reject in this case, and a 52% stake means a take-private cannot happen without the family.",
+        "Ownership flag: Bergmann family holding, 52%. It has publicly ruled out a sale.",
+        "Other kill criteria are not met. Net debt/EBITDA is 1.2x, well below the 4x threshold, and there is no regulatory issue.",
+        "The rest of the thesis fits. The segment is molecular diagnostics instruments, which is in-vitro diagnostics and so in scope. Recurring revenue is 60% of sales, above the 50% bar. EBITDA margin is 21%. The 27% 12-month price fall is attributed to a slower recovery in testing volumes, which management expects to normalise, so it looks temporary. The business would be a good fit if the family were willing to sell.",
+        "The fit does not change the outcome. The sale refusal is a hard kill criterion, so the verdict is Reject, not Radar."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 13.3,
+      "cost_usd": 0.0153129,
+      "tags": [
+        "ownership",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: a controlling shareholder has ruled out a sale. The Bergmann family holding owns 52% (majority control). In the H1 release the chairman said the family will remain the long-term majority owner and that the company is not for sale. The thesis says to reject in this case, and a 52% stake means a take-private cannot happen without the family.\",\n    \"Ownership flag: Bergmann family holding, 52%. It has publicly ruled out a sale.\",\n    \"Other kill criteria are not met. Net debt/EBITDA is 1.2x, well below the 4x threshold, and there is no regulatory issue.\",\n    \"The rest of the thesis fits. The segment is molecular diagnostics instruments, which is in-vitro diagnostics and so in scope. Recurring revenue is 60% of sales, above the 50% bar. EBITDA margin is 21%. The 27% 12-month price fall is attributed to a slower recovery in testing volumes, which management expects to normalise, so it looks temporary. The business would be a good fit if the family were willing to sell.\",\n    \"The fit does not change the outcome. The sale refusal is a hard kill criterion, so the verdict is Reject, not Radar.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "006-holder-large-silent",
+      "title": "Founding family holds 61%, has said nothing about selling",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: OEM analyzer systems and lab automation for IVD companies falls squarely within the segments we like (instruments, OEM analyzers, lab automation).",
+        "Business model: service and consumables are 55% of sales, above the 50% recurring-revenue threshold. No warning.",
+        "Why the price is low: the 12-month drop (-15%) is attributed to a weak 2025 after a single customer destocked. Destocking is one of the named temporary causes in the thesis, not a structural loss of market. The 21% recovery over 3 months after a strong Q2 release supports this reading. Residual risk: the recovery is only partial and one quarter does not prove the destocking is over, so this should be monitored.",
+        "Kill criteria: (1) Net debt/EBITDA is 3.4x per the data, below the 4x threshold, so it is not met. It is not far below, so leverage headroom is limited for an LBO. (2) The founding family (61%) has never commented publicly on its intentions. They have not ruled out a sale, so the controlling-shareholder kill criterion is not met. Silence is not a rule-out. (3) No regulatory issue.",
+        "Ownership flag (flag only): founding family holds 61%, a controlling stake. No public statement on selling. Any deal needs their agreement, which is the key execution risk. An approach should be made to the family before any public step.",
+        "Other points: the 12% EBITDA margin is modest but positive, so the company is profitable. Market cap of EUR 300m is mid-sized. The profile matches the thesis's good-fit example: an OEM instrument maker, a share price down after a customer-specific issue, and a founding family with a large stake.",
+        "Verdict logic: no kill criterion is met and the thesis criteria are met, so the company is Priority, meaning we would buy at the right price. Whether it is Actionable depends on the code's takeout price versus target price, which is not part of this judgment. The family's unknown intent is a deal-feasibility matter and does not downgrade the verdict under the thesis rules."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 16.8,
+      "cost_usd": 0.0180854,
+      "tags": [
+        "edge",
+        "ownership-flag"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Segment fit: OEM analyzer systems and lab automation for IVD companies falls squarely within the segments we like (instruments, OEM analyzers, lab automation).\",\n    \"Business model: service and consumables are 55% of sales, above the 50% recurring-revenue threshold. No warning.\",\n    \"Why the price is low: the 12-month drop (-15%) is attributed to a weak 2025 after a single customer destocked. Destocking is one of the named temporary causes in the thesis, not a structural loss of market. The 21% recovery over 3 months after a strong Q2 release supports this reading. Residual risk: the recovery is only partial and one quarter does not prove the destocking is over, so this should be monitored.\",\n    \"Kill criteria: (1) Net debt/EBITDA is 3.4x per the data, below the 4x threshold, so it is not met. It is not far below, so leverage headroom is limited for an LBO. (2) The founding family (61%) has never commented publicly on its intentions. They have not ruled out a sale, so the controlling-shareholder kill criterion is not met. Silence is not a rule-out. (3) No regulatory issue.\",\n    \"Ownership flag (flag only): founding family holds 61%, a controlling stake. No public statement on selling. Any deal needs their agreement, which is the key execution risk. An approach should be made to the family before any public step.\",\n    \"Other points: the 12% EBITDA margin is modest but positive, so the company is profitable. Market cap of EUR 300m is mid-sized. The profile matches the thesis's good-fit example: an OEM instrument maker, a share price down after a customer-specific issue, and a founding family with a large stake.\",\n    \"Verdict logic: no kill criterion is met and the thesis criteria are met, so the company is Priority, meaning we would buy at the right price. Whether it is Actionable depends on the code's takeout price versus target price, which is not part of this judgment. The family's unknown intent is a deal-feasibility matter and does not downgrade the verdict under the thesis rules.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "007-structural-decline",
+      "title": "Profitable, cheap, but the market is going away",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment: Rapid antigen tests for respiratory viruses are in-vitro diagnostics, but the profile describes a commoditised, pandemic-era test business, not the instruments, assays, OEM analyzers or lab automation the thesis names. The segment fit is weak and not clearly met.",
+        "Why the price is low: the 12-month share price fall of -62% does not look temporary. Revenue has fallen three years in a row as pandemic testing volumes disappear, and the latest release shows a further 30% decline. Management has no new product with meaningful sales. The thesis calls this a structural loss of market, and the rule says structural decline means Radar. It is not a product transition, destocking or a one-off charge.",
+        "Business model: the facts give no information on the share of recurring revenue (consumables, service, supply contracts). Rapid test kits are mostly one-off, volume-driven sales. This is a warning only and never a reject, but it is unknown, and an unknown fact is never a pass.",
+        "Kill criteria: none is met. Net debt/EBITDA is 0.4x, far below the 4x limit (taken from the data). There is no controlling shareholder; the top holder is Vanguard at 9%, and no one is above the 25% flag threshold. No regulatory issue is reported.",
+        "Profitability: the 24% EBITDA margin is positive, but the facts say it comes from cost cuts on shrinking revenue. That is not a sign of a healthy recurring franchise.",
+        "Verdict: this is not a Reject, because no kill criterion is triggered. It is not a Priority, because the price drop looks structural and the segment and business-model criteria are not met. The thesis rule for those cases is Radar. I would keep it on the watch list only if a new product with meaningful sales or a revenue stabilisation appears."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 15.9,
+      "cost_usd": 0.0172579,
+      "tags": [
+        "structural"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Segment: Rapid antigen tests for respiratory viruses are in-vitro diagnostics, but the profile describes a commoditised, pandemic-era test business, not the instruments, assays, OEM analyzers or lab automation the thesis names. The segment fit is weak and not clearly met.\",\n    \"Why the price is low: the 12-month share price fall of -62% does not look temporary. Revenue has fallen three years in a row as pandemic testing volumes disappear, and the latest release shows a further 30% decline. Management has no new product with meaningful sales. The thesis calls this a structural loss of market, and the rule says structural decline means Radar. It is not a product transition, destocking or a one-off charge.\",\n    \"Business model: the facts give no information on the share of recurring revenue (consumables, service, supply contracts). Rapid test kits are mostly one-off, volume-driven sales. This is a warning only and never a reject, but it is unknown, and an unknown fact is never a pass.\",\n    \"Kill criteria: none is met. Net debt/EBITDA is 0.4x, far below the 4x limit (taken from the data). There is no controlling shareholder; the top holder is Vanguard at 9%, and no one is above the 25% flag threshold. No regulatory issue is reported.\",\n    \"Profitability: the 24% EBITDA margin is positive, but the facts say it comes from cost cuts on shrinking revenue. That is not a sign of a healthy recurring franchise.\",\n    \"Verdict: this is not a Reject, because no kill criterion is triggered. It is not a Priority, because the price drop looks structural and the segment and business-model criteria are not met. The thesis rule for those cases is Radar. I would keep it on the watch list only if a new product with meaningful sales or a revenue stabilisation appears.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "008-outside-segment",
+      "title": "Good company, wrong segment: medical imaging equipment",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment: Lumen Imaging makes ultrasound and point-of-care imaging systems. That is medical imaging, not in-vitro diagnostics (instruments, assays, OEM analyzers, lab automation). The thesis rule says outside these segments the verdict is Radar. This is the deciding criterion.",
+        "Kill criteria: none is met. Net debt/EBITDA is 1.8x (from the data), well under the 4x limit. The facts report no regulatory issue. There is no controlling shareholder: insiders hold 6% and the top holder, Baillie Gifford, holds 11%. So the verdict is not Reject.",
+        "Ownership rule: no holder is above 25%, so there is nothing to flag and no public statement about selling to note.",
+        "Business model: service contracts are 40% of sales, below the 50% recurring-revenue threshold. This is a warning only and does not change the verdict. Consumables are not mentioned, so recurring revenue could be slightly higher than 40%, but that is unknown and cannot be counted as a pass.",
+        "Why the price is low: the 33% 12-month drop is attributed to a delayed UK hospital tender cycle that management expects to resume. This looks temporary and fits the thesis. It rests on a management expectation, not independent evidence, so it should be verified. The 3-month change of -7% shows the decline is continuing, not recovering.",
+        "Profitability: the EBITDA margin is 16% and the company is profitable, which is consistent with the strategy. Market cap of EUR 900m is mid-sized.",
+        "Conclusion: Radar, not Priority, because the segment is outside the IVD scope. Not Reject, because no kill criterion is met and the price drop looks temporary. Keep watching. If the fund's scope widens to imaging, the company would be a candidate for Priority, provided the tender recovery is confirmed and the recurring-revenue share is clarified."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 15.8,
+      "cost_usd": 0.014256500000000002,
+      "tags": [
+        "segment"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Segment: Lumen Imaging makes ultrasound and point-of-care imaging systems. That is medical imaging, not in-vitro diagnostics (instruments, assays, OEM analyzers, lab automation). The thesis rule says outside these segments the verdict is Radar. This is the deciding criterion.\",\n    \"Kill criteria: none is met. Net debt/EBITDA is 1.8x (from the data), well under the 4x limit. The facts report no regulatory issue. There is no controlling shareholder: insiders hold 6% and the top holder, Baillie Gifford, holds 11%. So the verdict is not Reject.\",\n    \"Ownership rule: no holder is above 25%, so there is nothing to flag and no public statement about selling to note.\",\n    \"Business model: service contracts are 40% of sales, below the 50% recurring-revenue threshold. This is a warning only and does not change the verdict. Consumables are not mentioned, so recurring revenue could be slightly higher than 40%, but that is unknown and cannot be counted as a pass.\",\n    \"Why the price is low: the 33% 12-month drop is attributed to a delayed UK hospital tender cycle that management expects to resume. This looks temporary and fits the thesis. It rests on a management expectation, not independent evidence, so it should be verified. The 3-month change of -7% shows the decline is continuing, not recovering.\",\n    \"Profitability: the EBITDA margin is 16% and the company is profitable, which is consistent with the strategy. Market cap of EUR 900m is mid-sized.\",\n    \"Conclusion: Radar, not Priority, because the segment is outside the IVD scope. Not Reject, because no kill criterion is met and the price drop looks temporary. Keep watching. If the fund's scope widens to imaging, the company would be a candidate for Priority, provided the tender recovery is confirmed and the recurring-revenue share is clarified.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "009-regulatory-unresolved",
+      "title": "In segment, cheap, but under an open FDA consent decree",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: major unresolved regulatory issue. The company is under an open FDA consent decree after repeated manufacturing quality findings. Shipments of two product lines are suspended and no remediation timeline is disclosed. This is a major, unresolved regulatory issue, and the open-ended timeline means we cannot size it or time it. Under the thesis an unknown fact is never a pass.",
+        "The segment fits: immunoassay and point-of-care is in-vitro diagnostics (instruments and assays).",
+        "The business model fits: reagents are 66% of sales, above the 50% recurring-revenue threshold.",
+        "Leverage is not a kill. Net debt/EBITDA is 2.6x, below the 4x limit (figure taken from the data, not computed by the judge). The EBITDA margin of 15% shows the company is profitable.",
+        "Ownership raises no flag. There is no holder above 25%: BlackRock holds 12% and insiders hold 3%. So there is no controlling shareholder who has ruled out a sale, and the ownership rule does not help or hurt.",
+        "The price drop is not clearly temporary. The thesis needs a temporary cause such as a product transition, destocking or a one-off charge. A 48% fall over 12 months (22% over the last 3 months) driven by a consent decree, with suspended shipments and possible lost customers, has no visible end date. This is a regulatory and quality problem, not a clean temporary dislocation, so even without the kill criterion it would fail the 'temporary' test.",
+        "Conclusion: the regulatory kill criterion applies, so this is a Reject rather than a Radar. If the decree were lifted and shipments restarted, the company could be re-screened."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 12.0,
+      "cost_usd": 0.0170029,
+      "tags": [
+        "regulatory",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: major unresolved regulatory issue. The company is under an open FDA consent decree after repeated manufacturing quality findings. Shipments of two product lines are suspended and no remediation timeline is disclosed. This is a major, unresolved regulatory issue, and the open-ended timeline means we cannot size it or time it. Under the thesis an unknown fact is never a pass.\",\n    \"The segment fits: immunoassay and point-of-care is in-vitro diagnostics (instruments and assays).\",\n    \"The business model fits: reagents are 66% of sales, above the 50% recurring-revenue threshold.\",\n    \"Leverage is not a kill. Net debt/EBITDA is 2.6x, below the 4x limit (figure taken from the data, not computed by the judge). The EBITDA margin of 15% shows the company is profitable.\",\n    \"Ownership raises no flag. There is no holder above 25%: BlackRock holds 12% and insiders hold 3%. So there is no controlling shareholder who has ruled out a sale, and the ownership rule does not help or hurt.\",\n    \"The price drop is not clearly temporary. The thesis needs a temporary cause such as a product transition, destocking or a one-off charge. A 48% fall over 12 months (22% over the last 3 months) driven by a consent decree, with suspended shipments and possible lost customers, has no visible end date. This is a regulatory and quality problem, not a clean temporary dislocation, so even without the kill criterion it would fail the 'temporary' test.\",\n    \"Conclusion: the regulatory kill criterion applies, so this is a Reject rather than a Radar. If the decree were lifted and shipments restarted, the company could be re-screened.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "010-non-recurring-model",
+      "title": "Fits everything except the recurring-revenue rule (20% recurring)",
+      "expected": "Priority",
+      "got": "Radar",
+      "ok": false,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: Lab automation systems are explicitly within the segments we like (IVD: instruments, assays, OEM analyzers, lab automation). No segment issue.",
+        "Kill criteria: none met. Net debt/EBITDA is 1.5x (data figure), well below the 4x threshold. No holder above 25% (largest is management and founders at 15%), so there is no controlling shareholder who could have ruled out a sale. No regulatory issue reported.",
+        "Why the price is low: the 30% 12-month fall is explained by two large hospital-network orders slipping from 2025 into 2026, both since confirmed. That is a timing effect, not a structural loss of market, which fits the thesis (temporary). The 3-month change of -4% shows the price has not recovered yet, but that does not contradict the thesis.",
+        "Business model: service is only 20% of sales, so recurring revenue is below the 50% threshold. The thesis makes this a warning only, never a reject, but it weakens the fit with the core strategy of recurring revenue (consumables, service, supply contracts). The company is capital equipment sold on a project basis and is also less profitable than the thesis implies, with an EBITDA margin of 14%.",
+        "Judgment: the thesis criteria are not fully met. The recurring-revenue test fails, and the order-slippage explanation is plausible but the orders are only confirmed, not yet delivered or recognized. The strategy states 'profitable mid-sized diagnostics companies with recurring revenue', and this business is lumpy capital equipment. A criterion not met means Radar, not Priority.",
+        "Ownership flag (informational): management and founders hold 15%, below the 25% flag threshold. No public statements on selling are noted.",
+        "Conclusion: Radar. The company is in a liked segment with no kill criterion and a temporary price driver, but the low recurring-revenue share (20% vs. 50%) means it does not fully meet the thesis. Keep watching for delivery of the delayed orders and any growth in service and consumables share."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 16.2,
+      "cost_usd": 0.018002900000000002,
+      "tags": [
+        "edge",
+        "business-model"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Segment fit: Lab automation systems are explicitly within the segments we like (IVD: instruments, assays, OEM analyzers, lab automation). No segment issue.\",\n    \"Kill criteria: none met. Net debt/EBITDA is 1.5x (data figure), well below the 4x threshold. No holder above 25% (largest is management and founders at 15%), so there is no controlling shareholder who could have ruled out a sale. No regulatory issue reported.\",\n    \"Why the price is low: the 30% 12-month fall is explained by two large hospital-network orders slipping from 2025 into 2026, both since confirmed. That is a timing effect, not a structural loss of market, which fits the thesis (temporary). The 3-month change of -4% shows the price has not recovered yet, but that does not contradict the thesis.\",\n    \"Business model: service is only 20% of sales, so recurring revenue is below the 50% threshold. The thesis makes this a warning only, never a reject, but it weakens the fit with the core strategy of recurring revenue (consumables, service, supply contracts). The company is capital equipment sold on a project basis and is also less profitable than the thesis implies, with an EBITDA margin of 14%.\",\n    \"Judgment: the thesis criteria are not fully met. The recurring-revenue test fails, and the order-slippage explanation is plausible but the orders are only confirmed, not yet delivered or recognized. The strategy states 'profitable mid-sized diagnostics companies with recurring revenue', and this business is lumpy capital equipment. A criterion not met means Radar, not Priority.\",\n    \"Ownership flag (informational): management and founders hold 15%, below the 25% flag threshold. No public statements on selling are noted.\",\n    \"Conclusion: Radar. The company is in a liked segment with no kill criterion and a temporary price driver, but the low recurring-revenue share (20% vs. 50%) means it does not fully meet the thesis. Keep watching for delivery of the delayed orders and any growth in service and consumables share.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "011-loss-making-reimbursement",
+      "title": "The bad-fit example of the thesis: loss-making genomics lab",
+      "expected": "Radar",
+      "got": "ParseError",
+      "ok": false,
+      "backend": "claude",
+      "reasons": [],
+      "missing_facts": [],
+      "parse_error": "invalid JSON: Extra data: line 5 column 1 (char 2071)",
+      "duration_s": 21.7,
+      "cost_usd": 0.0213765,
+      "tags": [
+        "bad-fit-example"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": \"No kill criterion is formally met, so under the thesis table this should be Radar rather than Reject. The correct verdict is therefore Radar. (Correction of the 'verdict' field: the intended answer is Radar.) Reasoning: (1) Segment: genomic testing services is a lab services business, not IVD instruments, assays, OEM analyzers or lab automation. Rule effect: outside the liked segments = Radar. (2) Profitability: EBITDA margin is -21% and the company has been loss-making for five years, which contradicts the 'profitable' requirement of the strategy. The thesis names a loss-making genomics lab dependent on reimbursement as the explicit bad-fit example, and this is almost exactly that profile. (3) Why the price is low: the 55% drop is tied to a pending Medicare reimbursement decision, which is an external binary outcome and not a temporary operational item such as a product transition, destocking or one-off charges. Five years of losses suggest the weakness may be structural. (4) Kill criteria: net debt/EBITDA is 'unknown' in the data (the facts say it is not meaningful with negative EBITDA); I do not compute it myself, and the thesis threshold cannot be shown to be breached, so this kill criterion is not met. No controlling shareholder exists (insiders 10%, ARK Invest 8%, no holder above 25%), so the ownership flag and sale-ruling-out kill criteria do not apply. The facts state no regulatory issue beyond the pending reimbursement decision; that is a commercial/reimbursement risk rather than a clear major unresolved regulatory issue, though it is borderline and I treat it as not meeting the kill criterion. (5) Recurring revenue share is not stated (warning only). Conclusion: no kill criterion is demonstrably met, but the company fails the segment, profitability and temporary-decline criteria, so it cannot be Priority. It stays Radar at best, with a low-conviction watch status, pending the Medicare decision. Note: the 'verdict' value above is inconsistent with this reasoning and should read Radar.\"\n}\n```\n\nCorrection: the JSON above is internally inconsistent. Here is the corrected final answer:\n\n```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": \"No kill criterion is demonstrably met, so Reject is not warranted under the thesis rules; but the company fails several thesis criteria, so it cannot be Priority. (1) Segment: genomic testing services is a lab services business, not IVD instruments, assays, OEM analyzers or lab automation. The rule says outside these segments = Radar. (2) Strategy fit: the strategy targets profitable companies; GenoScope has an EBITDA margin of -21% and five years of losses. It closely matches the thesis's own bad-fit example (loss-making genomics lab whose growth depends on reimbursement decisions). (3) Why the price is low: the 55% 12-month drop is linked to a pending Medicare reimbursement decision, an external binary outcome, not a temporary operational cause such as a product transition, destocking or one-off charges. Five years of losses suggest the weakness may be structural. (4) Kill criteria: net debt/EBITDA is unknown (not meaningful with negative EBITDA); I do not compute it, and an unknown fact is never a pass, but it is also not a demonstrated breach of the 4x threshold. No holder is above 25% (insiders 10%, ARK Invest 8%), so there is no controlling shareholder who ruled out a sale and no ownership flag. The facts state no regulatory issue beyond the pending reimbursement decision, which I read as a commercial/reimbursement risk rather than a major unresolved regulatory issue, though this is borderline and worth confirming. (5) Recurring revenue share is not given (warning only). Conclusion: Radar, low conviction, because it is outside the liked segments, unprofitable and the price decline may be structural. If the Medicare decision is negative or the leverage and regulatory readings change, it would move toward Reject. It is not a Priority candidate on the current facts.\"\n}\n```"
+    },
+    {
+      "id": "012-real-stratec",
+      "title": "Real data: Stratec (SBS.DE), facts limited to the dataset",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: Stratec is an OEM analyzer/automation systems maker for in-vitro diagnostics, which is squarely within the segments we like. No segment issue.",
+        "Kill criterion on leverage: net debt/EBITDA is 3.41x (from the data, computed by code), below the 4x threshold. Not triggered, though headroom is modest and EBITDA has been falling (47m in 2024 to 34m in 2025, 28m TTM), so leverage is moving the wrong way.",
+        "Ownership: insiders hold 61.1%, which is well above the 25% flag threshold and implies a controlling holder or group. The dataset does not name the holder or the stake (top_holder unknown, and Yahoo may miss family or strategic holders). Nothing in the data says they ruled out a sale, so it is not a reject, but the identity, stake and any public statement on selling are unknown. This is the decisive fact for a take-private and it is missing. An unknown fact is never a pass.",
+        "Why the price is low: the dataset does not explain the price move. Fundamentals show declining revenue (270m to 258m to 251m, 244.8m LTM) and a falling EBITDA margin (about 16% in 2023, 18% in 2024, 14% in 2025, 11.6% LTM). The 12-month price change is -15%, while the last 3 months are +23.2%. Headlines mention a 'Strong Q2 Recovery', which hints at a temporary dip, but this is only a headline and not evidence of cause. Several years of shrinking sales and margin could equally be structural, so I cannot confirm the drop is temporary (product transition, destocking, one-offs).",
+        "Business model: the share of recurring revenue (consumables, service) is not in the data. This is a warning only, never a reject, but it is another unknown.",
+        "Regulatory: no information in the dataset. No unresolved major regulatory issue is evidenced, but it is also not confirmed absent.",
+        "Conclusion: the company fits the strategy on segment, profitability (still positive EBITDA) and a profile close to our 'good fit' example (OEM instrument maker, large insider stake, price down). But no kill criterion is met and the key thesis criteria (temporary cause of the drop, controlling holder's stance on a sale) cannot be confirmed. Per the verdict rule this is Radar, not Priority and not Reject.",
+        "To move to Priority we would need: (1) the identity and stake of the controlling holder and any public statement about selling; (2) evidence from the H1-2026 release and call that the decline is temporary (transition, destocking, one-offs) and that margins are recovering; (3) the recurring revenue share; (4) confirmation that leverage stays under 4x. It would become a Reject if the controlling holder has ruled out a sale or if leverage rises above 4x."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 20.1,
+      "cost_usd": 0.0185565,
+      "tags": [
+        "real",
+        "unknown"
+      ],
+      "raw": "{\"verdict\":\"Radar\",\"reasons\":[\"Segment fit: Stratec is an OEM analyzer/automation systems maker for in-vitro diagnostics, which is squarely within the segments we like. No segment issue.\",\"Kill criterion on leverage: net debt/EBITDA is 3.41x (from the data, computed by code), below the 4x threshold. Not triggered, though headroom is modest and EBITDA has been falling (47m in 2024 to 34m in 2025, 28m TTM), so leverage is moving the wrong way.\",\"Ownership: insiders hold 61.1%, which is well above the 25% flag threshold and implies a controlling holder or group. The dataset does not name the holder or the stake (top_holder unknown, and Yahoo may miss family or strategic holders). Nothing in the data says they ruled out a sale, so it is not a reject, but the identity, stake and any public statement on selling are unknown. This is the decisive fact for a take-private and it is missing. An unknown fact is never a pass.\",\"Why the price is low: the dataset does not explain the price move. Fundamentals show declining revenue (270m to 258m to 251m, 244.8m LTM) and a falling EBITDA margin (about 16% in 2023, 18% in 2024, 14% in 2025, 11.6% LTM). The 12-month price change is -15%, while the last 3 months are +23.2%. Headlines mention a 'Strong Q2 Recovery', which hints at a temporary dip, but this is only a headline and not evidence of cause. Several years of shrinking sales and margin could equally be structural, so I cannot confirm the drop is temporary (product transition, destocking, one-offs).\",\"Business model: the share of recurring revenue (consumables, service) is not in the data. This is a warning only, never a reject, but it is another unknown.\",\"Regulatory: no information in the dataset. No unresolved major regulatory issue is evidenced, but it is also not confirmed absent.\",\"Conclusion: the company fits the strategy on segment, profitability (still positive EBITDA) and a profile close to our 'good fit' example (OEM instrument maker, large insider stake, price down). But no kill criterion is met and the key thesis criteria (temporary cause of the drop, controlling holder's stance on a sale) cannot be confirmed. Per the verdict rule this is Radar, not Priority and not Reject.\",\"To move to Priority we would need: (1) the identity and stake of the controlling holder and any public statement about selling; (2) evidence from the H1-2026 release and call that the decline is temporary (transition, destocking, one-offs) and that margins are recovering; (3) the recurring revenue share; (4) confirmation that leverage stays under 4x. It would become a Reject if the controlling holder has ruled out a sale or if leverage rises above 4x.\"]}"
+    },
+    {
+      "id": "013-real-quidelortho",
+      "title": "Real data: QuidelOrtho (QDEL), net debt 6.1x EBITDA",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: net debt/EBITDA is 6.09x in the data (debt 3,076m, cash 123m, EBITDA 485m), above the 4x threshold. The figure comes from the code-computed dataset, not from the judge. This alone makes it a Reject.",
+        "Segment fits: immunoassay and point-of-care diagnostics (instruments, assays) are in-vitro diagnostics. The business is probably consumables-heavy, but the dataset has no recurring-revenue share, so the business-model warning is unverified.",
+        "Profitability is mixed. LTM EBITDA margin is 18.1%, but reported fiscal-year EBITDA was -1,490m in 2024 and -483m in 2025. That points to large impairments or one-offs, and the dataset doesn't explain them. Revenue also fell from 2,998m (2023) to 2,730m (2025), about -9% over two years.",
+        "Why the price is low is unknown. The share price is down 54% over 12 months and 22% over 3 months. The dataset has no cause, and the headlines only say shares 'plummeted' after Q2. Temporary versus structural can't be shown, so this would be Radar at best even without the leverage issue.",
+        "Ownership: no holder is above 25%. The largest are BlackRock 16.3%, FMR 10.7% and Newtyn Management 9.7%, and insiders hold 0.9%. No ownership flag is raised and there is no controlling-shareholder issue. Newtyn is an activist-style holder, but nothing says it has made a public statement about a sale.",
+        "Regulatory: the dataset has no information on regulatory matters, so this is unknown rather than clear.",
+        "Financing angle: leverage of over 6x EBITDA leaves little room for an LBO structure. Market cap is EUR 790m against EV of EUR 3.4bn, so debt is the larger part of the capital structure. A take-private would need most of the existing debt refinanced or assumed, which conflicts with the thesis of funding the next product cycle and add-ons.",
+        "Conclusion: the kill criterion on leverage is mechanically met, so Reject. Re-check only if net debt/EBITDA falls below 4x, for example through deleveraging or an equity-heavy deal."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 15.9,
+      "cost_usd": 0.020897900000000004,
+      "tags": [
+        "real",
+        "leverage",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: net debt/EBITDA is 6.09x in the data (debt 3,076m, cash 123m, EBITDA 485m), above the 4x threshold. The figure comes from the code-computed dataset, not from the judge. This alone makes it a Reject.\",\n    \"Segment fits: immunoassay and point-of-care diagnostics (instruments, assays) are in-vitro diagnostics. The business is probably consumables-heavy, but the dataset has no recurring-revenue share, so the business-model warning is unverified.\",\n    \"Profitability is mixed. LTM EBITDA margin is 18.1%, but reported fiscal-year EBITDA was -1,490m in 2024 and -483m in 2025. That points to large impairments or one-offs, and the dataset doesn't explain them. Revenue also fell from 2,998m (2023) to 2,730m (2025), about -9% over two years.\",\n    \"Why the price is low is unknown. The share price is down 54% over 12 months and 22% over 3 months. The dataset has no cause, and the headlines only say shares 'plummeted' after Q2. Temporary versus structural can't be shown, so this would be Radar at best even without the leverage issue.\",\n    \"Ownership: no holder is above 25%. The largest are BlackRock 16.3%, FMR 10.7% and Newtyn Management 9.7%, and insiders hold 0.9%. No ownership flag is raised and there is no controlling-shareholder issue. Newtyn is an activist-style holder, but nothing says it has made a public statement about a sale.\",\n    \"Regulatory: the dataset has no information on regulatory matters, so this is unknown rather than clear.\",\n    \"Financing angle: leverage of over 6x EBITDA leaves little room for an LBO structure. Market cap is EUR 790m against EV of EUR 3.4bn, so debt is the larger part of the capital structure. A take-private would need most of the existing debt refinanced or assumed, which conflicts with the thesis of funding the next product cycle and add-ons.\",\n    \"Conclusion: the kill criterion on leverage is mechanically met, so Reject. Re-check only if net debt/EBITDA falls below 4x, for example through deleveraging or an equity-heavy deal.\"\n  ]\n}\n```"
+    },
+    {
+      "id": "014-holder-just-below-flag",
+      "title": "A holder at 24.5% is open to offers: just below the 25% flag line",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: immunoassay instruments and proprietary reagents are in-vitro diagnostics (instruments and assays), so the segment criterion is met. Business model: consumables and service are 66% of sales, above the 50% threshold, so no warning. Profitability: LTM EBITDA margin is 19%, so the company is profitable and mid-sized (market cap EUR 620m). Why the price is low: the 27% 12-month fall follows a product transition that delayed a new analyzer launch. The analyzer is now shipping. That is a temporary cause, not structural market loss. The 3-month change of -6% shows no sign of a structural collapse. Kill criteria: net debt/EBITDA is 2.1x, well under the 4x limit (figure taken from the data). No regulatory issue. No controlling shareholder has ruled out a sale. Ownership flag: Brandt Familienstiftung holds 24.5%. That is just under the 25% flag threshold, but I flag it anyway as the top holder. It is a passive financial stake with no board seat or special rights, and the foundation has said publicly that it is open to offers. This supports a takeout rather than blocking it. Insiders hold 4%. No other holder is above 25%. No key fact is unknown and no thesis criterion fails, so this is Priority. Whether it becomes Actionable depends on code comparing the takeout price with the target price. The judge does not decide that."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 18.4,
+      "cost_usd": 0.0158629,
+      "tags": [
+        "edge",
+        "ownership"
+      ],
+      "raw": "{\"verdict\":\"Priority\",\"reasons\":\"Segment fit: immunoassay instruments and proprietary reagents are in-vitro diagnostics (instruments and assays), so the segment criterion is met. Business model: consumables and service are 66% of sales, above the 50% threshold, so no warning. Profitability: LTM EBITDA margin is 19%, so the company is profitable and mid-sized (market cap EUR 620m). Why the price is low: the 27% 12-month fall follows a product transition that delayed a new analyzer launch. The analyzer is now shipping. That is a temporary cause, not structural market loss. The 3-month change of -6% shows no sign of a structural collapse. Kill criteria: net debt/EBITDA is 2.1x, well under the 4x limit (figure taken from the data). No regulatory issue. No controlling shareholder has ruled out a sale. Ownership flag: Brandt Familienstiftung holds 24.5%. That is just under the 25% flag threshold, but I flag it anyway as the top holder. It is a passive financial stake with no board seat or special rights, and the foundation has said publicly that it is open to offers. This supports a takeout rather than blocking it. Insiders hold 4%. No other holder is above 25%. No key fact is unknown and no thesis criterion fails, so this is Priority. Whether it becomes Actionable depends on code comparing the takeout price with the target price. The judge does not decide that.\"}"
+    },
+    {
+      "id": "015-regulatory-resolved",
+      "title": "A regulatory issue closed out 16 months ago, price still below its pre-issue level",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: clinical chemistry analyzers with captive reagents are in-vitro diagnostics (instruments and assays), which is one of the segments we like.",
+        "Business model: consumables and service are 61% of sales, above the 50% recurring-revenue bar. No warning is needed.",
+        "Profitability and leverage: EBITDA margin is 16%, so the company is profitable. Net debt/EBITDA is 2.6x, taken from the data, and is below the 4x kill threshold. Kill criterion not met.",
+        "Why the price is low: the 32% 12-month fall is attributed to a one-off write-down and a slow product cycle. Both are temporary causes under the thesis (one-off charges, product transition). The 3-month move is only -5%, so the stock has stabilised and is not in continuing structural decline. Nothing in the facts points to a structural loss of market.",
+        "Regulatory: the FDA warning letter from early 2025 was closed out in June 2025 after a clean re-inspection. That was 16 months ago, with no ongoing monitoring and no related observation since. There is no other regulatory issue. A closed issue is not a major unresolved regulatory issue, so the kill criterion is not met. The shares remain about 28% below their pre-letter level. That is a valuation point and not an open issue. It is worth a note for diligence only.",
+        "Ownership: no holder is above 25%. The top holder is Vanguard at 9% and insiders hold 8%. There is no controlling shareholder and nobody to flag. For a take-private that means no single holder can block a deal, but it also means no anchor holder to engage. This is neutral for the verdict.",
+        "Overall: no kill criterion is met, and every thesis criterion is met or is a pass with positive evidence. No key fact is unknown, so Priority fits. Whether it becomes Actionable depends on the code comparing the takeout price with the target price. Diligence points: confirm the write-down was one-off, confirm the product-cycle recovery timeline, and confirm the manufacturing site stays compliant."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 17.7,
+      "cost_usd": 0.0179179,
+      "tags": [
+        "edge",
+        "regulatory"
+      ],
+      "raw": "{\"verdict\":\"Priority\",\"reasons\":[\"Segment fit: clinical chemistry analyzers with captive reagents are in-vitro diagnostics (instruments and assays), which is one of the segments we like.\",\"Business model: consumables and service are 61% of sales, above the 50% recurring-revenue bar. No warning is needed.\",\"Profitability and leverage: EBITDA margin is 16%, so the company is profitable. Net debt/EBITDA is 2.6x, taken from the data, and is below the 4x kill threshold. Kill criterion not met.\",\"Why the price is low: the 32% 12-month fall is attributed to a one-off write-down and a slow product cycle. Both are temporary causes under the thesis (one-off charges, product transition). The 3-month move is only -5%, so the stock has stabilised and is not in continuing structural decline. Nothing in the facts points to a structural loss of market.\",\"Regulatory: the FDA warning letter from early 2025 was closed out in June 2025 after a clean re-inspection. That was 16 months ago, with no ongoing monitoring and no related observation since. There is no other regulatory issue. A closed issue is not a major unresolved regulatory issue, so the kill criterion is not met. The shares remain about 28% below their pre-letter level. That is a valuation point and not an open issue. It is worth a note for diligence only.\",\"Ownership: no holder is above 25%. The top holder is Vanguard at 9% and insiders hold 8%. There is no controlling shareholder and nobody to flag. For a take-private that means no single holder can block a deal, but it also means no anchor holder to engage. This is neutral for the verdict.\",\"Overall: no kill criterion is met, and every thesis criterion is met or is a pass with positive evidence. No key fact is unknown, so Priority fits. Whether it becomes Actionable depends on the code comparing the takeout price with the target price. Diligence points: confirm the write-down was one-off, confirm the product-cycle recovery timeline, and confirm the manufacturing site stays compliant.\"]}"
+    },
+    {
+      "id": "016-destocking-working-capital",
+      "title": "Destocking with a working capital swing, distributor inventories back to normal and reorders started",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Segment fit: Hematology analyzers and reagents are in-vitro diagnostics (instruments and assays), which is a segment the thesis likes. The company is not outside the segment.",
+        "Business model: Recurring revenue (reagents and service) is 58% of sales, above the 50% threshold. No warning applies.",
+        "Why the price is low: The 35% 12-month drop comes from distributor destocking, which the thesis names as a temporary cause. Distributor inventory is now back to normal and reorders have started, which supports the temporary reading. The 3m change of -8% shows the decline has not fully reversed.",
+        "Caveat: The company's own inventory and receivables rose sharply, which cut operating cash flow. This is a working capital swing and not a sign of lost market share. I would confirm in diligence that the receivables build is not a collection problem. It does not change the verdict, because the facts describe it as a working capital swing and the thesis does not ask us to treat it as structural.",
+        "Profitability: The LTM EBITDA margin is 15%. The company is profitable and mid-sized (market cap EUR 540m).",
+        "Kill criteria: Net debt/EBITDA is 1.9x per the data, well under the 4x limit. No holder is above 25% (top holder AMF Pension at 7%, insiders at 6%), so there is no controlling shareholder and no stated refusal to sell. No regulatory issue is reported. No kill criterion is met.",
+        "Ownership flag: There is no holder above 25% to flag. The shareholder base is dispersed, which makes a take-private easier because there is no blocking holder.",
+        "No key fact is unknown. Every criterion is addressed by the data or the facts, so the Radar condition 'a key fact is unknown' does not apply. Whether the company is Actionable depends on the code's takeout price versus target price and is not part of this verdict."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 17.4,
+      "cost_usd": 0.0175954,
+      "tags": [
+        "edge",
+        "destocking"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Segment fit: Hematology analyzers and reagents are in-vitro diagnostics (instruments and assays), which is a segment the thesis likes. The company is not outside the segment.\",\n    \"Business model: Recurring revenue (reagents and service) is 58% of sales, above the 50% threshold. No warning applies.\",\n    \"Why the price is low: The 35% 12-month drop comes from distributor destocking, which the thesis names as a temporary cause. Distributor inventory is now back to normal and reorders have started, which supports the temporary reading. The 3m change of -8% shows the decline has not fully reversed.\",\n    \"Caveat: The company's own inventory and receivables rose sharply, which cut operating cash flow. This is a working capital swing and not a sign of lost market share. I would confirm in diligence that the receivables build is not a collection problem. It does not change the verdict, because the facts describe it as a working capital swing and the thesis does not ask us to treat it as structural.\",\n    \"Profitability: The LTM EBITDA margin is 15%. The company is profitable and mid-sized (market cap EUR 540m).\",\n    \"Kill criteria: Net debt/EBITDA is 1.9x per the data, well under the 4x limit. No holder is above 25% (top holder AMF Pension at 7%, insiders at 6%), so there is no controlling shareholder and no stated refusal to sell. No regulatory issue is reported. No kill criterion is met.\",\n    \"Ownership flag: There is no holder above 25% to flag. The shareholder base is dispersed, which makes a take-private easier because there is no blocking holder.\",\n    \"No key fact is unknown. Every criterion is addressed by the data or the facts, so the Radar condition 'a key fact is unknown' does not apply. Whether the company is Actionable depends on the code's takeout price versus target price and is not part of this verdict.\"\n  ]\n}\n```"
+    }
+  ]
+}

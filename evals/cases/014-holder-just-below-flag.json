@@ -1,0 +1,11 @@
+{
+  "id": "014-holder-just-below-flag",
+  "title": "A holder at 24.5% is open to offers: just below the 25% flag line",
+  "input": {
+    "company": {"ticker": "SYN-014", "name": "Brandt Diagnostics", "team": "Diagnostics", "segment": "Immunoassay instruments and reagents", "country": "Germany", "market_cap_eur_m": 620, "ebitda_margin_ltm": 0.19, "net_debt_to_ebitda": 2.1, "price_change_3m": -0.06, "price_change_12m": -0.27, "held_pct_insiders": 0.04, "top_holder": "Brandt Familienstiftung", "top_holder_pct": 0.245},
+    "facts": "Immunoassay instruments with proprietary reagents; consumables and service are 66% of sales. The share price fell 27% after a product transition delayed the launch of a new analyzer, now shipping. Leverage 2.1x. The largest holder is a family foundation with 24.5%, a plain financial stake with no board seat or special rights. The foundation has said publicly that it is open to offers for its shares. No other holder above 25%. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "a holder under the 25% line, open to offers, triggers no flag and no kill criterion",
+  "tags": ["edge", "ownership"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "016-destocking-working-capital",
+  "title": "Destocking with a working capital swing, distributor inventories back to normal and reorders started",
+  "input": {
+    "company": {"ticker": "SYN-016", "name": "Veyra Diagnostics", "team": "Diagnostics", "segment": "Hematology analyzers and reagents", "country": "Sweden", "market_cap_eur_m": 540, "ebitda_margin_ltm": 0.15, "net_debt_to_ebitda": 1.9, "price_change_3m": -0.08, "price_change_12m": -0.35, "held_pct_insiders": 0.06, "top_holder": "AMF Pension", "top_holder_pct": 0.07},
+    "facts": "Hematology analyzers with reagents and service; recurring revenue is 58% of sales. Reagent orders fell as distributors cut their inventory, and the share price dropped 35%. The company's own inventory and receivables rose sharply over the period, a working capital swing that reduced operating cash flow. Distributor inventory levels are now back to normal and reorders have started. Leverage 1.9x. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "leading indicator for a potential window of actionability",
+  "tags": ["edge", "destocking"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "015-regulatory-resolved",
+  "title": "A regulatory issue closed out 16 months ago, price still below its pre-issue level",
+  "input": {
+    "company": {"ticker": "SYN-015", "name": "Halden Clinical Systems", "team": "Diagnostics", "segment": "Clinical chemistry analyzers", "country": "United States", "market_cap_eur_m": 900, "ebitda_margin_ltm": 0.16, "net_debt_to_ebitda": 2.6, "price_change_3m": -0.05, "price_change_12m": -0.32, "held_pct_insiders": 0.08, "top_holder": "Vanguard Group", "top_holder_pct": 0.09},
+    "facts": "Clinical chemistry analyzers with captive reagents; consumables and service are 61% of sales. The share price fell 32% after a one-off write-down and a slow product cycle. Leverage 2.6x. In early 2025 the FDA issued a warning letter on a manufacturing site. It was closed out in June 2025 after a clean re-inspection, 16 months ago, with no ongoing monitoring and no related observation since. The share price is still about 28% below its level before the warning letter. No holder above 25%. No other regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "unnessarily depressed share price after a regulatory issue that has been resolved for 16 months and no other regulatory issues",
+  "tags": ["edge", "regulatory"]
+}
