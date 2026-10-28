@@ -1,0 +1,11 @@
+{
+  "id": "010-regulatory-unresolved",
+  "title": "Open data-breach investigation by the regulator",
+  "input": {
+    "company": {"ticker": "SYN-010", "name": "Patientgate Systems", "team": "Healthcare IT", "segment": "EHR", "country": "Denmark", "market_cap_eur_m": 700, "ebitda_margin_ltm": 0.22, "net_debt_to_ebitda": 0.9, "price_change_3m": -0.18, "price_change_12m": -0.40, "held_pct_insiders": 0.09, "top_holder": "Nordea Asset Management", "top_holder_pct": 0.07},
+    "facts": "Patient record platform with subscription contracts; recurring revenue is 82% of sales. A cyber incident exposed patient data; the data protection authority opened an investigation that remains open and could lead to a significant fine and suspension of new contracts. No holder above 25%."
+  },
+  "expected": "Reject",
+  "why": "A major unresolved regulatory or data-privacy issue is a kill criterion: Reject.",
+  "tags": ["edge", "regulatory", "kill"]
+}

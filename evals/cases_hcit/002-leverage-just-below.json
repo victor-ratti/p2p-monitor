@@ -1,0 +1,11 @@
+{
+  "id": "002-leverage-just-below",
+  "title": "Same profile, net debt at 3.9x EBITDA",
+  "input": {
+    "company": {"ticker": "SYN-002", "name": "Medrecord Group", "team": "Healthcare IT", "segment": "EHR", "country": "Germany", "market_cap_eur_m": 900, "ebitda_margin_ltm": 0.24, "net_debt_to_ebitda": 3.9, "price_change_3m": -0.05, "price_change_12m": -0.28, "held_pct_insiders": 0.08, "top_holder": "Allianz Global Investors", "top_holder_pct": 0.07},
+    "facts": "Hospital EHR platform with multi-year subscription contracts; recurring revenue is 72% of sales. Net debt is 3.9x EBITDA after a funded acquisition. The share price fell 28% on a delayed product release, now shipped. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "3.9x is below the 4x kill line, and the criteria are met: Priority.",
+  "tags": ["edge", "leverage"]
+}

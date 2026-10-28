@@ -1,0 +1,293 @@
+{
+  "summary": {
+    "timestamp": "2026-10-28 11:40:49",
+    "label": "HCIT baseline",
+    "prompt": "v4",
+    "model": "sonnet",
+    "structured": false,
+    "thesis": "evals\\thesis_hcit.md",
+    "backend": "claude",
+    "cases": 10,
+    "correct": 10,
+    "accuracy": 1.0,
+    "parse_errors": 0,
+    "errors": 0,
+    "confusion": {
+      "Priority": {
+        "Priority": 4,
+        "Radar": 0,
+        "Reject": 0,
+        "ParseError": 0,
+        "Error": 0
+      },
+      "Radar": {
+        "Priority": 0,
+        "Radar": 3,
+        "Reject": 0,
+        "ParseError": 0,
+        "Error": 0
+      },
+      "Reject": {
+        "Priority": 0,
+        "Radar": 0,
+        "Reject": 3,
+        "ParseError": 0,
+        "Error": 0
+      }
+    },
+    "total_cost_usd": 0.2631,
+    "wall_s": 37.0
+  },
+  "cases": [
+    {
+      "id": "001-clean-fit",
+      "title": "Profitable pharmacy software vendor, price down on a cloud transition",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criteria: none met. Net debt/EBITDA is 0.3x, well below the 4x limit. No holder above 25%, so there is no controlling shareholder who ruled out a sale. The facts state no regulatory issue, so there is no unresolved regulatory or data-privacy problem.",
+        "Segment: pharmacy software is a preferred segment. It is not RCM-only.",
+        "Business model: recurring revenue is 78% of sales, above the 50% threshold. Churn is under 3%, which points to sticky customers and high switching costs. The EBITDA margin is 21%, so the company is profitable.",
+        "Why the price is low: the share fell 30% over 12 months (-8% over 3 months). The cause is a temporary cloud migration of the customer base that depressed license revenue, and management expects it to complete next year. This is a cloud-transition dip, not a structural loss of customers or share. The thesis names this as acceptable.",
+        "Ownership flag (flag only): the top holder is Lambert Family Office at 14%, and insiders hold 15%. Both are below the 25% flag threshold, so nothing is triggered. The data has no public statements about selling.",
+        "Fit: this closely matches the thesis's good-fit example, which is a profitable pharmacy software vendor with mostly subscription revenue, little net debt and a share price down after a cloud-transition dip. The only difference is that the family stake is smaller than the large stake in that example. That is not a criterion.",
+        "Actionable status is not part of this verdict. The code decides it by comparing the takeout price with the target price."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 13.0,
+      "cost_usd": 0.0625865,
+      "tags": [
+        "clean"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Kill criteria: none met. Net debt/EBITDA is 0.3x, well below the 4x limit. No holder above 25%, so there is no controlling shareholder who ruled out a sale. The facts state no regulatory issue, so there is no unresolved regulatory or data-privacy problem.\",\n    \"Segment: pharmacy software is a preferred segment. It is not RCM-only.\",\n    \"Business model: recurring revenue is 78% of sales, above the 50% threshold. Churn is under 3%, which points to sticky customers and high switching costs. The EBITDA margin is 21%, so the company is profitable.\",\n    \"Why the price is low: the share fell 30% over 12 months (-8% over 3 months). The cause is a temporary cloud migration of the customer base that depressed license revenue, and management expects it to complete next year. This is a cloud-transition dip, not a structural loss of customers or share. The thesis names this as acceptable.\",\n    \"Ownership flag (flag only): the top holder is Lambert Family Office at 14%, and insiders hold 15%. Both are below the 25% flag threshold, so nothing is triggered. The data has no public statements about selling.\",\n    \"Fit: this closely matches the thesis's good-fit example, which is a profitable pharmacy software vendor with mostly subscription revenue, little net debt and a share price down after a cloud-transition dip. The only difference is that the family stake is smaller than the large stake in that example. That is not a criterion.\",\n    \"Actionable status is not part of this verdict. The code decides it by comparing the takeout price with the target price.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "002-leverage-just-below",
+      "title": "Same profile, net debt at 3.9x EBITDA",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criteria: net debt/EBITDA is 3.9x, below the 4x threshold, so it is not met (tight headroom, but the figure comes from the data). No holder above 25% (top holder Allianz Global Investors 7%, insiders 8%), so no controlling shareholder and no sale ruled out. The facts state no regulatory issue, so no data-privacy or regulatory kill criterion is met.",
+        "Segment: hospital EHR platform, which is a core segment we like. It is not RCM-only.",
+        "Business model: recurring revenue is 72% of sales, above the 50% line. This is a warning-only criterion and it passes.",
+        "Why the price is low: the 28% 12-month fall followed a delayed product release that has now shipped. This is a temporary, product-related cause and not a structural loss of customers or market share.",
+        "Profitability: EBITDA margin is 24%, and the multi-year subscription contracts point to high switching costs.",
+        "Flags: no holder above the 25% threshold, so there is no ownership flag. Leverage of 3.9x after a funded acquisition is close to the 4x kill line and is worth monitoring, but it does not lower the verdict. The thesis prefers little or no net debt, which is only a preference in the good-fit example, not a criterion. Whether the company is Actionable depends on the code-computed target price, not on this judgment."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 12.6,
+      "cost_usd": 0.061536499999999994,
+      "tags": [
+        "edge",
+        "leverage"
+      ],
+      "raw": "{\"verdict\":\"Priority\",\"reasons\":[\"Kill criteria: net debt/EBITDA is 3.9x, below the 4x threshold, so it is not met (tight headroom, but the figure comes from the data). No holder above 25% (top holder Allianz Global Investors 7%, insiders 8%), so no controlling shareholder and no sale ruled out. The facts state no regulatory issue, so no data-privacy or regulatory kill criterion is met.\",\"Segment: hospital EHR platform, which is a core segment we like. It is not RCM-only.\",\"Business model: recurring revenue is 72% of sales, above the 50% line. This is a warning-only criterion and it passes.\",\"Why the price is low: the 28% 12-month fall followed a delayed product release that has now shipped. This is a temporary, product-related cause and not a structural loss of customers or market share.\",\"Profitability: EBITDA margin is 24%, and the multi-year subscription contracts point to high switching costs.\",\"Flags: no holder above the 25% threshold, so there is no ownership flag. Leverage of 3.9x after a funded acquisition is close to the 4x kill line and is worth monitoring, but it does not lower the verdict. The thesis prefers little or no net debt, which is only a preference in the good-fit example, not a criterion. Whether the company is Actionable depends on the code-computed target price, not on this judgment.\"],\"missing_facts\":[]}"
+    },
+    {
+      "id": "003-leverage-just-above",
+      "title": "Same profile, net debt at 4.1x EBITDA",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: net debt is 4.1x EBITDA (figure from the data), above the thesis limit of 4x. Management saying it is comfortable with the level does not lift the criterion. The excess is small, but the thesis sets a hard threshold and a rule that applies at the line applies here.",
+        "For the record, the company otherwise fits the thesis. It is an EHR vendor, which is a preferred segment. Recurring revenue is 72%, above the 50% bar. The 28% price drop came from a delayed product release that has now shipped, which looks temporary. No holder is above 25%, so there is no ownership flag. Top holder is Allianz Global Investors at 7%, insiders hold 8%. There is no regulatory issue. None of these change the verdict, because a kill criterion has been met."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 11.8,
+      "cost_usd": 0.0155045,
+      "tags": [
+        "edge",
+        "leverage",
+        "kill"
+      ],
+      "raw": "{\"verdict\":\"Reject\",\"reasons\":[\"Kill criterion met: net debt is 4.1x EBITDA (figure from the data), above the thesis limit of 4x. Management saying it is comfortable with the level does not lift the criterion. The excess is small, but the thesis sets a hard threshold and a rule that applies at the line applies here.\",\"For the record, the company otherwise fits the thesis. It is an EHR vendor, which is a preferred segment. Recurring revenue is 72%, above the 50% bar. The 28% price drop came from a delayed product release that has now shipped, which looks temporary. No holder is above 25%, so there is no ownership flag. Top holder is Allianz Global Investors at 7%, insiders hold 8%. There is no regulatory issue. None of these change the verdict, because a kill criterion has been met.\"],\"missing_facts\":[]}"
+    },
+    {
+      "id": "004-leverage-unknown",
+      "title": "Attractive profile but net debt is not available",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criteria: no regulatory or data-privacy issue is reported, and no holder is above 25% (top holder UBS Asset Management 6%, insiders 10%), so no controlling shareholder has ruled out a sale. The leverage kill criterion (net debt above 4x EBITDA) cannot be checked. Net debt/EBITDA is 'unknown' and the facts say debt and cash are not disclosed. Because an unknown fact is never a pass, I cannot reject and cannot give Priority.",
+        "Segment: pharma software is one of the preferred segments, and it is not RCM-only.",
+        "Business model: recurring revenue is 65% of sales, above the 50% threshold. This criterion is warning only in any case.",
+        "Why the price is low: the 33% 12-month drop is attributed to a one-off charge for a discontinued product. That is a listed temporary cause, not a structural loss of customers or market share. EBITDA margin is 20%, so the company is profitable.",
+        "Ownership: no holder above 25%, so there is no ownership flag. UBS Asset Management holds 6% and insiders 10%. The data is silent on any statements about selling.",
+        "Overall the company fits the strategy and would be a Priority candidate if leverage checks out. The verdict stays Radar only because the leverage kill criterion cannot be verified."
+      ],
+      "missing_facts": [
+        "Net debt (debt and cash) or net debt/EBITDA, needed to apply the kill criterion of net debt above 4x EBITDA"
+      ],
+      "parse_error": null,
+      "duration_s": 13.7,
+      "cost_usd": 0.018057,
+      "tags": [
+        "edge",
+        "missing-fact"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"Kill criteria: no regulatory or data-privacy issue is reported, and no holder is above 25% (top holder UBS Asset Management 6%, insiders 10%), so no controlling shareholder has ruled out a sale. The leverage kill criterion (net debt above 4x EBITDA) cannot be checked. Net debt/EBITDA is 'unknown' and the facts say debt and cash are not disclosed. Because an unknown fact is never a pass, I cannot reject and cannot give Priority.\",\n    \"Segment: pharma software is one of the preferred segments, and it is not RCM-only.\",\n    \"Business model: recurring revenue is 65% of sales, above the 50% threshold. This criterion is warning only in any case.\",\n    \"Why the price is low: the 33% 12-month drop is attributed to a one-off charge for a discontinued product. That is a listed temporary cause, not a structural loss of customers or market share. EBITDA margin is 20%, so the company is profitable.\",\n    \"Ownership: no holder above 25%, so there is no ownership flag. UBS Asset Management holds 6% and insiders 10%. The data is silent on any statements about selling.\",\n    \"Overall the company fits the strategy and would be a Priority candidate if leverage checks out. The verdict stays Radar only because the leverage kill criterion cannot be verified.\"\n  ],\n  \"missing_facts\": [\n    \"Net debt (debt and cash) or net debt/EBITDA, needed to apply the kill criterion of net debt above 4x EBITDA\"\n  ]\n}\n```"
+    },
+    {
+      "id": "005-holder-refused-sale",
+      "title": "A 55% holder has publicly ruled out a sale",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: a controlling shareholder has ruled out a sale. Van der Meer Holding, the founding holding company, owns 55% and said at the annual meeting that it will not sell its stake under any circumstances. A 55% stake is control, and the statement is explicit and unconditional. The thesis lists this as a Reject.",
+        "Ownership flag (named for the record): Van der Meer Holding, 55%, publicly ruled out a sale.",
+        "Other kill criteria are not met. Net debt/EBITDA is 0.5x, well under the 4x limit. The facts state no regulatory issue.",
+        "Other criteria (not decisive, since the kill criterion already applies): the segment is healthcare-specific analytics, which we like. Recurring revenue is 70% of sales, above the 50% threshold. The 35% price drop is attributed to a one-off contract loss, which looks temporary. The company would otherwise have been a reasonable fit, but the ruled-out sale makes a take-private unachievable."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 11.3,
+      "cost_usd": 0.016447,
+      "tags": [
+        "edge",
+        "ownership",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: a controlling shareholder has ruled out a sale. Van der Meer Holding, the founding holding company, owns 55% and said at the annual meeting that it will not sell its stake under any circumstances. A 55% stake is control, and the statement is explicit and unconditional. The thesis lists this as a Reject.\",\n    \"Ownership flag (named for the record): Van der Meer Holding, 55%, publicly ruled out a sale.\",\n    \"Other kill criteria are not met. Net debt/EBITDA is 0.5x, well under the 4x limit. The facts state no regulatory issue.\",\n    \"Other criteria (not decisive, since the kill criterion already applies): the segment is healthcare-specific analytics, which we like. Recurring revenue is 70% of sales, above the 50% threshold. The 35% price drop is attributed to a one-off contract loss, which looks temporary. The company would otherwise have been a reasonable fit, but the ruled-out sale makes a take-private unachievable.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "006-holder-large-silent",
+      "title": "A 31% holder with no public statement about selling",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criteria: none met. Net debt/EBITDA is 1.1x, well below the 4x limit. No regulatory or data-privacy issue is reported. The largest holder has made no statement ruling out a sale, so the controlling-shareholder kill criterion does not apply.",
+        "Segment: pharmacy software is a preferred segment. It is not RCM-only.",
+        "Business model: recurring revenue is 74% of sales (subscriptions and transaction fees), above the 50% threshold. This is a warning-only criterion and it is passed.",
+        "Why the price is low: the 29% fall over 12 months came from a delayed customer migration that is now complete. This is a temporary cloud/product-transition cause and fits the thesis. It is not a structural loss of customers or market share. The 3-month change of -6% is consistent with stabilisation.",
+        "Profitability and leverage: the EBITDA margin is 22% and leverage is low, which fits the 'profitable, little or no net debt' profile.",
+        "Ownership flag (flag only): Lindgren Invest AB holds 31%, above the 25% threshold. There is no public statement about selling or keeping the stake. This does not lower the verdict and is not a key fact. Our approach to Lindgren Invest should be a first diligence step.",
+        "Actionable status is not a judge verdict. The code decides it by comparing the takeout price with the target price."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 13.3,
+      "cost_usd": 0.017712,
+      "tags": [
+        "edge",
+        "ownership"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Kill criteria: none met. Net debt/EBITDA is 1.1x, well below the 4x limit. No regulatory or data-privacy issue is reported. The largest holder has made no statement ruling out a sale, so the controlling-shareholder kill criterion does not apply.\",\n    \"Segment: pharmacy software is a preferred segment. It is not RCM-only.\",\n    \"Business model: recurring revenue is 74% of sales (subscriptions and transaction fees), above the 50% threshold. This is a warning-only criterion and it is passed.\",\n    \"Why the price is low: the 29% fall over 12 months came from a delayed customer migration that is now complete. This is a temporary cloud/product-transition cause and fits the thesis. It is not a structural loss of customers or market share. The 3-month change of -6% is consistent with stabilisation.\",\n    \"Profitability and leverage: the EBITDA margin is 22% and leverage is low, which fits the 'profitable, little or no net debt' profile.\",\n    \"Ownership flag (flag only): Lindgren Invest AB holds 31%, above the 25% threshold. There is no public statement about selling or keeping the stake. This does not lower the verdict and is not a key fact. Our approach to Lindgren Invest should be a first diligence step.\",\n    \"Actionable status is not a judge verdict. The code decides it by comparing the takeout price with the target price.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "007-rcm-only",
+      "title": "Strong financials but the business is revenue cycle management only",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criterion is met. Net debt/EBITDA is -0.2 (net cash), well under the 4x limit. No holder is above 25%: the top holder is Schroders at 9% and insiders hold 20%. The facts state there is no regulatory issue.",
+        "Segment: the whole product range is hospital revenue cycle management. The thesis de-emphasizes RCM: an RCM-only business is Radar, not Priority. It is not bundled with EHR or analytics, so it falls outside the segments we like.",
+        "Business model: recurring revenue is 80% of sales, above the 50% threshold (warning only, and it passes).",
+        "Why the price is low: the 45% fall in 12 months follows a growth reset that management calls temporary. That fits the 'temporary' test, but it is management's claim only and there is no independent evidence. It is not a structural loss of customers. This is not the blocking point.",
+        "Profitability: the EBITDA margin is 19% and the company has net cash. Ownership gives no flag. The company is a good financial profile in a de-emphasized segment, so keep watching. It would move up if RCM were bundled with EHR or analytics."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 12.6,
+      "cost_usd": 0.016572000000000003,
+      "tags": [
+        "edge",
+        "segment"
+      ],
+      "raw": "{\"verdict\":\"Radar\",\"reasons\":[\"No kill criterion is met. Net debt/EBITDA is -0.2 (net cash), well under the 4x limit. No holder is above 25%: the top holder is Schroders at 9% and insiders hold 20%. The facts state there is no regulatory issue.\",\"Segment: the whole product range is hospital revenue cycle management. The thesis de-emphasizes RCM: an RCM-only business is Radar, not Priority. It is not bundled with EHR or analytics, so it falls outside the segments we like.\",\"Business model: recurring revenue is 80% of sales, above the 50% threshold (warning only, and it passes).\",\"Why the price is low: the 45% fall in 12 months follows a growth reset that management calls temporary. That fits the 'temporary' test, but it is management's claim only and there is no independent evidence. It is not a structural loss of customers. This is not the blocking point.\",\"Profitability: the EBITDA margin is 19% and the company has net cash. Ownership gives no flag. The company is a good financial profile in a de-emphasized segment, so keep watching. It would move up if RCM were bundled with EHR or analytics.\"],\"missing_facts\":[]}"
+    },
+    {
+      "id": "008-rcm-bundled",
+      "title": "RCM is one module of an EHR platform",
+      "expected": "Priority",
+      "got": "Priority",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criteria: none met. Net debt/EBITDA is 1.4x, well below the 4x limit. No holder above 25%, so no controlling shareholder who ruled out a sale. The facts state no regulatory issue, so there is no unresolved regulatory or data-privacy issue.",
+        "Segment: the core product is an ambulatory EHR, a segment we like. The revenue cycle module is only an add-on sold to 40% of customers. It is bundled with EHR, which the thesis accepts, so this is not an RCM-only business.",
+        "Why the price is low: the 34% 12-month drop followed a one-off charge on a platform migration. That is a temporary cause (one-off charge and product/cloud transition), and the facts show no loss of customers or market share. The 3-month change of -9% shows no sign of structural deterioration.",
+        "Business model (warning only): recurring revenue is 76% of sales, above the 50% threshold. No warning.",
+        "Profitability: EBITDA margin is 20% and leverage is low, which matches the good-fit profile.",
+        "Ownership flag: no holder above 25%. The largest holder is Vanguard Group at 9% and insiders hold 6%. There is nothing to flag. The absence of a large founder or family stake makes a negotiated deal harder, but that is not a criterion that lowers the verdict.",
+        "Overall: no kill criterion, no key fact missing, and the judgment criteria are met. Whether it is Actionable depends on the code comparing the takeout price with the target price, which I do not judge."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 14.2,
+      "cost_usd": 0.0182245,
+      "tags": [
+        "edge",
+        "segment"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Priority\",\n  \"reasons\": [\n    \"Kill criteria: none met. Net debt/EBITDA is 1.4x, well below the 4x limit. No holder above 25%, so no controlling shareholder who ruled out a sale. The facts state no regulatory issue, so there is no unresolved regulatory or data-privacy issue.\",\n    \"Segment: the core product is an ambulatory EHR, a segment we like. The revenue cycle module is only an add-on sold to 40% of customers. It is bundled with EHR, which the thesis accepts, so this is not an RCM-only business.\",\n    \"Why the price is low: the 34% 12-month drop followed a one-off charge on a platform migration. That is a temporary cause (one-off charge and product/cloud transition), and the facts show no loss of customers or market share. The 3-month change of -9% shows no sign of structural deterioration.\",\n    \"Business model (warning only): recurring revenue is 76% of sales, above the 50% threshold. No warning.\",\n    \"Profitability: EBITDA margin is 20% and leverage is low, which matches the good-fit profile.\",\n    \"Ownership flag: no holder above 25%. The largest holder is Vanguard Group at 9% and insiders hold 6%. There is nothing to flag. The absence of a large founder or family stake makes a negotiated deal harder, but that is not a criterion that lowers the verdict.\",\n    \"Overall: no kill criterion, no key fact missing, and the judgment criteria are met. Whether it is Actionable depends on the code comparing the takeout price with the target price, which I do not judge.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "009-non-recurring-model",
+      "title": "Healthcare IT services, recurring revenue 38%",
+      "expected": "Radar",
+      "got": "Radar",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "No kill criterion is met. Net debt/EBITDA is 0.8x (below 4x). No holder is above 25% (top holder Davy Asset Management at 8%, insiders 10%), so there is no ownership flag and no sale has been ruled out. The facts report no regulatory issue.",
+        "No key fact is missing. Everything needed to apply the kill criteria and the judgment criteria is in the data.",
+        "Segment fit: this is a services business that does project-based implementation and integration for medtech software. It is not a software vendor in the EHR, pharmacy, healthcare analytics, pharma software or medtech software segments we like. The thesis wants software with high switching costs, and this business sells services. Outside the liked segments, the thesis rule gives Radar.",
+        "Business model (warning only, does not lower the verdict): recurring support contracts are 38% of sales, below the 50% threshold. The revenue is mainly project-based, which is not the sticky, subscription-like profile we want.",
+        "Why the price is low: the 30% fall over 12 months is attributed to project delays described as temporary, and the 3-month change of -5% shows no new deterioration. This is consistent with contract timing, so the drop is not judged structural. This criterion is therefore not what blocks the verdict.",
+        "Other points: EBITDA margin of 12% is modest for the profile we target. Net debt is low, and market cap of EUR 300m is a manageable size. These do not change the verdict.",
+        "Conclusion: the price drop looks temporary and the balance sheet is clean, but the company is outside our preferred segments and has low recurring revenue. We keep it on the watchlist and do not make it a Priority."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 11.5,
+      "cost_usd": 0.0185745,
+      "tags": [
+        "edge",
+        "business-model"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Radar\",\n  \"reasons\": [\n    \"No kill criterion is met. Net debt/EBITDA is 0.8x (below 4x). No holder is above 25% (top holder Davy Asset Management at 8%, insiders 10%), so there is no ownership flag and no sale has been ruled out. The facts report no regulatory issue.\",\n    \"No key fact is missing. Everything needed to apply the kill criteria and the judgment criteria is in the data.\",\n    \"Segment fit: this is a services business that does project-based implementation and integration for medtech software. It is not a software vendor in the EHR, pharmacy, healthcare analytics, pharma software or medtech software segments we like. The thesis wants software with high switching costs, and this business sells services. Outside the liked segments, the thesis rule gives Radar.\",\n    \"Business model (warning only, does not lower the verdict): recurring support contracts are 38% of sales, below the 50% threshold. The revenue is mainly project-based, which is not the sticky, subscription-like profile we want.\",\n    \"Why the price is low: the 30% fall over 12 months is attributed to project delays described as temporary, and the 3-month change of -5% shows no new deterioration. This is consistent with contract timing, so the drop is not judged structural. This criterion is therefore not what blocks the verdict.\",\n    \"Other points: EBITDA margin of 12% is modest for the profile we target. Net debt is low, and market cap of EUR 300m is a manageable size. These do not change the verdict.\",\n    \"Conclusion: the price drop looks temporary and the balance sheet is clean, but the company is outside our preferred segments and has low recurring revenue. We keep it on the watchlist and do not make it a Priority.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    },
+    {
+      "id": "010-regulatory-unresolved",
+      "title": "Open data-breach investigation by the regulator",
+      "expected": "Reject",
+      "got": "Reject",
+      "ok": true,
+      "backend": "claude",
+      "reasons": [
+        "Kill criterion met: a major unresolved regulatory or data-privacy issue. A cyber incident exposed patient data. The data protection authority's investigation is still open. It could lead to a significant fine and to suspension of new contracts. That is a material, unresolved issue, and the suspension risk would hit growth directly.",
+        "The other kill criteria are not met. Net debt/EBITDA is 0.9x, below the 4x limit. No holder is above 25%, so there is no controlling shareholder who has ruled out a sale.",
+        "The company otherwise fits the strategy. It is an EHR vendor, which is a preferred segment. Recurring revenue is 82% of sales, above the 50% bar. EBITDA margin is 22%, and the share price is down 18% over 3 months and 40% over 12 months. The data-privacy kill criterion takes precedence over this fit.",
+        "Ownership flag: no holder is above 25%. The top holder is Nordea Asset Management at 7%, and insiders hold 9%. Nothing is flagged and no sale statements are reported.",
+        "Whether the price drop is temporary is unclear. It may be linked to the incident, but the facts do not say so. This does not change the verdict because the kill criterion already decides it."
+      ],
+      "missing_facts": [],
+      "parse_error": null,
+      "duration_s": 11.5,
+      "cost_usd": 0.017902,
+      "tags": [
+        "edge",
+        "regulatory",
+        "kill"
+      ],
+      "raw": "```json\n{\n  \"verdict\": \"Reject\",\n  \"reasons\": [\n    \"Kill criterion met: a major unresolved regulatory or data-privacy issue. A cyber incident exposed patient data. The data protection authority's investigation is still open. It could lead to a significant fine and to suspension of new contracts. That is a material, unresolved issue, and the suspension risk would hit growth directly.\",\n    \"The other kill criteria are not met. Net debt/EBITDA is 0.9x, below the 4x limit. No holder is above 25%, so there is no controlling shareholder who has ruled out a sale.\",\n    \"The company otherwise fits the strategy. It is an EHR vendor, which is a preferred segment. Recurring revenue is 82% of sales, above the 50% bar. EBITDA margin is 22%, and the share price is down 18% over 3 months and 40% over 12 months. The data-privacy kill criterion takes precedence over this fit.\",\n    \"Ownership flag: no holder is above 25%. The top holder is Nordea Asset Management at 7%, and insiders hold 9%. Nothing is flagged and no sale statements are reported.\",\n    \"Whether the price drop is temporary is unclear. It may be linked to the incident, but the facts do not say so. This does not change the verdict because the kill criterion already decides it.\"\n  ],\n  \"missing_facts\": []\n}\n```"
+    }
+  ]
+}

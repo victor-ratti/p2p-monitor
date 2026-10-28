@@ -1,0 +1,11 @@
+{
+  "id": "001-clean-fit",
+  "title": "Profitable pharmacy software vendor, price down on a cloud transition",
+  "input": {
+    "company": {"ticker": "SYN-001", "name": "Apothix Systems", "team": "Healthcare IT", "segment": "Pharmacy software", "country": "France", "market_cap_eur_m": 420, "ebitda_margin_ltm": 0.21, "net_debt_to_ebitda": 0.3, "price_change_3m": -0.08, "price_change_12m": -0.30, "held_pct_insiders": 0.15, "top_holder": "Lambert Family Office", "top_holder_pct": 0.14},
+    "facts": "Pharmacy management software sold by subscription with maintenance; recurring revenue is 78% of sales and customer churn is under 3%. The share price fell 30% after a migration of the customer base to the cloud product temporarily depressed license revenue; management expects the transition to complete next year. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "In-segment, recurring revenue above 50%, temporary price drop, leverage far below 4x, no flag, no kill criterion: Priority.",
+  "tags": ["clean"]
+}

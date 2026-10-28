@@ -1,0 +1,11 @@
+{
+  "id": "003-leverage-just-above",
+  "title": "Same profile, net debt at 4.1x EBITDA",
+  "input": {
+    "company": {"ticker": "SYN-003", "name": "Medrecord Group", "team": "Healthcare IT", "segment": "EHR", "country": "Germany", "market_cap_eur_m": 900, "ebitda_margin_ltm": 0.24, "net_debt_to_ebitda": 4.1, "price_change_3m": -0.05, "price_change_12m": -0.28, "held_pct_insiders": 0.08, "top_holder": "Allianz Global Investors", "top_holder_pct": 0.07},
+    "facts": "Hospital EHR platform with multi-year subscription contracts; recurring revenue is 72% of sales. Net debt is 4.1x EBITDA after a funded acquisition; management says it is comfortable with the level. The share price fell 28% on a delayed product release, now shipped. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Reject",
+  "why": "Net debt above 4x EBITDA is a kill criterion: Reject, whatever management says.",
+  "tags": ["edge", "leverage", "kill"]
+}

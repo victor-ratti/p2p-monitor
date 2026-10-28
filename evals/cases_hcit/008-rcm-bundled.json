@@ -1,0 +1,11 @@
+{
+  "id": "008-rcm-bundled",
+  "title": "RCM is one module of an EHR platform",
+  "input": {
+    "company": {"ticker": "SYN-008", "name": "Carestack Systems", "team": "Healthcare IT", "segment": "EHR with integrated revenue cycle module", "country": "United States", "market_cap_eur_m": 1500, "ebitda_margin_ltm": 0.20, "net_debt_to_ebitda": 1.4, "price_change_3m": -0.09, "price_change_12m": -0.34, "held_pct_insiders": 0.06, "top_holder": "Vanguard Group", "top_holder_pct": 0.09},
+    "facts": "Core product is an ambulatory EHR; a revenue cycle module is sold as an add-on to 40% of customers. Recurring revenue is 76% of sales. The share price fell 34% after a one-off charge on a platform migration. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "RCM bundled with EHR is acceptable under the thesis; the other criteria are met: Priority.",
+  "tags": ["edge", "segment"]
+}

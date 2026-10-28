@@ -1,0 +1,11 @@
+{
+  "id": "009-non-recurring-model",
+  "title": "Healthcare IT services, recurring revenue 38%",
+  "input": {
+    "company": {"ticker": "SYN-009", "name": "Integra Clinical Consulting", "team": "Healthcare IT", "segment": "Medtech software implementation services", "country": "Ireland", "market_cap_eur_m": 300, "ebitda_margin_ltm": 0.12, "net_debt_to_ebitda": 0.8, "price_change_3m": -0.05, "price_change_12m": -0.30, "held_pct_insiders": 0.10, "top_holder": "Davy Asset Management", "top_holder_pct": 0.08},
+    "facts": "Project-based implementation and integration services for medtech software; recurring support contracts are 38% of sales. The share price fell 30% on project delays described as temporary. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Radar",
+  "why": "Recurring revenue is below the 50% rule, so a thesis criterion is not met: Radar, not Reject (no kill criterion).",
+  "tags": ["edge", "business-model"]
+}

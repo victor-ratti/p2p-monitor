@@ -1,0 +1,11 @@
+{
+  "id": "007-rcm-only",
+  "title": "Strong financials but the business is revenue cycle management only",
+  "input": {
+    "company": {"ticker": "SYN-007", "name": "Billwise Health", "team": "Healthcare IT", "segment": "Hospital revenue cycle management software", "country": "United Kingdom", "market_cap_eur_m": 450, "ebitda_margin_ltm": 0.19, "net_debt_to_ebitda": -0.2, "price_change_3m": -0.07, "price_change_12m": -0.45, "held_pct_insiders": 0.20, "top_holder": "Schroders", "top_holder_pct": 0.09},
+    "facts": "Billing and claims-management software for hospitals; the whole product range is revenue cycle management. Recurring revenue is 80% of sales. The share price fell 45% after a growth reset management calls temporary. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Radar",
+  "why": "An RCM-only business is de-emphasized by the thesis: Radar. Not Reject (no kill criterion) and not Priority (the segment criterion is not met).",
+  "tags": ["edge", "segment"]
+}

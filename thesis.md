@@ -8,7 +8,11 @@ illustration only. The evals do NOT read this file: they use `evals/thesis_diagn
 In 3 to 5 lines: what kind of listed company you would take private, and why it would be better off with your fund.
 
 > **Your answer:**
->
+> Profitable listed healthcare software companies with recurring revenue (subscriptions, maintenance, transaction fees),
+> sticky customers and high switching costs, whose share price has fallen for reasons we believe are temporary. We
+> emphasize EHR, pharmacy software, healthcare-specific analytics, pharma software and medtech software; revenue cycle
+> management (RCM) is de-emphasized. Private ownership lets the fund invest in product and cloud migration, make
+> add-on acquisitions and fix go-to-market away from quarterly market pressure.
 
 > *Example:* Profitable mid-sized diagnostics companies with recurring revenue (consumables, service, supply contracts)
 > whose share price has fallen for reasons we believe are temporary. Private ownership lets the fund finance the next
@@ -20,24 +24,24 @@ Numbers go in **Min / Max** (margin as a fraction: 0.10 = 10%); lists go in **Yo
 
 | Filter | Field | Min | Max | Your value | Example |
 |---|---|---|---|---|---|
-| Team | `team` | | | | Diagnostics |
+| Team | `team` | | | Healthcare IT | Diagnostics |
 | Countries | `country` | | | | United States, Canada, United Kingdom, Ireland, France, Germany, Switzerland, Italy, Spain, Belgium, Netherlands, Sweden, Denmark, Norway, Finland (names as in the data) |
-| Market cap (€M) | `market_cap_eur_m` | | | | Min 100, Max 4000 |
-| EBITDA margin | `ebitda_margin_ltm` | | | | Min 0.10 |
-| Role | `role` | | | | candidate (consolidators are never targets) |
+| Market cap (€M) | `market_cap_eur_m` | 100 | 4000 | | Min 100, Max 4000 |
+| EBITDA margin | `ebitda_margin_ltm` | 0.10 | | | Min 0.10 |
+| Role | `role` | | | candidate | candidate (consolidators are never targets) |
 
 ## 3. Judgment criteria
 What only a person, or the judge reading the facts, can decide. Write rules a colleague could apply without you.
 
 | Criterion | Your rule | Example | Effect |
 |---|---|---|---|
-| Segments we like | | In-vitro diagnostics: instruments, assays, OEM analyzers, lab automation | Outside these segments: Radar |
-| Business model | | Recurring revenue (consumables, service) is at least half of sales | Warning only, never a reject |
-| Why the price is low | | Must be temporary: product transition, destocking, one-off charges. Not a structural loss of market | Structural decline: Radar |
-| Ownership rule | | Flag any holder above 25%: name, stake, public statements about selling | Flag only; reject only if they ruled out a sale |
-| Kill criteria | | Net debt above 4x EBITDA (from the data, never computed by the judge); a controlling shareholder who ruled out a sale; a major unresolved regulatory issue | Reject |
-| Good fit (one example) | | A profitable OEM instrument maker with long supply contracts, share price down after a product transition, founding family with a large stake | |
-| Bad fit (one example) | | A loss-making genomics lab whose growth depends on reimbursement decisions | |
+| Segments we like | EHR, pharmacy software, healthcare-specific analytics, pharma software, medtech software. Revenue cycle management (RCM) is de-emphasized: an RCM-only business is Radar, not Priority; RCM bundled with EHR or analytics is acceptable | In-vitro diagnostics: instruments, assays, OEM analyzers, lab automation | Outside these segments: Radar |
+| Business model | Recurring revenue (subscriptions, maintenance, transaction fees) is at least 50% of sales | Recurring revenue (consumables, service) is at least half of sales | Warning only, never a reject |
+| Why the price is low | Must be temporary: cloud or product transition, one-off charges, contract timing, sector sentiment. Not a structural loss of customers or market share | Must be temporary: product transition, destocking, one-off charges. Not a structural loss of market | Structural decline: Radar |
+| Ownership rule | Flag any holder above 25%: name, stake, public statements about selling | Flag any holder above 25%: name, stake, public statements about selling | Flag only; reject only if they ruled out a sale |
+| Kill criteria | Net debt above 4x EBITDA (from the data, never computed by the judge); a controlling shareholder who ruled out a sale; a major unresolved regulatory or data-privacy issue | Net debt above 4x EBITDA (from the data, never computed by the judge); a controlling shareholder who ruled out a sale; a major unresolved regulatory issue | Reject |
+| Good fit (one example) | A profitable pharmacy or EHR software vendor with mostly subscription and maintenance revenue and high switching costs, little or no net debt, share price down after a cloud-transition dip, and a founder or family with a large stake that has not ruled out a sale | A profitable OEM instrument maker with long supply contracts, share price down after a product transition, founding family with a large stake | |
+| Bad fit (one example) | A loss-making clinical-analytics vendor whose growth depends on continued equity funding, with under 50% recurring revenue and a share price that has risen on sentiment rather than fundamentals | A loss-making genomics lab whose growth depends on reimbursement decisions | |
 | Verdict | keep or rewrite | **Priority** = no kill criterion and the criteria are met: we would buy at the right price. **Radar** = fits the strategy but a key fact is unknown, the drop may be structural, or a criterion is not met: keep watching. **Reject** = any kill criterion. An unknown fact is never a pass. **Actionable** is not a verdict: the code grants it to a Priority company whose takeout price is at or below the target price (section 4). | |
 
 ## 4. Valuation settings

@@ -1,0 +1,11 @@
+{
+  "id": "004-leverage-unknown",
+  "title": "Attractive profile but net debt is not available",
+  "input": {
+    "company": {"ticker": "SYN-004", "name": "Pharmalink Software", "team": "Healthcare IT", "segment": "Pharma software", "country": "Switzerland", "market_cap_eur_m": 610, "ebitda_margin_ltm": 0.20, "net_debt_to_ebitda": null, "price_change_3m": -0.07, "price_change_12m": -0.33, "held_pct_insiders": 0.10, "top_holder": "UBS Asset Management", "top_holder_pct": 0.06},
+    "facts": "Software for pharma commercial operations and trial management; recurring revenue is 65% of sales. The share price fell 33% on a one-off charge for a discontinued product. Debt and cash are not disclosed in the available material. No holder above 25%. No regulatory issue."
+  },
+  "expected": "Radar",
+  "why": "Leverage is a kill criterion and it is unknown: an unknown fact is never a pass. Radar, with leverage under missing facts.",
+  "tags": ["edge", "missing-fact"]
+}

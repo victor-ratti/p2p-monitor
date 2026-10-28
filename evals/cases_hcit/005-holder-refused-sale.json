@@ -1,0 +1,11 @@
+{
+  "id": "005-holder-refused-sale",
+  "title": "A 55% holder has publicly ruled out a sale",
+  "input": {
+    "company": {"ticker": "SYN-005", "name": "Clinova Data", "team": "Healthcare IT", "segment": "Healthcare-specific analytics", "country": "Netherlands", "market_cap_eur_m": 380, "ebitda_margin_ltm": 0.17, "net_debt_to_ebitda": 0.5, "price_change_3m": -0.10, "price_change_12m": -0.35, "held_pct_insiders": 0.55, "top_holder": "Van der Meer Holding", "top_holder_pct": 0.55},
+    "facts": "Clinical analytics subscriptions for hospital groups; recurring revenue is 70% of sales. The share price fell 35% on a one-off contract loss. The founding holding company owns 55% and stated at the annual meeting that it will not sell its stake under any circumstances. No regulatory issue."
+  },
+  "expected": "Reject",
+  "why": "A controlling shareholder who ruled out a sale is a kill criterion: Reject.",
+  "tags": ["edge", "ownership", "kill"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "006-holder-large-silent",
+  "title": "A 31% holder with no public statement about selling",
+  "input": {
+    "company": {"ticker": "SYN-006", "name": "Pharmasoft Nordic", "team": "Healthcare IT", "segment": "Pharmacy software", "country": "Sweden", "market_cap_eur_m": 520, "ebitda_margin_ltm": 0.22, "net_debt_to_ebitda": 1.1, "price_change_3m": -0.06, "price_change_12m": -0.29, "held_pct_insiders": 0.31, "top_holder": "Lindgren Invest AB", "top_holder_pct": 0.31},
+    "facts": "Pharmacy software with subscription and transaction fees; recurring revenue is 74% of sales. The share price fell 29% on a delay in a customer migration, now complete. The largest holder owns 31%; no public statement about selling or keeping the stake. No regulatory issue."
+  },
+  "expected": "Priority",
+  "why": "A holder above 25% is a flag to report (name, stake, no statement), not a reject: only a ruled-out sale rejects. Priority, with the flag.",
+  "tags": ["edge", "ownership"]
+}
